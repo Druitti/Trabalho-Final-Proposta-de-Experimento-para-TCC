@@ -298,19 +298,19 @@ O experimento fundamenta-se nos seguintes conceitos-chave:
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
-│                    Tipo de Revisão de Código                    │
-│                    (Variável Independente)                      │
+│                    Tipo de Revisão de Código                │
+│                    (Variável Independente)                  │
 └──────────────────────┬──────────────────────────────────────┘
-                        │ 
+                       │ 
         ┌──────────────┴──────────────┐
-        │                               │
-        ▼                               ▼
-┌──────────────────┐        ┌─────────────────┐
-│ Revisão Manual    │        │ SonarQube (Auto)  │
-│  (Peer Review)    │        │    (Análise       │   
-│                   │        │    Estática)      │
+        │                             │
+        ▼                             ▼
+┌──────────────────┐        ┌──────────────────┐
+│ Revisão Manual   │        │ SonarQube (Auto) │
+│  (Peer Review)   │        │    (Análise      │   
+│                  │        │    Estática)     │
 └────────┬─────────┘        └────────┬─────────┘
-          ▼                            ▼
+         ▼                           ▼
          │                         │
          │ Detecta:                │ Detecta:              │
          │ • Lógica complexa       │ • Padrões estruturais │
@@ -318,11 +318,11 @@ O experimento fundamenta-se nos seguintes conceitos-chave:
          │ • Casos extremos        │ • Complexidade        │
          │ • Design patterns       │ • Duplicação          │
          │                         │ • Code smells         │
-         │                         │──────────────────────┘
-         └───────────┬───────────┘
-                      │  
-                      ▼
-         ┌──────────────────────────┐
+         │                         │───────────────────────┘
+         └───────────┬─────────────┘
+                     │  
+                     ▼
+         ┌────────────────────────────┐
          │ Qualidade do Código        │
          │  (Métrica Primária)        │
          │                            │
@@ -331,23 +331,23 @@ O experimento fundamenta-se nos seguintes conceitos-chave:
          │ • Taxa de Críticos (M2)    │
          │ • Defeitos Pós-Entrega     │
          │   (M3)                     │
-         └──────────────┬───────────┘
-                         │
-                         ▼
-         ┌──────────────────────────┐
+         └──────────────┬─────────────┘
+                        │
+                        ▼
+         ┌────────────────────────────┐
          │  Resultado Final           │
          │  (Efeito Observado)        │
          │                            │
          │ Redução de Defeitos        │
          │ em Produção?               │
-         └──────────────────────────┘
+         └────────────────────────────┘
 
 ┌─────────────────────────────────────────────────────────────┐
-│  Variáveis Moderadoras / Contexto                               │
-│  • Experiência dos desenvolvedores (M14: Confiança)             │
-│  • Complexidade do código (M8: Complexidade Ciclomática)        │ 
-│  • Tamanho do PR (linhas modificadas)                           │ 
-│  • Criticidade da funcionalidade                                │
+│  Variáveis Moderadoras / Contexto                           │
+│  • Experiência dos desenvolvedores (M14: Confiança)         │
+│  • Complexidade do código (M8: Complexidade Ciclomática)    │ 
+│  • Tamanho do PR (linhas modificadas)                       │ 
+│  • Criticidade da funcionalidade                            │
 └─────────────────────────────────────────────────────────────┘
 ```
 
