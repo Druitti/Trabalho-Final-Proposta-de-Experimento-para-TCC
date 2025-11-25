@@ -14,10 +14,11 @@ EXP-SE-001
 - **Histórico:**  
   - v1.0 — criação inicial do documento, contendo escopo e fundamentos teóricos.
   - v2.0 — expansão com objetivos específicos, GQM, stakeholders e riscos.
+  - v3.0 — modelo conceitual e hipóteses; variáveis, fatores, tratamentos e objetos de estudo; desenho experimental
 
 ### 1.4 Datas (criação, última atualização)
 - **Data de criação:** 23/11/2025  
-- **Última atualização:** 24/11/2025
+- **Última atualização:** 25/11/2025
 
 ### 1.5 Autores (nome, área, contato)
 - **Autor:** [Gabriel Ferreira Amaral] — Engenharia de Software — gabriel.afa@outlook.com
@@ -453,6 +454,628 @@ Se pressupostos forem violados:
 - Aplicar **transformações logarítmicas** aos dados se apropriado
 - Reportar tanto teste paramétrico quanto não-paramétrico
 
+## 8. Variáveis, fatores, tratamentos e objetos de estudo
+
+### 8.1 Objetos de estudo
+
+Os objetos de estudo neste experimento são **Pull Requests (PRs)** contendo implementações de features ou correções de bugs em código Java. Cada PR representa uma unidade experimental que será submetida a um dos dois métodos de revisão.
+
+**Características dos objetos:**
+
+- **Tipo:** Pull Requests no GitHub contendo código-fonte Java
+- **Escopo funcional:** Implementações de user stories, features de backend (REST APIs, lógica de negócio, persistência de dados)
+- **Tamanho esperado:** PRs com 50-500 linhas de código modificadas (LOC)
+- **Complexidade:** Variada — desde CRUDs simples até lógica de negócio com regras condicionais complexas
+- **Framework:** Spring Boot 3.x com Java 17+
+- **Repositório:** Código versionado no GitHub com histórico completo de commits, comentários e iterações
+
+**Critérios de inclusão:**
+- PRs que implementam novas funcionalidades ou correções significativas (não refatorações triviais)
+- PRs com pelo menos 50 LOC modificadas
+- PRs abertos após o início oficial do experimento
+- PRs que passam por todo o fluxo de revisão (abertura → revisão → aprovação/rejeição → merge/retrabalho)
+
+**Critérios de exclusão:**
+- PRs puramente de documentação (README, comentários)
+- PRs que modificam apenas configurações (YAML, properties)
+- PRs abandonados ou fechados sem merge
+- PRs com <50 LOC (muito triviais para análise significativa)
 
 ---
+
+### 8.2 Sujeitos / participantes (visão geral)
+
+**Perfil dos participantes:**
+
+| Aspecto | Descrição |
+|---|---|
+| **Função** | Estudantes de graduação em Ciência da Computação/Engenharia de Software atuando como desenvolvedores e revisores |
+| **Quantidade** | 4-6 participantes (equipe única) |
+| **Experiência com Java** | Mista: 6-18 meses de experiência prática; pelo menos 1 disciplina de Programação Orientada a Objetos concluída |
+| **Experiência com Git/GitHub** | Básica a intermediária; todos devem saber criar branches, PRs e realizar code review |
+| **Experiência com Spring Boot** | Pelo menos 1 projeto acadêmico prévio |
+| **Conhecimento de SonarQube** | Não obrigatório (será fornecido treinamento) |
+
+**Papéis no experimento:**
+
+1. **Autores de PRs:** Desenvolvedores que implementam features e abrem PRs
+2. **Revisores manuais:** Participantes designados para realizar peer review tradicional
+3. **Operadores do SonarQube:** Participantes que interpretam relatórios automatizados (pode ser o próprio autor)
+4. **Testadores:** Responsáveis por validar código em staging/homologação (podem ser os mesmos desenvolvedores em rodízio)
+
+**Recrutamento:**
+- Convite direto a estudantes matriculados na disciplina de Engenharia de Software
+- Consentimento informado com explicação clara dos objetivos e procedimentos
+- Participação voluntária; possibilidade de desistência sem penalização acadêmica
+
+---
+
+### 8.3 Variáveis independentes (fatores) e seus níveis
+
+| Fator | Descrição | Níveis (Tratamentos) | Tipo |
+|---|---|---|---|
+| **F1: Método de Revisão** | Estratégia utilizada para revisar o código antes da integração | **Nível 1:** Revisão Manual (Peer Review) <br> **Nível 2:** Revisão Automatizada (SonarQube) | Categórico (2 níveis) |
+
+**Detalhamento do fator F1:**
+
+**Nível 1 — Revisão Manual (Peer Review):**
+- Revisor humano designado analisa o código linha a linha
+- Utiliza checklist padronizado (lógica, legibilidade, boas práticas, segurança, casos extremos)
+- Deixa comentários diretamente no GitHub PR
+- Aprova ou solicita mudanças com justificativa
+- **Não utiliza** ferramentas automatizadas durante a revisão
+
+**Nível 2 — Revisão Automatizada (SonarQube):**
+- Análise estática executada automaticamente via CI/CD (GitHub Actions)
+- Relatório SonarQube gerado com issues categorizadas (bugs, vulnerabilities, code smells, coverage, duplicação)
+- Autor do PR corrige problemas identificados pela ferramenta
+- Aprovação automática se quality gate for atingido (configuração padrão: sem bugs críticos, cobertura mínima)
+- **Não há** revisão humana adicional neste grupo
+
+---
+
+### 8.4 Tratamentos (condições experimentais)
+
+| Tratamento | Descrição Completa | Protocolo |
+|---|---|---|
+| **T1: Controle (Revisão Manual)** | PR passa por revisão humana tradicional sem uso de ferramentas automatizadas | 1. Desenvolvedor abre PR no GitHub <br> 2. Revisor humano designado recebe notificação <br> 3. Revisor analisa código usando checklist padronizado <br> 4. Revisor deixa comentários e aprova ou solicita mudanças <br> 5. Autor corrige e atualiza PR (se necessário) <br> 6. Após aprovação, PR é mergeado <br> 7. Código é testado em staging/homologação |
+| **T2: Tratamento (Revisão Automatizada SonarQube)** | PR passa por análise estática automática; aprovação baseada em quality gate da ferramenta | 1. Desenvolvedor abre PR no GitHub <br> 2. GitHub Actions dispara análise SonarQube automaticamente <br> 3. Relatório é gerado com issues identificadas <br> 4. Autor analisa relatório e corrige problemas críticos <br> 5. PR é atualizado; nova análise é executada <br> 6. Quality gate aprovado → PR é mergeado <br> 7. Código é testado em staging/homologação |
+
+**Diferenciação entre tratamentos:**
+
+| Aspecto | T1 (Manual) | T2 (Automatizado) |
+|---|---|---|
+| **Revisor** | Humano | Ferramenta (SonarQube) |
+| **Critérios de aprovação** | Subjetivos + checklist | Objetivos (quality gate) |
+| **Tempo de resposta** | Variável (depende de disponibilidade) | Imediato (CI/CD) |
+| **Tipo de problemas detectados** | Lógica, contexto, design | Padrões, estrutura, métricas |
+| **Feedback** | Comentários textuais no GitHub | Relatório estruturado com categorias |
+
+---
+
+### 8.5 Variáveis dependentes (respostas)
+
+| ID | Nome da Variável | Descrição | Unidade de Medida | Forma de Coleta | Métrica Associada |
+|---|---|---|---|---|---|
+| **VD1** | **Densidade de Defeitos Pós-Entrega** | Número de defeitos encontrados em staging/homologação após o merge do PR, normalizados por 1.000 linhas de código | defeitos/KLOC | Rastreamento de issues no GitHub + análise de logs de testes | M1 |
+| **VD2** | **Taxa de Defeitos Críticos** | Percentual de defeitos com severidade crítica ou alta em relação ao total de defeitos encontrados | % | Classificação manual de severidade nos issues reportados | M2 |
+| **VD3** | **Defeitos Pós-Entrega (Absoluto)** | Número absoluto de defeitos identificados após merge (sem normalização) | quantidade | Contagem de issues criados após merge do PR | M3 |
+| **VD4** | **Vulnerabilidades Detectadas** | Número total de vulnerabilidades de segurança identificadas durante a revisão (manual ou automatizada) | quantidade | Comentários de revisão manual + relatório SonarQube (Security Hotspots) | M6 |
+| **VD5** | **Complexidade Ciclomática Média** | Média da complexidade ciclomática das funções/métodos no código do PR | índice | Relatório SonarQube (Complexity metrics) | M8 |
+| **VD6** | **Duplicação de Código** | Percentual de linhas duplicadas identificadas no PR | % | Relatório SonarQube (Duplication metrics) | M9 |
+| **VD7** | **Tempo de Revisão** | Tempo total gasto desde a abertura do PR até a aprovação final | minutos | Diferença entre timestamps (PR opened → approved) no GitHub API | M10 |
+| **VD8** | **Ciclos de Retrabalho** | Número de iterações (pushes após comentários) necessárias antes da aprovação | quantidade | Contagem de commits após primeira revisão | M11 |
+| **VD9** | **Número de Comentários** | Quantidade total de comentários deixados durante a revisão (manual) ou issues flagadas (automatizada) | quantidade | GitHub PR comments API + SonarQube issues count | M12 |
+| **VD10** | **Satisfação Percebida** | Avaliação subjetiva dos desenvolvedores sobre a utilidade do método de revisão | escala Likert (1-5) | Questionário pós-experimento | M13 |
+| **VD11** | **Confiança no Método** | Grau de confiança dos desenvolvedores na capacidade do método de identificar problemas | escala Likert (1-5) | Questionário pós-experimento | M14 |
+| **VD12** | **True Positive Rate** | Percentual de problemas identificados na revisão que correspondem a defeitos reais validados em testes | % | Validação cruzada: issues revisão vs. defeitos em staging | M5 |
+
+#### Variáveis Dependentes Primárias (Principal Analysis)
+
+As seguintes variáveis serão o **foco principal** da análise estatística para teste de hipóteses:
+
+1. **VD1 (Densidade de Defeitos Pós-Entrega)** — métrica primária para H₀/H₁
+2. **VD2 (Taxa de Defeitos Críticos)** — complementa análise de qualidade
+3. **VD7 (Tempo de Revisão)** — eficiência do processo
+
+#### Variáveis Dependentes Secundárias (Exploratory Analysis)
+
+Variáveis complementares para análise exploratória e discussão qualitativa:
+
+- VD4, VD5, VD6 — caracterização de problemas detectados
+- VD8, VD9 — dinâmica do processo de revisão
+- VD10, VD11 — percepção e aceitação dos métodos
+- VD12 — validação da qualidade da detecção
+
+---
+
+### 8.6 Variáveis de controle / bloqueio
+
+Variáveis que serão **mantidas constantes** ou usadas para **formação de blocos** a fim de reduzir variabilidade não relacionada ao tratamento:
+
+| ID | Nome da Variável | Descrição | Estratégia de Controle | Justificativa |
+|---|---|---|---|---|
+| **VC1** | **Tamanho do PR (LOC)** | Número de linhas de código modificadas no PR | **Bloqueio:** PRs serão agrupados em 3 blocos por tamanho (pequeno: 50-150 LOC; médio: 151-300 LOC; grande: 301-500 LOC). Alocação balanceada entre tratamentos dentro de cada bloco. | Tamanho influencia tempo de revisão e probabilidade de defeitos |
+| **VC2** | **Complexidade da Feature** | Nível de complexidade da funcionalidade implementada (simples/média/complexa) | **Bloqueio:** Features classificadas em 3 níveis; distribuição equilibrada entre T1 e T2 | Complexidade afeta densidade de defeitos independentemente do método de revisão |
+| **VC3** | **Experiência do Desenvolvedor** | Tempo de experiência com Java (em meses) | **Controle:** Rodízio de autores entre tratamentos; cada desenvolvedor contribui com PRs em ambos os grupos | Desenvolvedores mais experientes tendem a produzir menos defeitos |
+| **VC4** | **Configuração do SonarQube** | Regras e quality gate utilizados | **Controle:** Configuração padrão do SonarQube mantida constante durante todo o experimento | Variações nas regras distorceriam comparação |
+| **VC5** | **Checklist de Revisão Manual** | Critérios utilizados na revisão humana | **Controle:** Checklist padronizado fornecido a todos os revisores; treinamento inicial | Padronização garante comparabilidade entre revisores |
+| **VC6** | **Ambiente de Testes** | Infraestrutura de staging/homologação | **Controle:** Mesmo ambiente usado para todos os PRs; configuração fixa | Diferenças de ambiente podem mascarar ou criar defeitos artificialmente |
+| **VC7** | **Sprint / Período Temporal** | Momento em que o PR é desenvolvido | **Bloqueio:** Análise estratificada por sprint; efeitos de aprendizagem controlados | Equipe pode melhorar ao longo do tempo (maturação) |
+| **VC8** | **Tipo de Funcionalidade** | Categoria da feature (CRUD, API REST, regra de negócio, etc.) | **Bloqueio:** Tipos funcionais balanceados entre tratamentos | Diferentes tipos têm perfis de risco distintos |
+
+---
+
+### 8.7 Possíveis variáveis de confusão conhecidas
+
+Fatores que podem distorcer os resultados e que serão **monitorados** e/ou **mitigados**:
+
+| ID | Variável de Confusão | Descrição do Risco | Impacto Potencial | Estratégia de Mitigação | Monitoramento |
+|---|---|---|---|---|---|
+| **CF1** | **Efeito Hawthorne** | Participantes alteram comportamento por saberem que estão sendo observados | Desenvolvedores podem caprichar mais na qualidade do código, reduzindo defeitos artificialmente | • Minimizar comunicação sobre métricas durante experimento <br> • Não revelar qual PR está em qual grupo <br> • Coletar dados de forma discreta | Análise retrospectiva de padrões comportamentais |
+| **CF2** | **Aprendizado / Maturação** | Equipe melhora habilidades ao longo do tempo | Defeitos podem diminuir naturalmente com o tempo, independente do tratamento | • Controlar por sprint (VC7) <br> • Alternar tratamentos ao longo do tempo <br> • Análise de tendência temporal | Gráficos de densidade de defeitos por semana |
+| **CF3** | **Familiaridade com SonarQube** | Desenvolvedores aprendem a "burlar" ou ignorar warnings da ferramenta | Reduz efetividade do tratamento T2 ao longo do experimento | • Treinamento inicial sobre importância das regras <br> • Quality gate rígido (não permite merge com issues críticos) <br> • Auditoria aleatória de PRs | Taxa de issues ignorados ou suprimidos |
+| **CF4** | **Viés de Seleção de Tarefas** | Tarefas mais complexas podem ser alocadas desproporcionalmente a um grupo | Grupo com tarefas mais difíceis apresenta mais defeitos por natureza da tarefa | • Randomização da alocação de PRs <br> • Bloqueio por complexidade (VC2) <br> • Registro da complexidade percebida | Verificação de balanceamento pós-alocação |
+| **CF5** | **Diferenças entre Revisores** | Revisores manuais têm estilos e níveis de rigor diferentes | Variabilidade na qualidade da revisão manual (T1) | • Treinamento padronizado <br> • Checklist obrigatório (VC5) <br> • Rodízio de revisores entre PRs <br> • Auditoria de amostra de revisões | Análise de concordância inter-revisor |
+| **CF6** | **Carga de Trabalho Variável** | Desenvolvedores podem estar mais ou menos ocupados em momentos diferentes | Qualidade do código pode cair sob pressão de prazo | • Distribuir PRs uniformemente ao longo das sprints <br> • Monitorar carga de trabalho via retrospectivas | Registro de horas trabalhadas e número de tarefas simultâneas |
+| **CF7** | **Comunicação Informal** | Desenvolvedores discutem código fora do processo oficial de revisão | Feedback informal pode compensar ausência de revisão formal em T2 | • Instruir equipe a documentar todas as discussões no PR <br> • Observação participante em reuniões | Análise de comunicação via Slack/Discord |
+| **CF8** | **Qualidade dos Testes em Staging** | Testes de validação podem variar em rigor | Defeitos podem não ser detectados por testes fracos, não por falha do método de revisão | • Padronizar suíte de testes <br> • Cobertura mínima exigida (80%) <br> • Casos de teste pré-definidos para cada feature | Análise de cobertura de testes por PR |
+| **CF9** | **Falhas Técnicas Temporárias** | SonarQube pode ficar indisponível; CI/CD pode falhar | PRs do grupo T2 podem não receber análise adequada | • Monitoramento de uptime do SonarQube <br> • Política de re-análise em caso de falha <br> • Backup de dados de análise | Logs de falhas técnicas com timestamps |
+| **CF10** | **Motivação / Engajamento Diferencial** | Participantes podem gostar mais de um método que outro | Desenvolvedores podem se esforçar mais em revisões que consideram mais úteis | • Balancear exposição aos dois métodos <br> • Coletar dados de satisfação (VD10, VD11) <br> • Análise de correlação entre satisfação e qualidade | Questionários de motivação durante experimento |
+
+---
+
+markdown# Plano de Experimento – Parte 3: Variáveis e Desenho Experimental
+
+## 8. Variáveis, fatores, tratamentos e objetos de estudo
+
+### 8.1 Objetos de estudo
+
+Os objetos de estudo neste experimento são **Pull Requests (PRs)** contendo implementações de features ou correções de bugs em código Java. Cada PR representa uma unidade experimental que será submetida a um dos dois métodos de revisão.
+
+**Características dos objetos:**
+
+- **Tipo:** Pull Requests no GitHub contendo código-fonte Java
+- **Escopo funcional:** Implementações de user stories, features de backend (REST APIs, lógica de negócio, persistência de dados)
+- **Tamanho esperado:** PRs com 50-500 linhas de código modificadas (LOC)
+- **Complexidade:** Variada — desde CRUDs simples até lógica de negócio com regras condicionais complexas
+- **Framework:** Spring Boot 3.x com Java 17+
+- **Repositório:** Código versionado no GitHub com histórico completo de commits, comentários e iterações
+
+**Critérios de inclusão:**
+- PRs que implementam novas funcionalidades ou correções significativas (não refatorações triviais)
+- PRs com pelo menos 50 LOC modificadas
+- PRs abertos após o início oficial do experimento
+- PRs que passam por todo o fluxo de revisão (abertura → revisão → aprovação/rejeição → merge/retrabalho)
+
+**Critérios de exclusão:**
+- PRs puramente de documentação (README, comentários)
+- PRs que modificam apenas configurações (YAML, properties)
+- PRs abandonados ou fechados sem merge
+- PRs com <50 LOC (muito triviais para análise significativa)
+
+---
+
+### 8.2 Sujeitos / participantes (visão geral)
+
+**Perfil dos participantes:**
+
+| Aspecto | Descrição |
+|---|---|
+| **Função** | Estudantes de graduação em Ciência da Computação/Engenharia de Software atuando como desenvolvedores e revisores |
+| **Quantidade** | 4-6 participantes (equipe única) |
+| **Experiência com Java** | Mista: 6-18 meses de experiência prática; pelo menos 1 disciplina de Programação Orientada a Objetos concluída |
+| **Experiência com Git/GitHub** | Básica a intermediária; todos devem saber criar branches, PRs e realizar code review |
+| **Experiência com Spring Boot** | Pelo menos 1 projeto acadêmico prévio |
+| **Conhecimento de SonarQube** | Não obrigatório (será fornecido treinamento) |
+
+**Papéis no experimento:**
+
+1. **Autores de PRs:** Desenvolvedores que implementam features e abrem PRs
+2. **Revisores manuais:** Participantes designados para realizar peer review tradicional
+3. **Operadores do SonarQube:** Participantes que interpretam relatórios automatizados (pode ser o próprio autor)
+4. **Testadores:** Responsáveis por validar código em staging/homologação (podem ser os mesmos desenvolvedores em rodízio)
+
+**Recrutamento:**
+- Convite direto a estudantes matriculados na disciplina de Engenharia de Software
+- Consentimento informado com explicação clara dos objetivos e procedimentos
+- Participação voluntária; possibilidade de desistência sem penalização acadêmica
+
+---
+
+### 8.3 Variáveis independentes (fatores) e seus níveis
+
+| Fator | Descrição | Níveis (Tratamentos) | Tipo |
+|---|---|---|---|
+| **F1: Método de Revisão** | Estratégia utilizada para revisar o código antes da integração | **Nível 1:** Revisão Manual (Peer Review) <br> **Nível 2:** Revisão Automatizada (SonarQube) | Categórico (2 níveis) |
+
+**Detalhamento do fator F1:**
+
+**Nível 1 — Revisão Manual (Peer Review):**
+- Revisor humano designado analisa o código linha a linha
+- Utiliza checklist padronizado (lógica, legibilidade, boas práticas, segurança, casos extremos)
+- Deixa comentários diretamente no GitHub PR
+- Aprova ou solicita mudanças com justificativa
+- **Não utiliza** ferramentas automatizadas durante a revisão
+
+**Nível 2 — Revisão Automatizada (SonarQube):**
+- Análise estática executada automaticamente via CI/CD (GitHub Actions)
+- Relatório SonarQube gerado com issues categorizadas (bugs, vulnerabilities, code smells, coverage, duplicação)
+- Autor do PR corrige problemas identificados pela ferramenta
+- Aprovação automática se quality gate for atingido (configuração padrão: sem bugs críticos, cobertura mínima)
+- **Não há** revisão humana adicional neste grupo
+
+---
+
+### 8.4 Tratamentos (condições experimentais)
+
+| Tratamento | Descrição Completa | Protocolo |
+|---|---|---|
+| **T1: Controle (Revisão Manual)** | PR passa por revisão humana tradicional sem uso de ferramentas automatizadas | 1. Desenvolvedor abre PR no GitHub <br> 2. Revisor humano designado recebe notificação <br> 3. Revisor analisa código usando checklist padronizado <br> 4. Revisor deixa comentários e aprova ou solicita mudanças <br> 5. Autor corrige e atualiza PR (se necessário) <br> 6. Após aprovação, PR é mergeado <br> 7. Código é testado em staging/homologação |
+| **T2: Tratamento (Revisão Automatizada SonarQube)** | PR passa por análise estática automática; aprovação baseada em quality gate da ferramenta | 1. Desenvolvedor abre PR no GitHub <br> 2. GitHub Actions dispara análise SonarQube automaticamente <br> 3. Relatório é gerado com issues identificadas <br> 4. Autor analisa relatório e corrige problemas críticos <br> 5. PR é atualizado; nova análise é executada <br> 6. Quality gate aprovado → PR é mergeado <br> 7. Código é testado em staging/homologação |
+
+**Diferenciação entre tratamentos:**
+
+| Aspecto | T1 (Manual) | T2 (Automatizado) |
+|---|---|---|
+| **Revisor** | Humano | Ferramenta (SonarQube) |
+| **Critérios de aprovação** | Subjetivos + checklist | Objetivos (quality gate) |
+| **Tempo de resposta** | Variável (depende de disponibilidade) | Imediato (CI/CD) |
+| **Tipo de problemas detectados** | Lógica, contexto, design | Padrões, estrutura, métricas |
+| **Feedback** | Comentários textuais no GitHub | Relatório estruturado com categorias |
+
+---
+
+### 8.5 Variáveis dependentes (respostas)
+
+| ID | Nome da Variável | Descrição | Unidade de Medida | Forma de Coleta | Métrica Associada |
+|---|---|---|---|---|---|
+| **VD1** | **Densidade de Defeitos Pós-Entrega** | Número de defeitos encontrados em staging/homologação após o merge do PR, normalizados por 1.000 linhas de código | defeitos/KLOC | Rastreamento de issues no GitHub + análise de logs de testes | M1 |
+| **VD2** | **Taxa de Defeitos Críticos** | Percentual de defeitos com severidade crítica ou alta em relação ao total de defeitos encontrados | % | Classificação manual de severidade nos issues reportados | M2 |
+| **VD3** | **Defeitos Pós-Entrega (Absoluto)** | Número absoluto de defeitos identificados após merge (sem normalização) | quantidade | Contagem de issues criados após merge do PR | M3 |
+| **VD4** | **Vulnerabilidades Detectadas** | Número total de vulnerabilidades de segurança identificadas durante a revisão (manual ou automatizada) | quantidade | Comentários de revisão manual + relatório SonarQube (Security Hotspots) | M6 |
+| **VD5** | **Complexidade Ciclomática Média** | Média da complexidade ciclomática das funções/métodos no código do PR | índice | Relatório SonarQube (Complexity metrics) | M8 |
+| **VD6** | **Duplicação de Código** | Percentual de linhas duplicadas identificadas no PR | % | Relatório SonarQube (Duplication metrics) | M9 |
+| **VD7** | **Tempo de Revisão** | Tempo total gasto desde a abertura do PR até a aprovação final | minutos | Diferença entre timestamps (PR opened → approved) no GitHub API | M10 |
+| **VD8** | **Ciclos de Retrabalho** | Número de iterações (pushes após comentários) necessárias antes da aprovação | quantidade | Contagem de commits após primeira revisão | M11 |
+| **VD9** | **Número de Comentários** | Quantidade total de comentários deixados durante a revisão (manual) ou issues flagadas (automatizada) | quantidade | GitHub PR comments API + SonarQube issues count | M12 |
+| **VD10** | **Satisfação Percebida** | Avaliação subjetiva dos desenvolvedores sobre a utilidade do método de revisão | escala Likert (1-5) | Questionário pós-experimento | M13 |
+| **VD11** | **Confiança no Método** | Grau de confiança dos desenvolvedores na capacidade do método de identificar problemas | escala Likert (1-5) | Questionário pós-experimento | M14 |
+| **VD12** | **True Positive Rate** | Percentual de problemas identificados na revisão que correspondem a defeitos reais validados em testes | % | Validação cruzada: issues revisão vs. defeitos em staging | M5 |
+
+#### Variáveis Dependentes Primárias (Principal Analysis)
+
+As seguintes variáveis serão o **foco principal** da análise estatística para teste de hipóteses:
+
+1. **VD1 (Densidade de Defeitos Pós-Entrega)** — métrica primária para H₀/H₁
+2. **VD2 (Taxa de Defeitos Críticos)** — complementa análise de qualidade
+3. **VD7 (Tempo de Revisão)** — eficiência do processo
+
+#### Variáveis Dependentes Secundárias (Exploratory Analysis)
+
+Variáveis complementares para análise exploratória e discussão qualitativa:
+
+- VD4, VD5, VD6 — caracterização de problemas detectados
+- VD8, VD9 — dinâmica do processo de revisão
+- VD10, VD11 — percepção e aceitação dos métodos
+- VD12 — validação da qualidade da detecção
+
+---
+
+### 8.6 Variáveis de controle / bloqueio
+
+Variáveis que serão **mantidas constantes** ou usadas para **formação de blocos** a fim de reduzir variabilidade não relacionada ao tratamento:
+
+| ID | Nome da Variável | Descrição | Estratégia de Controle | Justificativa |
+|---|---|---|---|---|
+| **VC1** | **Tamanho do PR (LOC)** | Número de linhas de código modificadas no PR | **Bloqueio:** PRs serão agrupados em 3 blocos por tamanho (pequeno: 50-150 LOC; médio: 151-300 LOC; grande: 301-500 LOC). Alocação balanceada entre tratamentos dentro de cada bloco. | Tamanho influencia tempo de revisão e probabilidade de defeitos |
+| **VC2** | **Complexidade da Feature** | Nível de complexidade da funcionalidade implementada (simples/média/complexa) | **Bloqueio:** Features classificadas em 3 níveis; distribuição equilibrada entre T1 e T2 | Complexidade afeta densidade de defeitos independentemente do método de revisão |
+| **VC3** | **Experiência do Desenvolvedor** | Tempo de experiência com Java (em meses) | **Controle:** Rodízio de autores entre tratamentos; cada desenvolvedor contribui com PRs em ambos os grupos | Desenvolvedores mais experientes tendem a produzir menos defeitos |
+| **VC4** | **Configuração do SonarQube** | Regras e quality gate utilizados | **Controle:** Configuração padrão do SonarQube mantida constante durante todo o experimento | Variações nas regras distorceriam comparação |
+| **VC5** | **Checklist de Revisão Manual** | Critérios utilizados na revisão humana | **Controle:** Checklist padronizado fornecido a todos os revisores; treinamento inicial | Padronização garante comparabilidade entre revisores |
+| **VC6** | **Ambiente de Testes** | Infraestrutura de staging/homologação | **Controle:** Mesmo ambiente usado para todos os PRs; configuração fixa | Diferenças de ambiente podem mascarar ou criar defeitos artificialmente |
+| **VC7** | **Sprint / Período Temporal** | Momento em que o PR é desenvolvido | **Bloqueio:** Análise estratificada por sprint; efeitos de aprendizagem controlados | Equipe pode melhorar ao longo do tempo (maturação) |
+| **VC8** | **Tipo de Funcionalidade** | Categoria da feature (CRUD, API REST, regra de negócio, etc.) | **Bloqueio:** Tipos funcionais balanceados entre tratamentos | Diferentes tipos têm perfis de risco distintos |
+
+---
+
+### 8.7 Possíveis variáveis de confusão conhecidas
+
+Fatores que podem distorcer os resultados e que serão **monitorados** e/ou **mitigados**:
+
+| ID | Variável de Confusão | Descrição do Risco | Impacto Potencial | Estratégia de Mitigação | Monitoramento |
+|---|---|---|---|---|---|
+| **CF1** | **Efeito Hawthorne** | Participantes alteram comportamento por saberem que estão sendo observados | Desenvolvedores podem caprichar mais na qualidade do código, reduzindo defeitos artificialmente | • Minimizar comunicação sobre métricas durante experimento <br> • Não revelar qual PR está em qual grupo <br> • Coletar dados de forma discreta | Análise retrospectiva de padrões comportamentais |
+| **CF2** | **Aprendizado / Maturação** | Equipe melhora habilidades ao longo do tempo | Defeitos podem diminuir naturalmente com o tempo, independente do tratamento | • Controlar por sprint (VC7) <br> • Alternar tratamentos ao longo do tempo <br> • Análise de tendência temporal | Gráficos de densidade de defeitos por semana |
+| **CF3** | **Familiaridade com SonarQube** | Desenvolvedores aprendem a "burlar" ou ignorar warnings da ferramenta | Reduz efetividade do tratamento T2 ao longo do experimento | • Treinamento inicial sobre importância das regras <br> • Quality gate rígido (não permite merge com issues críticos) <br> • Auditoria aleatória de PRs | Taxa de issues ignorados ou suprimidos |
+| **CF4** | **Viés de Seleção de Tarefas** | Tarefas mais complexas podem ser alocadas desproporcionalmente a um grupo | Grupo com tarefas mais difíceis apresenta mais defeitos por natureza da tarefa | • Randomização da alocação de PRs <br> • Bloqueio por complexidade (VC2) <br> • Registro da complexidade percebida | Verificação de balanceamento pós-alocação |
+| **CF5** | **Diferenças entre Revisores** | Revisores manuais têm estilos e níveis de rigor diferentes | Variabilidade na qualidade da revisão manual (T1) | • Treinamento padronizado <br> • Checklist obrigatório (VC5) <br> • Rodízio de revisores entre PRs <br> • Auditoria de amostra de revisões | Análise de concordância inter-revisor |
+| **CF6** | **Carga de Trabalho Variável** | Desenvolvedores podem estar mais ou menos ocupados em momentos diferentes | Qualidade do código pode cair sob pressão de prazo | • Distribuir PRs uniformemente ao longo das sprints <br> • Monitorar carga de trabalho via retrospectivas | Registro de horas trabalhadas e número de tarefas simultâneas |
+| **CF7** | **Comunicação Informal** | Desenvolvedores discutem código fora do processo oficial de revisão | Feedback informal pode compensar ausência de revisão formal em T2 | • Instruir equipe a documentar todas as discussões no PR <br> • Observação participante em reuniões | Análise de comunicação via Slack/Discord |
+| **CF8** | **Qualidade dos Testes em Staging** | Testes de validação podem variar em rigor | Defeitos podem não ser detectados por testes fracos, não por falha do método de revisão | • Padronizar suíte de testes <br> • Cobertura mínima exigida (80%) <br> • Casos de teste pré-definidos para cada feature | Análise de cobertura de testes por PR |
+| **CF9** | **Falhas Técnicas Temporárias** | SonarQube pode ficar indisponível; CI/CD pode falhar | PRs do grupo T2 podem não receber análise adequada | • Monitoramento de uptime do SonarQube <br> • Política de re-análise em caso de falha <br> • Backup de dados de análise | Logs de falhas técnicas com timestamps |
+| **CF10** | **Motivação / Engajamento Diferencial** | Participantes podem gostar mais de um método que outro | Desenvolvedores podem se esforçar mais em revisões que consideram mais úteis | • Balancear exposição aos dois métodos <br> • Coletar dados de satisfação (VD10, VD11) <br> • Análise de correlação entre satisfação e qualidade | Questionários de motivação durante experimento |
+
+---
+
+## 9. Desenho experimental
+
+### 9.1 Tipo de desenho (completamente randomizado, blocos, fatorial, etc.)
+
+**Desenho escolhido:** **Desenho em Blocos Randomizados (Randomized Block Design)**
+
+**Justificativa:**
+
+O desenho em blocos é apropriado para este experimento porque:
+
+1. **Heterogeneidade conhecida:** Os PRs variam naturalmente em tamanho, complexidade e tipo de funcionalidade. Essa variabilidade pode obscurecer o efeito real do tratamento.
+
+2. **Controle de variáveis de confusão:** Ao agrupar PRs em blocos homogêneos (por tamanho, complexidade, tipo), reduzimos a variância intra-bloco e aumentamos a precisão na detecção de diferenças entre tratamentos.
+
+3. **Tamanho de amostra limitado:** Com ~40-60 PRs esperados, é essencial maximizar o poder estatístico controlando fontes de variação conhecidas.
+
+4. **Comparabilidade:** Garante que ambos os tratamentos (T1 e T2) sejam aplicados a PRs similares, evitando viés de seleção.
+
+**Estrutura do desenho:**
+```
+┌─────────────────────────────────────────────────────────────┐
+│                    População de PRs                          │
+│                  (Todos os PRs do projeto)                   │
+└──────────────────────┬──────────────────────────────────────┘
+                       │
+                       ▼
+         ┌─────────────────────────────┐
+         │  Estratificação em Blocos   │
+         └─────────────┬───────────────┘
+                       │
+        ┌──────────────┼──────────────┐
+        │              │              │
+        ▼              ▼              ▼
+   ┌─────────┐   ┌─────────┐   ┌─────────┐
+   │ Bloco 1 │   │ Bloco 2 │   │ Bloco 3 │
+   │(Pequeno)│   │ (Médio) │   │(Grande) │
+   │50-150   │   │151-300  │   │301-500  │
+   │  LOC    │   │  LOC    │   │  LOC    │
+   └────┬────┘   └────┬────┘   └────┬────┘
+        │             │             │
+        │ Randomização│             │
+        │  dentro do  │             │
+        │    bloco    │             │
+        ▼             ▼             ▼
+   ┌────────┐    ┌────────┐    ┌────────┐
+   │T1  │T2 │    │T1  │T2 │    │T1  │T2 │
+   │(n) │(n)│    │(n) │(n)│    │(n) │(n)│
+   └────────┘    └────────┘    └────────┘
+   
+   Legenda:
+   T1 = Revisão Manual
+   T2 = Revisão Automatizada (SonarQube)
+   n = número aproximadamente igual de PRs por célula
+```
+
+**Critérios de bloqueio:**
+
+| Bloco | Critério Principal | Critério Secundário |
+|---|---|---|
+| **Bloco 1 (Pequeno)** | 50-150 LOC | Complexidade: Simples a Média |
+| **Bloco 2 (Médio)** | 151-300 LOC | Complexidade: Média |
+| **Bloco 3 (Grande)** | 301-500 LOC | Complexidade: Média a Alta |
+
+**Número esperado de unidades por bloco:**
+
+- **Meta:** ~6-10 PRs por célula (tratamento × bloco)
+- **Total esperado:** 36-60 PRs distribuídos em 6 células (3 blocos × 2 tratamentos)
+
+**Modelo estatístico:**
+
+O modelo ANOVA para blocos randomizados será:
+```
+Y_ij = μ + τ_i + β_j + ε_ij
+
+Onde:
+Y_ij = resposta observada (ex: densidade de defeitos)
+μ = média geral
+τ_i = efeito do tratamento i (i = 1,2)
+β_j = efeito do bloco j (j = 1,2,3)
+ε_ij = erro aleatório
+```
+
+---
+
+### 9.2 Randomização e alocação
+
+**Processo de randomização:**
+
+A randomização será realizada **dentro de cada bloco** para garantir balanceamento e reduzir viés.
+
+**Etapas práticas:**
+
+1. **Classificação inicial de PRs:**
+   - No momento da abertura do PR, o pesquisador/facilitador registra:
+     - Número de LOC modificadas (via GitHub API)
+     - Complexidade estimada da feature (via discussão com autor ou análise do título/descrição)
+     - Tipo de funcionalidade (CRUD, API, lógica de negócio, etc.)
+
+2. **Alocação ao bloco:**
+   - PR é alocado ao bloco correspondente baseado no tamanho (LOC)
+   - Bloco 1: 50-150 LOC
+   - Bloco 2: 151-300 LOC
+   - Bloco 3: 301-500 LOC
+
+3. **Randomização do tratamento:**
+   - Dentro de cada bloco, PRs são randomizados para T1 ou T2 usando gerador de números aleatórios
+   - **Ferramenta:** Script Python com `random.choice(['T1', 'T2'])` ou planilha com função `=ALEATÓRIO()`
+   - **Restrição de balanceamento:** Se diferença entre T1 e T2 dentro do bloco exceder 2 PRs, próximo PR é alocado ao grupo menor para forçar equilíbrio
+
+4. **Registro da alocação:**
+   - Tabela mestre mantida em planilha segura:
+```
+     PR_ID | LOC | Complexidade | Bloco | Tratamento | Data_Abertura
+```
+   - Apenas pesquisador tem acesso à alocação completa (cegamento parcial dos participantes)
+
+**Exemplo de código Python para randomização:**
+```python
+import random
+
+def alocar_tratamento(bloco, historico_bloco):
+    """
+    Aloca tratamento garantindo balanceamento dentro do bloco
+    """
+    contagem_t1 = historico_bloco.count('T1')
+    contagem_t2 = historico_bloco.count('T2')
+    
+    # Se diferença > 2, força alocação ao grupo menor
+    if contagem_t1 - contagem_t2 >= 2:
+        return 'T2'
+    elif contagem_t2 - contagem_t1 >= 2:
+        return 'T1'
+    else:
+        return random.choice(['T1', 'T2'])
+
+# Exemplo de uso
+bloco1_historico = []
+for pr in range(10):
+    tratamento = alocar_tratamento('Bloco1', bloco1_historico)
+    bloco1_historico.append(tratamento)
+    print(f"PR {pr+1}: {tratamento}")
+```
+
+**O que será randomizado:**
+
+| Elemento | Randomizado? | Justificativa |
+|---|---|---|
+| **Alocação de PR ao tratamento** | ✅ Sim | Evita viés de seleção; garante comparabilidade |
+| **Ordem de revisão dentro de sprint** | ❌ Não | Não relevante; PRs revisados conforme abertura |
+| **Escolha do revisor manual** | ✅ Sim (rodízio) | Evita viés de revisor específico |
+| **Ordem dos testes em staging** | ❌ Não | Todos testados após merge |
+
+**O que NÃO será randomizado:**
+
+- **Features/tarefas:** Alocação de features aos desenvolvedores segue planejamento normal da sprint (não interferimos no processo de desenvolvimento)
+- **Momento de abertura do PR:** Desenvolvedores abrem PRs naturalmente ao completarem features
+- **Blocos:** PRs são alocados deterministicamente aos blocos baseado em LOC
+
+---
+
+### 9.3 Balanceamento e contrabalanço
+
+**Balanceamento:**
+
+Estratégias para garantir que os grupos (T1 e T2) sejam comparáveis:
+
+1. **Balanceamento de tamanho de amostra:**
+   - **Meta:** N_T1 ≈ N_T2 dentro de cada bloco (diferença máxima de 1-2 PRs)
+   - **Mecanismo:** Randomização com restrição (seção 9.2)
+   - **Verificação:** Contagem periódica (semanal) de PRs por tratamento/bloco
+
+2. **Balanceamento de complexidade:**
+   - PRs complexos distribuídos uniformemente entre T1 e T2
+   - Classificação de complexidade (simples/média/alta) realizada por 2 avaliadores independentes
+   - Se discordância, consenso via discussão
+
+3. **Balanceamento de autores:**
+   - Cada desenvolvedor contribui com PRs em **ambos** os tratamentos
+   - Rodízio forçado: se desenvolvedor X já tem 3 PRs em T1, próximo PR dele é alocado a T2
+   - **Tabela de rastreamento:**
+ Desenvolvedor | PRs_T1 | PRs_T2 | Diferença
+ Dev_A         |   3    |   2    |    +1
+ Dev_B         |   2    |   3    |    -1
+
+4. **Balanceamento temporal:**
+   - Ambos os tratamentos aplicados em todas as sprints (não concentrar T1 no início e T2 no final)
+   - Alternância entre sprints se possível
+
+**Contrabalanço (para controlar efeitos de ordem/aprendizagem):**
+
+Embora o desenho não seja crossover (cada PR recebe apenas 1 tratamento), aplicamos contrabalanço para outros fatores:
+
+1. **Ordem de exposição dos desenvolvedores aos tratamentos:**
+   - **Problema:** Desenvolvedores podem aprender com SonarQube e depois escrever código melhor na revisão manual
+   - **Solução:** Alternar ordem de exposição:
+     - Metade dos desenvolvedores inicia com T1 (manual), depois T2 (automatizado)
+     - Outra metade inicia com T2, depois T1
+   
+2. **Sequência de revisores manuais:**
+   - **Problema:** Mesmo revisor pode ficar mais rigoroso ou relaxado ao longo do tempo
+   - **Solução:** Rodízio sistemático de revisores em T1; cada revisor atua em PRs de diferentes blocos e sprints
+
+3. **Ordem de testes em staging:**
+   - **Problema:** Testadores podem ficar mais atentos após encontrar defeitos
+   - **Solução:** Aleatorizar ordem de teste dos PRs em staging (não testar todos T1 primeiro, depois T2)
+
+**Verificação de balanceamento:**
+
+Análise pré-experimento (após coleta mas antes da análise estatística):
+
+| Fator | Teste de Balanceamento | Critério de Aceitação |
+|---|---|---|
+| **Tamanho (LOC)** | Teste t: média LOC_T1 vs. LOC_T2 | p > 0.05 (não significativo) |
+| **Complexidade** | Teste χ²: distribuição de complexidade | p > 0.05 |
+| **Autores** | Teste χ²: distribuição de PRs por desenvolvedor | p > 0.05 |
+| **Sprints** | Teste χ²: distribuição temporal | p > 0.05 |
+
+Se balanceamento falhar (p < 0.05), usar **covariáveis** na análise estatística (ANCOVA) para ajustar diferenças.
+
+---
+### 9.4 Número de grupos e sessões
+
+**Número de grupos experimentais:**
+
+- **2 grupos de tratamento:**
+  - Grupo 1 (T1): Revisão Manual
+  - Grupo 2 (T2): Revisão Automatizada (SonarQube)
+
+- **3 blocos** (por tamanho de PR):
+  - Bloco 1: Pequeno (50-150 LOC)
+  - Bloco 2: Médio (151-300 LOC)
+  - Bloco 3: Grande (301-500 LOC)
+
+- **Total de células experimentais:** 2 tratamentos × 3 blocos = **6 células**
+
+**Distribuição esperada de PRs:**
+
+| Bloco | T1 (Manual) | T2 (SonarQube) | Total por Bloco |
+|---|---|---|---|
+|Bloco 1 (Pequeno) | 6-10 PRs | 6-10 PRs | 12-20 PRs |
+| Bloco 2 (Médio) | 6-10 PRs | 6-10 PRs | 12-20 PRs |
+| Bloco 3 (Grande) | 6-10 PRs | 6-10 PRs | 12-20 PRs |
+| Total | 18-30 PRs | 18-30 PRs | 36-60 PRs |
+
+**Número de "sessões" (sprints):**
+
+- **Duração:** 3-4 sprints de 2 semanas cada
+- **Total:** 6-8 semanas de coleta de dados
+- **PRs por sprint (estimativa):** 9-15 PRs (3-5 PRs por sprint × 2 tratamentos)
+
+**Participação dos sujeitos:**
+
+- **Cada desenvolvedor:**
+  - Atua como **autor** de PRs em ambos os tratamentos (exposição balanceada)
+  - Atua como **revisor manual** em PRs do grupo T1 (rodízio)
+  - Interage com **relatórios SonarQube** em seus próprios PRs do grupo T2
+
+- **Exposição esperada por desenvolvedor (assumindo 6 participantes):**
+  - Autoria: 6-10 PRs ao longo do experimento (mix T1/T2)
+  - Revisão manual: 3-5 PRs de outros autores (apenas T1)
+  - Total de interações: ~9-15 PRs
+
+**Justificativa do tamanho de amostra:**
+
+| Aspecto | Valor | Justificativa |
+|---|---|---|
+| **N total esperado** | 36-60 PRs | Viável em 6-8 semanas; equipe de 6 pessoas produz ~1.5 PRs/semana/pessoa |
+| **N por tratamento** | 18-30 PRs | Suficiente para teste t com poder moderado (0.60-0.70) para efeito médio (d=0.5) |
+| **N por célula (bloco×tratamento)** | 6-10 PRs | Permite ANOVA de blocos; reduz risco de células vazias |
+| **Poder estatístico** | ~0.60-0.70 | Abaixo do ideal (0.80), mas aceitável para estudo exploratório em contexto acadêmico |
+
+**Considerações sobre viabilidade:**
+
+- **Mínimo aceitável:** 30 PRs totais (15 por tratamento) para análise válida
+- **Meta ideal:** 50+ PRs totais (25+ por tratamento) para poder adequado
+- **Contingência:** Se N < 30 ao final da coleta, estender período experimental em 2 semanas ou reduzir escopo de análise (focar em análise descritiva + tamanho de efeito)
+
+---
+
+
 
