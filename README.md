@@ -10,11 +10,12 @@ Comparação entre revisão de código manual (peer review) e revisão automatiz
 EXP-SE-001
 
 ### 1.3 Versão do documento e histórico de revisão
-- **Versão atual:** v2.0  
+- **Versão atual:** v3.0  
 - **Histórico:**  
   - v1.0 — criação inicial do documento, contendo escopo e fundamentos teóricos.
   - v2.0 — expansão com objetivos específicos, GQM, stakeholders e riscos.
   - v3.0 — modelo conceitual e hipóteses; variáveis, fatores, tratamentos e objetos de estudo; desenho experimental
+  - v3.1 — ajustes de precisão nas métricas e operacionalização de critérios.
 
 ### 1.4 Datas (criação, última atualização)
 - **Data de criação:** 23/11/2025  
@@ -471,10 +472,11 @@ Os objetos de estudo neste experimento são **Pull Requests (PRs)** contendo imp
 - **Repositório:** Código versionado no GitHub com histórico completo de commits, comentários e iterações
 
 **Critérios de inclusão:**
-- PRs que implementam novas funcionalidades ou correções significativas (não refatorações triviais)
-- PRs com pelo menos 50 LOC modificadas
+- PRs que modificam **lógica de negócio, REST APIs ou funcionalidades** (não apenas refatorações de estilo, formatting ou comentários)
+- PRs com pelo menos 50 LOC modificadas em **código-fonte** (excluso testes automaticamente gerados)
 - PRs abertos após o início oficial do experimento
 - PRs que passam por todo o fluxo de revisão (abertura → revisão → aprovação/rejeição → merge/retrabalho)
+- PRs com descrição clara da funcionalidade no título ou descrição
 
 **Critérios de exclusão:**
 - PRs puramente de documentação (README, comentários)
@@ -570,6 +572,8 @@ Os objetos de estudo neste experimento são **Pull Requests (PRs)** contendo imp
 | **VD10** | **Satisfação Percebida** | Avaliação subjetiva dos desenvolvedores sobre a utilidade do método de revisão | escala Likert (1-5) | Questionário pós-experimento | M13 |
 | **VD11** | **Confiança no Método** | Grau de confiança dos desenvolvedores na capacidade do método de identificar problemas | escala Likert (1-5) | Questionário pós-experimento | M14 |
 | **VD12** | **True Positive Rate** | Percentual de problemas identificados na revisão que correspondem a defeitos reais validados em testes | % | Validação cruzada: issues revisão vs. defeitos em staging | M5 |
+| **VD13** | **Severity Distribution** | Distribuição de defeitos pós-entrega por nível de severidade (crítico, alto, médio, baixo) | % por severidade | Classificação manual dos issues reportados | M4 |
+| **VD14** | **Feedback Qualitativo** | Temas, insights e observações coletadas em entrevistas/questionários abertos | texto/temas codificadas | Transcrições de entrevistas semi-estruturadas | M16 |
 
 #### Variáveis Dependentes Primárias (Principal Analysis)
 
@@ -587,6 +591,7 @@ Variáveis complementares para análise exploratória e discussão qualitativa:
 - VD8, VD9 — dinâmica do processo de revisão
 - VD10, VD11 — percepção e aceitação dos métodos
 - VD12 — validação da qualidade da detecção
+- VD13, VD14 — análise detalhada de severidade e feedback qualitativo
 
 ---
 
@@ -683,11 +688,11 @@ O desenho em blocos é apropriado para este experimento porque:
 
 **Critérios de bloqueio:**
 
-| Bloco | Critério Principal | Critério Secundário |
-|---|---|---|
-| **Bloco 1 (Pequeno)** | 50-150 LOC | Complexidade: Simples a Média |
-| **Bloco 2 (Médio)** | 151-300 LOC | Complexidade: Média |
-| **Bloco 3 (Grande)** | 301-500 LOC | Complexidade: Média a Alta |
+| Bloco | Critério Principal | Critério Secundário | Justificativa |
+|---|---|---|---|
+| **Bloco 1 (Pequeno)** | 50-150 LOC | Complexidade: Simples a Média | PRs menores com escopo reduzido |
+| **Bloco 2 (Médio)** | 151-300 LOC | Complexidade: Média | PRs de tamanho moderado, escopo padrão |
+| **Bloco 3 (Grande)** | 301-500 LOC | Complexidade: Média a Alta | PRs maiores com múltiplas componentes ou lógica complexa |
 
 **Número esperado de unidades por bloco:**
 
