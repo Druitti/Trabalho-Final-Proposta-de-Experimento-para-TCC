@@ -10,16 +10,18 @@ Comparação entre revisão de código manual (peer review) e revisão automatiz
 EXP-SE-001
 
 ### 1.3 Versão do documento e histórico de revisão
-- **Versão atual:** v3.0  
+- **Versão atual:** v4.0  
 - **Histórico:**  
   - v1.0 — criação inicial do documento, contendo escopo e fundamentos teóricos.
   - v2.0 — expansão com objetivos específicos, GQM, stakeholders e riscos.
   - v3.0 — modelo conceitual e hipóteses; variáveis, fatores, tratamentos e objetos de estudo; desenho experimental
   - v3.1 — ajustes de precisão nas métricas e operacionalização de critérios.
+  - v4.0 - População, sujeitos e amostragem; Instrumentação e protocolo operacional; Plano de análise de dados (pré-execução) + Avaliação de validade (ameaças e mitigação)
+
 
 ### 1.4 Datas (criação, última atualização)
 - **Data de criação:** 23/11/2025  
-- **Última atualização:** 25/11/2025
+- **Última atualização:** 01/12/2025
 
 ### 1.5 Autores (nome, área, contato)
 - **Autor:** [Gabriel Ferreira Amaral] — Engenharia de Software — gabriel.afa@outlook.com
@@ -909,6 +911,957 @@ Se balanceamento falhar (p < 0.05), usar **covariáveis** na análise estatísti
 - **Contingência:** Se N < 30 ao final da coleta, estender período experimental em 2 semanas ou reduzir escopo de análise (focar em análise descritiva + tamanho de efeito)
 
 ---
+## 10. População, sujeitos e amostragem
+
+### 10.1 População-alvo
+
+A **população-alvo** deste experimento é definida como:
+
+> Desenvolvedores que trabalham com **Java e Spring Boot**, atuando em **equipes pequenas/médias (4-6 pessoas)** de desenvolvimento de software, em contextos acadêmicos ou industriais, que realizam revisão de código como prática de garantia de qualidade.
+
+**Critérios de caracterização da população:**
+
+| Critério | Definição |
+|---|---|
+| **Tecnologia principal** | Java 17+ com Spring Boot 3.x |
+| **Tamanho de equipe** | 4-6 desenvolvedores (equipes pequenas/médias) |
+| **Contexto** | Acadêmico (prioridade) ou industrial pequeno/médio |
+| **Prática de desenvolvimento** | Uso de Git, GitHub, PRs e code review como rotina |
+| **Experiência mínima** | 6+ meses com Java; pelo menos 1 projeto em Spring Boot |
+| **Engajamento** | Participação voluntária em práticas de qualidade de software |
+
+**Justificativa da população:**
+
+- Alinhada com **objetivo O1-O4** de comparar métodos de revisão
+- Representa contexto real onde ambas as práticas (manual + automatizada) são aplicáveis
+- Amostra homogênea reduz variabilidade não relacionada ao tratamento
+
+---
+
+### 10.2 Critérios de inclusão de sujeitos
+
+Um participante é **elegível** se atender a TODOS os critérios abaixo:
+
+| Critério | Descrição | Verificação |
+|---|---|---|
+| **C1: Matriculado na disciplina** | Aluno regularmente matriculado em Engenharia de Software ou disciplina equivalente | Lista oficial da instituição |
+| **C2: Experiência com Java** | Mínimo 6 meses de experiência prática com Java (documentado em CV ou projeto anterior) | Entrevista / verificação de projetos anteriores |
+| **C3: Experiência com Git/GitHub** | Capacidade de criar branches, fazer commits, abrir PRs e fazer code review básico | Teste prático ou portfolio de commits no GitHub |
+| **C4: Disponibilidade de tempo** | Disponibilidade de 3-4 horas/semana para participar do experimento (desenvolvimento, revisão, coleta de dados) | Assinatura de termo de compromisso; verificação de calendário |
+| **C5: Consentimento informado** | Leitura e assinatura do termo de consentimento (TCLE) explicando objetivos, riscos e benefícios | Documento assinado antes do início |
+| **C6: Ausência de conflitos pedagógicos** | Não está reprovando na disciplina; não tem restrições acadêmicas que impedissem participação | Consulta ao departamento de registros |
+| **C7: Concordância com protocolo** | Compromisso de seguir o protocolo experimental (aplicar métodos de revisão conforme designado) | Termo de concordância verbal/escrito |
+| **C8: Acesso a ferramentas** | Tem acesso a computador com Internet, Git instalado e acesso ao repositório GitHub do projeto | Verificação prévia de acesso |
+
+**Processo de verificação:**
+
+1. **Divulgação:** Comunicação por e-mail e em sala de aula com convite para participar
+2. **Pré-screening:** Questionário inicial (2-3 minutos) via formulário online para verificar C1-C4
+3. **Entrevista/Validação:** Conversa breve (10-15 min) com candidatos pré-selecionados para confirmar critérios
+4. **Assinatura:** Coleta de TCLE e termo de concordância
+5. **Confirmação:** Lista de participantes confirmados 1 semana antes do início
+
+---
+
+### 10.3 Critérios de exclusão de sujeitos
+
+Um participante é **excluído** se apresentar QUALQUER uma das condições abaixo:
+
+| Critério | Descrição | Impacto na Exclusão |
+|---|---|---|
+| **E1: Experiência insuficiente** | Menos de 6 meses de experiência com Java | Risco de não conseguir completar tarefas; viés na qualidade do código |
+| **E2: Indisponibilidade comprovada** | Menos de 3 horas/semana disponíveis durante o período experimental (férias, trabalho externo, conflitos) | Impossibilidade de participar adequadamente; dados incompletos |
+| **E3: Conflito de interesse** | Membro da equipe de suporte técnico/TI que poderia manipular ferramentas; alguém com interesse corporativo em resultado específico | Viés na coleta de dados; comprometimento da integridade científica |
+| **E4: Restrição ética/legal** | Menores de idade sem consentimento de responsável; indivíduos com restrições de privacidade ou legal | Violação de normas éticas; impossibilidade de prosseguir |
+| **E5: Desempenho insuficiente no pré-teste** | Se houver teste técnico inicial e desempenho < 50%, indicando falta de skills críticas | Risco de não compreender protocolo; resultados não válidos |
+| **E6: Desistência durante experimento** | Participante comunica formalmente que deseja sair do estudo | Coleta de dados incompleta; exclusão a posteriori |
+| **E7: Falta de adesão ao protocolo** | Participante não segue protocolo (ex: faz review manual quando deveria usar SonarQube; não registra dados) | Invalidação de dados dessa unidade experimental |
+| **E8: Eventos adversos** | Participante sofre incidente de segurança da informação (hack de conta, vazamento de código) | Impossibilidade de garantir confidencialidade dos dados |
+
+**Processo de exclusão:**
+
+- **Exclusão pré-experimento:** Se critério E1-E5 detectado, participante é informado educadamente e não iniciada coleta de dados
+- **Exclusão mid-experimento:** Se E6-E8 ocorrem, dados do participante até esse ponto são **análisados separadamente** (análise de sensibilidade) ou removidos conforme critério adotado
+- **Comunicação:** Participantes excluídos recebem comunicação clara das razões e garantia de que exclusão não afeta nota/avaliação acadêmica
+
+---
+
+### 10.4 Tamanho da amostra planejado (por grupo)
+
+#### Cálculo do Tamanho de Amostra
+
+**Objetivos da amostragem:**
+
+1. Detectar diferença **estatisticamente significativa** entre T1 e T2 em VD1 (Densidade de Defeitos)
+2. Ter **poder estatístico suficiente** para concluir se H₀ deve ser rejeitada
+3. **Balancear** esforço experimental vs. tamanho da amostra
+
+**Parâmetros estatísticos assumidos:**
+
+| Parâmetro | Valor | Fonte/Justificativa |
+|---|---|---|
+| **Nível de significância (α)** | 0.05 | Padrão em pesquisa; risco de erro Tipo I |
+| **Poder estatístico (1-β)** | 0.80 | Padrão recomendado; β=0.20 (erro Tipo II) |
+| **Tamanho de efeito esperado (d de Cohen)** | 0.5 | Efeito médio; diferenças práticas que esperamos encontrar |
+| **Teste estatístico** | Teste t independente (two-tailed) | Comparação de 2 grupos independentes |
+| **Variância (σ)** | Estimada em ~1.2 defeitos/KLOC | Baseada em literatura; estudos prévios de code review |
+
+**Cálculo (usando fórmula de Cohen para teste t):**
+
+$$n = \frac{2(z_{\alpha/2} + z_\beta)^2 \cdot \sigma^2}{d^2}$$
+
+Onde:
+- $z_{\alpha/2} = 1.96$ (para α=0.05, bilateral)
+- $z_\beta = 0.84$ (para poder=0.80)
+- $d = 0.5$ (tamanho de efeito médio)
+- $\sigma = 1.2$ (desvio padrão estimado)
+
+$$n = \frac{2(1.96 + 0.84)^2 \cdot (1.2)^2}{(0.5)^2} = \frac{2 \cdot 7.84 \cdot 1.44}{0.25} \approx 90$$
+
+**Conclusão do cálculo:** ~90 PRs por grupo (180 no total) seria o tamanho ideal para poder 0.80.
+
+#### Ajustes Práticos e Restrições
+
+**Realidade do projeto:** Não é viável alcançar 90 PRs por grupo em 6-8 semanas com equipe de 6 desenvolvedores.
+
+**Amostra realística planejada:**
+
+| Tratamento | PRs Planejados | Razão |
+|---|---|---|
+| **T1 (Revisão Manual)** | 15-25 PRs | Viável em 6-8 semanas; equipe de 6 gera ~1.5 PR/semana |
+| **T2 (Revisão Automatizada)** | 15-25 PRs | Mesmo ritmo de desenvolvimento |
+| **Total** | 30-50 PRs | Amostra pragmática balanceada |
+
+**Consequências do tamanho reduzido:**
+
+| Aspecto | Impacto |
+|---|---|
+| **Poder estatístico** | ~0.60-0.70 (abaixo do ideal 0.80) |
+| **Intervalo de confiança (IC)** | Mais largo; precisão reduzida |
+| **Tamanho de efeito detectável** | Necessário d ≥ 0.6-0.7 (efeito grande a médio) |
+| **Análise de sensibilidade** | Essencial; reportar junto com p-values |
+
+**Justificativa de aceitabilidade:**
+
+- Tamanho de amostra **reduzido é aceitável** em estudos exploratórios e acadêmicos
+- Poder 0.60-0.70 ainda oferece evidência considerável (não é "sem poder")
+- Resultados serão reportados com **intervalo de confiança, d de Cohen e tamanho de efeito**, não apenas p-value
+- Conclusões serão **conservadoras** ("sugestivo de diferença" vs. "diferença significativa")
+
+---
+
+#### Distribuição de Amostra entre Grupos
+
+**Amostra por tratamento:**
+
+| Tratamento | Célula 1 (Bloco Pequeno) | Célula 2 (Bloco Médio) | Célula 3 (Bloco Grande) | Total |
+|---|---|---|---|---|
+| **T1 (Manual)** | 5-8 PRs | 5-8 PRs | 5-8 PRs | 15-24 PRs |
+| **T2 (SonarQube)** | 5-8 PRs | 5-8 PRs | 5-8 PRs | 15-24 PRs |
+| **Total por bloco** | 10-16 PRs | 10-16 PRs | 10-16 PRs | 30-48 PRs |
+
+**Amostra por desenvolvedor:**
+
+Com 6 desenvolvedores:
+- Cada um contribui com **5-8 PRs** ao longo do experimento (mix T1/T2)
+- Cada um realiza **2-4 revisões manuais** de PRs de colegas (T1 apenas)
+- Total de interações por pessoa: ~7-12 interações
+
+**Meta mínima de sucesso (C1 do critério 6.2):**
+
+- **Mínimo aceitável:** 30 PRs totais (15 por grupo)
+- **Meta ambiciosa:** 40+ PRs totais (20+ por grupo)
+
+---
+
+### 10.5 Método de seleção / recrutamento
+
+#### Estratégia de Recrutamento
+
+**Abordagem:** **Amostragem por Conveniência Estruturada** com seleção de participantes elegíveis
+
+**Racional:** 
+- Contexto acadêmico obriga uso de alunos disponíveis em disciplina específica
+- Não é viável randomização ao nível de participantes (todos precisam participar)
+- Randomização ao nível de PRs/tratamentos garante comparabilidade
+
+**Etapas de recrutamento:**
+
+```
+┌────────────────────────────────────────────────────┐
+│ FASE 1: Divulgação e Convite                        │
+│ • Apresentação do projeto em sala de aula           │
+│ • Distribuição de folder com objetivos e benefícios │
+│ • E-mail com convite formal; link para pré-screening │
+│ Responsável: Professor / Pesquisador                │
+│ Timeline: Semana 1 (2-3 dias)                       │
+└───────────────────┬────────────────────────────────┘
+                    ▼
+┌────────────────────────────────────────────────────┐
+│ FASE 2: Pré-screening (Questionário Online)        │
+│ • Verificação de C1-C4: experiência, disponibilidade│
+│ • Formulário de 3-5 minutos via Google Forms        │
+│ • Perguntas sobre: experiência Java, Git, horas/sem │
+│ Responsável: Pesquisador (análise automática)       │
+│ Timeline: Semana 1 (até dia 5)                      │
+└───────────────────┬────────────────────────────────┘
+                    ▼
+┌────────────────────────────────────────────────────┐
+│ FASE 3: Validação / Entrevista (10-15 min)         │
+│ • Conversa com candidatos pré-selecionados          │
+│ • Confirmação de critérios; avaliação de motivação  │
+│ • Teste técnico rápido (ex: criar PR no GitHub)     │
+│ Responsável: Pesquisador + Professor                │
+│ Timeline: Semana 1 (dias 6-7)                       │
+└───────────────────┬────────────────────────────────┘
+                    ▼
+┌────────────────────────────────────────────────────┐
+│ FASE 4: Consentimento Informado (TCLE)             │
+│ • Fornecimento de Termo de Consentimento Livre     │
+│   e Esclarecido                                     │
+│ • Leitura; resposta a dúvidas                       │
+│ • Assinatura e coleta de termo original             │
+│ Responsável: Pesquisador + Comitê Ética (se req.)  │
+│ Timeline: Semana 1 (fim de semana)                  │
+└───────────────────┬────────────────────────────────┘
+                    ▼
+┌────────────────────────────────────────────────────┐
+│ FASE 5: Confirmação Final e Treinamento             │
+│ • Lista de participantes confirmados                │
+│ • Agendamento de sessão de treinamento              │
+│ • Distribuição de material preparatório (checklist, │
+│   guias de uso de SonarQube, etc.)                  │
+│ Responsável: Pesquisador                            │
+│ Timeline: Semana 2 (segunda)                        │
+└────────────────────────────────────────────────────┘
+```
+
+#### Critérios de Aceitação / Rejeição
+
+| Cenário | Decisão | Ação |
+|---|---|---|
+| **Candidato atende todos C1-C8** | ✅ Aceito | Convite formal; agendamento de treinamento |
+| **Candidato atende C1-C3, C5-C8; C4 questionável** | ⚠️ Aceitação condicional | Conversa sobre disponibilidade; negociação de horários; menção em TCLE |
+| **Candidato falha em C1 ou C2** | ❌ Rejeitado | E-mail educado; explicação de motivo; sugestão de participação futura |
+| **Candidato não completa pré-screening** | ❌ Sem dados | Tentativa de contacto; se sem resposta em 5 dias, considera-se recusa |
+| **Aceitação total < 4 participantes** | 🚫 Go/No-Go | Revisar convite; estender prazo; considerar cancelar se inviável |
+
+---
+
+#### Comunicação com Participantes
+
+**Cronograma de comunicações:**
+
+| Fase | Veículo | Conteúdo | Tempo |
+|---|---|---|---|
+| **Divulgação** | Apresentação em sala + E-mail | "Convite para participar de estudo de code review" | Semana 1, dia 1 |
+| **Pré-screening** | E-mail + Link Google Forms | "Preencha formulário de pré-screening" | Semana 1, dia 2 |
+| **Resultado pré-screening** | E-mail individual | "Você foi pré-selecionado! Agende entrevista." | Semana 1, dia 4 |
+| **TCLE** | E-mail + PDF | "Termo de Consentimento — leia e traga assinado" | Semana 1, dia 6 |
+| **Confirmação** | E-mail + Slack/Teams | "Bem-vindo! Treinamento na próxima segunda." | Semana 1, dia 7 |
+| **Lembretes** | Slack/Teams | Lembretes semanais durante experimento | Semanal |
+| **Feedback** | E-mail + Reunião | Resumo de resultados (mantendo cegamento) | Após experimento |
+
+---
+
+### 10.6 Treinamento e preparação dos sujeitos
+
+#### Objetivos do Treinamento
+
+1. **Equalizar conhecimento:** Todos os participantes entendem protocolo e ferramentas
+2. **Reduzir viés:** Minimizar variação na aplicação dos métodos
+3. **Alinhar expectativas:** Deixar claro que experimento não afeta notas/avaliação
+4. **Competência técnica:** Garantir que todos conseguem usar as ferramentas
+
+#### Módulos de Treinamento
+
+**Módulo 1: Visão Geral do Experimento (30 minutos)**
+
+| Tópico | Conteúdo | Duração |
+|---|---|---|
+| **Objetivos** | Explicar por que estamos comparando revisão manual vs. automatizada | 5 min |
+| **Estrutura** | Desenho experimental, grupos, métricas que serão coletadas | 10 min |
+| **Cronograma** | Timeline de 6-8 semanas; sprints, datas-chave | 5 min |
+| **Confidencialidade** | Segurança dos dados; quem tem acesso; anonimização | 5 min |
+| **Engajamento** | Incentivos; como contribuir de forma igualitária | 5 min |
+
+**Módulo 2: Protocolo de Revisão Manual (45 minutos)**
+
+Conteúdo detalhado em seção 11.3.
+
+| Tópico | Conteúdo | Duração | Material |
+|---|---|---|---|
+| **Checklist de revisão** | Apresentação de critérios de revisão (lógica, legibilidade, segurança, boas práticas) | 15 min | PDF com checklist; exemplos de problemas |
+| **Casos de uso** | 3-4 exemplos de PRs; discussão em grupo de como revisar | 15 min | PRs de exemplo (anterior ou fictício) |
+| **Feedback efetivo** | Como deixar comentários construtivos no GitHub | 10 min | Template de comentário; boas práticas |
+| **Prática hands-on** | Participantes fazem review de PR de treino em tempo real | 5 min | PR de treino preparado; feedback do facilitador |
+
+**Módulo 3: SonarQube e Análise Automatizada (45 minutos)**
+
+| Tópico | Conteúdo | Duração | Material |
+|---|---|---|---|
+| **Tour de SonarQube** | Demonstração de painel, relatórios, quality gate | 15 min | Tela compartilhada; printscreens anotados |
+| **Interpretação de issues** | Explicação de cada categoria (bugs, vulnerabilities, code smells, etc.) | 15 min | Documento com exemplos; referência rápida |
+| **Quality gate** | O que significa passar/falhar; o que fazer se falhar | 10 min | Exemplo de relatório com quality gate falho |
+| **Prática hands-on** | Participantes analisam relatório SonarQube de projeto teste | 5 min | Projeto teste preparado; discussão |
+
+**Módulo 4: Processo GitHub e CI/CD (30 minutos)**
+
+| Tópico | Conteúdo | Duração | Material |
+|---|---|---|---|
+| **Workflow padrão** | Fluxo de criar branch → commit → push → abrir PR → merge | 10 min | Diagrama; reprodução ao vivo |
+| **Alocação de tratamentos** | "Sua próxima PR será revisada por [método]. Eis o que esperar:" | 10 min | Tabela de próximos PRs; roles de cada um |
+| **Registro de dados** | Quais dados serão coletados automaticamente (timestamps, commits, etc.) | 5 min | Planilha de dados (anonimizada) |
+| **Suporte técnico** | Como reportar problemas técnicos (SonarQube down, acesso perdido) | 5 min | Contato de suporte; SLA esperado |
+
+**Módulo 5: Ética, Confidencialidade e Direitos dos Participantes (20 minutos)**
+
+| Tópico | Conteúdo | Duração | Material |
+|---|---|---|---|
+| **Direitos** | Direito de desistir sem penalização; dados serão protegidos | 5 min | Resumo de direitos (em TCLE) |
+| **Confidencialidade** | Como dados serão armazenados, quem pode acessar | 5 min | Política de privacidade do projeto |
+| **Uso dos dados** | Dados usados apenas para pesquisa; será publicado anonimizado | 5 min | Exemplos de relatórios com anonimização |
+| **Contato em caso de dúvida** | Professor, pesquisador, comitê ética | 5 min | Números, e-mails, horários |
+
+#### Cronograma de Treinamento
+
+**Sessão única integrada (3 horas total)**
+
+```
+Semana 2, segunda-feira, 14:00-17:00
+
+14:00-14:30 → Módulo 1: Visão geral
+14:30-15:15 → Módulo 2: Revisão manual + pausa 5 min
+15:20-16:05 → Módulo 3: SonarQube + pausa 5 min
+16:10-16:40 → Módulo 4: GitHub/CI-CD
+16:40-17:00 → Módulo 5: Ética + Q&A
+```
+
+**Alternativa (se presencial problemático):** Gravação assíncrona disponibilizada; sessão ao vivo (30 min) para Q&A
+
+#### Materiais de Suporte
+
+**Documentos a fornecer:**
+
+1. **Checklist de Revisão Manual (PDF/Markdown)**
+   - Versão impressa e digital
+   - Inclui exemplos de cada critério
+
+2. **Quick Reference Guide — SonarQube (1-2 páginas)**
+   - Categorias de issues
+   - Como interpretar cada tipo
+   - Links para documentação completa
+
+3. **Protocolo Experimental (resumido)**
+   - O que fazer em cada fase
+   - O que não fazer
+   - Contato para dúvidas
+
+4. **Vídeo de Tutorial (5-10 min)**
+   - Gravação do treinamento ou compilação de demos
+   - Disponibilizada para revisão posterior
+
+5. **FAQ (Frequently Asked Questions)**
+   - Perguntas comuns sobre protocolo, ferramentas, ética
+   - Atualizado durante experimento conforme surgem dúvidas
+
+#### Validação do Aprendizado
+
+**Pós-treinamento, avaliação breve:**
+
+| Método | Questão | Critério de Sucesso |
+|---|---|---|
+| **Questionário** | "Qual é o objetivo do experimento?" | ≥80% respostas corretas |
+| **Demonstração** | Participante faz review de PR fictício usando checklist | Identifica ≥3/4 problemas plantados |
+| **Interpretação** | Participante explica um issue SonarQube | Explicação correta de bug/vulnerability |
+
+**Se não atingir sucesso:** Fornecimento de reforço de treinamento 1-on-1; adiamento do início até competência confirmada
+
+---
+
+## 11. Instrumentação e protocolo operacional
+
+### 11.1 Instrumentos de coleta (questionários, logs, planilhas, etc.)
+
+#### Instrumentos primários de coleta de dados
+
+| ID | Instrumento | Descrição | Formato | Variáveis Coletadas | Responsável |
+|---|---|---|---|---|---|
+| **I1** | **Planilha de Registro de PRs** | Planilha mestre para tracking de todos os PRs do experimento | Google Sheets | PR_ID, Autor, Data_Abertura, LOC, Bloco, Tratamento, Data_Merge, Status | Pesquisador |
+| **I2** | **Checklist de Revisão Manual** | Formulário padronizado para revisores humanos preencherem durante análise de PRs em T1 | Google Forms | Critérios de qualidade (lógica, segurança, legibilidade), Comentários, Tempo de revisão, Aprovação/Rejeição | Revisor manual |
+| **I3** | **Relatórios SonarQube** | Exports JSON dos relatórios de análise estática para PRs em T2 | JSON (API) | Bugs, Vulnerabilities, Code Smells, Complexity, Duplicação, Coverage | GitHub Actions (automático) |
+| **I4** | **Registro de Defeitos Pós-Entrega** | Template de issue no GitHub para reportar defeitos encontrados em staging/produção | GitHub Issues | Defeito_ID, PR_Origem, Severidade, Categoria, Descrição, Reprodução | Testador |
+| **I5** | **Logs de Tempo de Revisão** | Script que captura timestamps de eventos no GitHub (PR opened, reviewed, approved, merged) | CSV (GitHub API) | PR_ID, Timestamp_Abertura, Timestamp_Primeira_Revisão, Timestamp_Aprovação, Timestamp_Merge | Script automático |
+| **I6** | **Contador de Comentários e Iterações** | Script que conta número de comentários e commits após primeira revisão | CSV (GitHub API) | PR_ID, Num_Comentarios, Num_Commits_Pos_Revisao, Num_Iteracoes | Script automático |
+| **I7** | **Questionário de Satisfação (Pós-Experimento)** | Questionário Likert + perguntas abertas sobre percepção dos métodos de revisão | Google Forms | Satisfação (M13), Confiança (M14), Utilidade percebida, Preferências, Sugestões | Participante |
+| **I8** | **Entrevista Semi-Estruturada** | Roteiro de entrevista qualitativa para aprofundar percepções individuais | Áudio + Transcrição | Feedback qualitativo (M16), Experiências, Desafios, Aprendizados | Pesquisador (entrevistador) |
+| **I9** | **Formulário de Classificação de Complexidade** | Formulário rápido para autor e revisor classificarem complexidade da feature | Google Forms (1 pergunta) | Complexidade percebida (Simples/Média/Alta) | Autor + Revisor |
+| **I10** | **Planilha de Validação (True Positives)** | Planilha para cruzar issues de revisão com defeitos reais encontrados em testes | Google Sheets | Issue_ID, Defeito_Correspondente, Validado (Sim/Não/Parcial) | Pesquisador + QA |
+
+#### Instrumentos secundários (documentação e controle)
+
+| ID | Instrumento | Descrição | Formato | Finalidade |
+|---|---|---|---|---|
+| **I11** | **Termo de Consentimento Livre e Esclarecido (TCLE)** | Documento legal de consentimento dos participantes | PDF assinado | Ética e conformidade |
+| **I12** | **Diário de Campo do Pesquisador** | Notas de observação sobre dinâmica do experimento, incidentes, ajustes | Markdown | Contexto qualitativo; análise de ameaças à validade |
+| **I13** | **Log de Incidentes Técnicos** | Registro de falhas de ferramentas (SonarQube offline, CI/CD falhando) | Google Sheets | Controle de qualidade dos dados |
+| **I14** | **Checklist de Prontidão (Definition of Ready)** | Checklist para verificar se todos os requisitos foram cumpridos antes de iniciar | Checklist (digital) | Governança |
+
+---
+
+### 11.2 Materiais de suporte (instruções, guias)
+
+#### Materiais para participantes
+
+| Material | Descrição | Formato | Público | Momento de Entrega |
+|---|---|---|---|---|
+| **Guia do Participante** | Documento completo com visão geral do experimento, papéis, responsabilidades, cronograma | PDF (10 páginas) | Todos os participantes | Sessão de treinamento |
+| **Checklist de Revisão Manual** | Lista de verificação com critérios padronizados (lógica, segurança, performance, legibilidade, testes) | PDF (2 páginas) | Revisores manuais | Sessão 1 de treinamento |
+| **Guia Rápido do SonarQube** | Tutorial visual de como interpretar relatórios, priorizar issues e corrigir problemas | PDF (4 páginas) + vídeo (5 min) | Autores de PRs em T2 | Sessão 2 de treinamento |
+| **Template de Descrição de PR** | Modelo padrão para descrição de PRs (contexto, mudanças, testes realizados) | Markdown (arquivo no repo) | Autores de PRs | Início do experimento |
+| **Template de Issue de Defeito** | Modelo para reportar defeitos encontrados em staging (passos de reprodução, severidade, screenshots) | Markdown (issue template no GitHub) | Testadores | Início do experimento |
+| **Fluxograma do Protocolo Experimental** | Diagrama visual do fluxo completo desde abertura de PR até coleta de dados (ver seção 11.3) | PDF A3 + PNG | Todos os participantes | Sessão 3 de treinamento |
+| **FAQ do Experimento** | Perguntas frequentes sobre procedimentos, ferramentas, prazos | Markdown (wiki do GitHub) | Todos os participantes | Disponível continuamente |
+| **Glossário de Termos** | Definições de termos técnicos (code smell, technical debt, quality gate, etc.) | PDF (2 páginas) | Todos os participantes | Sessão 2 de treinamento |
+
+#### Materiais para administradores do experimento
+
+| Material | Descrição | Formato | Finalidade |
+|---|---|---|---|
+| **Manual de Operação do Experimento** | Guia completo para o pesquisador executar o experimento (configuração, coleta, troubleshooting) | Markdown (20 páginas) | Referência operacional |
+| **Scripts de Automação** | Coleção de scripts Python/Shell para coletar dados do GitHub API e SonarQube | GitHub repo (`/scripts`) | Automação da coleta |
+| **Protocolo de Randomização** | Documento com algoritmo e registro de alocação de PRs aos tratamentos | Markdown + planilha | Auditoria e transparência |
+| **Checklist de Verificação Semanal** | Lista de tarefas de monitoramento (conferir aderência, resolver bloqueios, atualizar planilhas) | Checklist (Notion/Trello) | Governança operacional |
+| **Roteiro de Entrevista Semi-Estruturada** | Perguntas abertas para explorar percepções dos participantes pós-experimento | Documento Word/PDF | Coleta qualitativa |
+| **Plano de Contingência** | Procedimentos para lidar com cenários de risco (desistências, falhas técnicas, baixa adesão) | Markdown | Gestão de riscos |
+
+---
+
+### 11.3 Procedimento experimental (protocolo – visão passo a passo)
+
+#### Fluxograma do Protocolo Experimental
+
+![Fluxograma do Protocolo Experimental](imagens/fluxograma_protocolo_experimental.png)
+
+
+
+
+## 11.4 Plano de piloto (se haverá piloto, escopo e critérios de ajuste)
+
+### **Realização de piloto**
+
+**Decisão:** Sim, será realizado um piloto limitado antes da operação completa do experimento.
+
+**Justificativa:**  
+O piloto é essencial para:
+
+- Validar a viabilidade operacional do protocolo  
+- Identificar gargalos ou ambiguidades nas instruções  
+- Testar a funcionalidade dos instrumentos de coleta (formulários, scripts)  
+- Calibrar estimativas de tempo e carga de trabalho  
+- Ajustar o treinamento dos participantes baseado em dificuldades reais  
+
+---
+
+### **Escopo do piloto**
+
+| Aspecto | Detalhamento |
+|--------|--------------|
+| **Participantes** | 2–3 desenvolvedores voluntários (preferencialmente não participarão do experimento principal, ou seus dados do piloto serão descartados) |
+| **Duração** | 1 sprint (2 semanas) |
+| **Número de PRs** | 4–6 PRs no total (2–3 por tratamento) |
+| **Cobertura de tratamentos** | Ambos os tratamentos (T1 e T2) |
+| **Cobertura de blocos** | Ao menos 2 blocos (Pequeno e Médio) |
+| **Ferramentas** | GitHub, SonarQube, CI/CD, formulários, scripts |
+| **Coleta completa** | Sim, todos os instrumentos (I1–I10) serão usados |
+
+---
+
+### **Objetivos específicos do piloto**
+
+| Objetivo | Critério de Validação | Método |
+|---------|------------------------|--------|
+| Validar clareza do protocolo | 100% dos participantes conseguem executar tarefas sem assistência | Observação + questionário pós-piloto |
+| Testar instrumentos de coleta | Formulários e scripts funcionam sem erros | Inspeção manual |
+| Verificar integração CI/CD + SonarQube | Pipeline sem falhas; relatório em <10 min | Logs técnicos |
+| Calibrar tempo de revisão | Estimativa dentro de ±30% do observado | Comparação estimado vs. real |
+| Identificar pontos de confusão | Lista de dúvidas dos participantes | Diário do pesquisador |
+| Testar checklist de revisão | Checklist sem ambiguidades | análise de consistência |
+| Validar randomização | PRs alocados corretamente | Auditoria em I1 |
+
+---
+
+### **Critérios de ajuste do protocolo**
+
+| Problema Identificado | Ajuste Permitido | Ajuste Não Permitido |
+|----------------------|------------------|------------------------|
+| Instruções ambíguas | Reescrever materiais | Mudar hipóteses |
+| Checklist extenso | Ajustar itens | Remover segurança |
+| Formulários difíceis | Simplificar perguntas | Remover métricas VD1–VD14 |
+| Bugs em scripts | Corrigir | Alterar fonte dos dados |
+| Tempo muito alto de revisão | Ajustar estimativas | Reduzir rigor |
+| Erros no SonarQube | Ajustar quality gate | Remover tratamento T2 |
+| Confusão sobre papéis | Melhorar treinamento | Alterar desenho experimental |
+| Defeitos não detectados | Reforçar testes | Aceitar ausência como normal |
+| Baixa resposta | Simplificar questionário | Remover qualitativo |
+| Variabilidade alta | Reforçar treinamento | Aceitar inconsistência |
+
+---
+
+### **Decisão Go/No-Go pós-piloto**
+
+| Critério | Go | No-Go |
+|----------|----|--------|
+| Viabilidade técnica | Tudo funciona | Falhas críticas |
+| Clareza do protocolo | ≥80% aderência | <60% aderência |
+| Qualidade dos dados | Completos e consistentes | >20% faltantes |
+| Viabilidade de tempo | Dentro do cronograma | >8 semanas |
+| Engajamento | Boa motivação | Resistência |
+
+**Decisão final:** Se **4/5** critérios forem Go → iniciar experimento.  
+Se não → ajustes + mini-piloto (1 semana).
+
+---
+
+# 12. Plano de análise de dados (pré-execução)
+
+---
+
+## 12.1 Estratégia geral de análise
+
+### **Estrutura da análise**
+
+| Questão | Estratégia | Variáveis | Técnica |
+|--------|------------|-----------|---------|
+| Q1.1 | Comparar densidade de defeitos | VD1, VC1 | t-test / Mann-Whitney / ANOVA |
+| Q1.2 | Comparar defeitos pós-entrega | VD3, VD13 | Wilcoxon / χ² |
+| Q1.3 | Relação entre issues de revisão e defeitos | VD12, VD9 | Correlação Spearman |
+| Q2.1 | Vulnerabilidades identificadas | VD4, M7 | Mann-Whitney |
+| Q2.2 | Complexidade | VD5, VD2 | t-test / correlação |
+| Q2.3 | Duplicação | VD6, VD1 | t-test / regressão |
+| Q3.1 | Tempo de revisão | VD7, LOC | t-test / ANCOVA |
+| Q3.2 | Comentários | VD9 | Mann-Whitney |
+| Q3.3 | Ciclos de retrabalho | VD8 | Mann-Whitney |
+| Q4.1 | Satisfação | VD10, VD14 | Mann-Whitney + qualitativo |
+| Q4.2 | Aceitabilidade | VD11, VD15 | Mann-Whitney |
+| Q4.3 | Aprendizado | VD14 | Codificação temática |
+
+---
+
+### **Fluxo geral de análise**
+
+## Preparação e limpeza
+
+- Preparação e limpeza dos dados  
+- Análise exploratória  
+- Teste de pressupostos  
+- Testes de hipóteses  
+- Tamanho de efeito  
+- Análise qualitativa  
+- Triangulação  
+- Discussão  
+
+---
+
+## 12.2 Métodos estatísticos
+
+### **Testes paramétricos**
+
+| Teste | Aplicação | Condições |
+|-------|-----------|-----------|
+| t-test | VD1, VD2, VD5, VD6, VD7 | Normalidade + homogeneidade |
+| ANOVA | Efeito de tratamento e bloco | Normalidade + balanceamento |
+| ANCOVA | Controlar LOC/experiência | Linearidade |
+| Regressão linear | VD6 → VD1 | Normalidade dos resíduos |
+| Correlação Pearson | VD5 e VD1 | Relação linear |
+
+---
+
+### **Testes não-paramétricos**
+
+| Teste | Aplicação |
+|-------|-----------|
+| Mann-Whitney | Comparação entre grupos |
+| Kruskal-Wallis | Alternativa à ANOVA |
+| Spearman | Correlação ordinal |
+| χ² | Distribuições categóricas |
+| Fisher | n pequeno |
+
+---
+
+### **Tamanho de efeito**
+
+| Medida | Quando usar |
+|--------|-------------|
+| Cohen d | Testes paramétricos |
+| r | Mann-Whitney |
+| η² | ANOVA |
+| V de Cramér | χ² |
+
+---
+
+## 12.3 Dados faltantes e outliers
+
+### **Dados faltantes**
+
+| Cenário | Ação |
+|---------|------|
+| MCAR <5% | Listwise deletion |
+| MCAR 5–10% | Imputação simples |
+| MCAR >10% | Multiple Imputation |
+| MNAR | Sensibilidade |
+| VD1 faltante | Excluir |
+| Covariável faltante | Imputação por regressão |
+
+---
+
+### **Outliers**
+
+| Tipo | Ação |
+|------|------|
+| Legítimo | Incluir + análise de sensibilidade |
+| Erro | Corrigir ou excluir |
+| Influente | Reportar com/sem |
+| Secundário | Winsorizar |
+| >10% no grupo | Investigar processo |
+
+---
+
+## 12.4 Análise qualitativa
+
+### **Fontes**
+
+- Respostas abertas (I7)  
+- Entrevistas (I8)  
+- Comentários de revisão (I2)  
+- Diário de campo (I12)  
+
+---
+
+### **Método: Análise Temática (Braun & Clarke)**
+
+1. Familiarização  
+2. Codificação inicial  
+3. Busca de temas  
+4. Revisão  
+5. Nomeação e definição  
+6. Relatório final  
+
+---
+
+### **Técnicas**
+
+- Contagem de frequência  
+- Co-ocorrência  
+- Comparação entre tratamentos  
+- Análise de sentimento  
+- Word cloud  
+
+---
+
+### **Rigor**
+
+| Critério | Estratégia |
+|----------|------------|
+| Credibilidade | Triangulação, member checking |
+| Transferibilidade | Descrição rica |
+| Confiabilidade | Duplo codificador + Kappa > 0.7 |
+| Confirmabilidade | Audit trail |
+
+---
+
+### **Triangulação**
+
+| Cenário | Interpretação |
+|---------|--------------|
+| Convergência | Mesma direção |
+| Complementaridade | Quali explica quanti |
+| Divergência | Resultados conflitantes |
+| Silêncio | Algo aparece só em um dos tipos |
+
+---
+
+## 13. Avaliação de validade (ameaças e mitigação)
+
+### 13.1 Validade de conclusão
+**Definição:** Validade de conclusão refere-se à robustez das inferências estatísticas sobre relação entre tratamento e resposta. Ameaças comprometem a capacidade de detectar efeitos reais ou levam a conclusões errôneas sobre significância.
+
+## Ameaças identificadas e estratégias de mitigação
+
+### C1 — Baixo poder estatístico
+- **Risco:** Amostra pequena (n=40-60 PRs) reduz poder para detectar diferenças  
+- **Impacto:** Erro Tipo II  
+- **Mitigação:**  
+  - Priorizar detecção de efeitos médios/grandes (d≥0.5)  
+  - Usar testes não-paramétricos  
+  - Reportar tamanho de efeito + IC95%  
+  - Aceitar poder moderado (0.60-0.70) como limitação  
+- **Monitoramento:** Cálculo de poder post-hoc; análise de sensibilidade
+
+### C2 — Violação de pressupostos estatísticos
+- **Risco:** Dados não-normais, variâncias heterogêneas  
+- **Impacto:** p-values incorretos  
+- **Mitigação:**  
+  - Testes Shapiro-Wilk, Levene  
+  - Testes não-paramétricos  
+  - Transformações (log, Box-Cox)  
+  - Reportar paramétrico + não-paramétrico  
+- **Monitoramento:** Verificação de pressupostos e gráficos diagnósticos
+
+### C3 — Confiabilidade de medidas
+- **Risco:** Erro de medição em defeitos e timestamps  
+- **Impacto:** Ruído obscurece sinal real  
+- **Mitigação:**  
+  - Scripts automáticos  
+  - Auditoria manual de 20%  
+  - Protocolos claros  
+- **Monitoramento:** Auditoria e verificação de consistência
+
+### C4 — Pesca de significância (p-hacking)
+- **Mitigação:**  
+  - Hipóteses definidas a priori  
+  - Bonferroni (>5 testes)  
+  - α=0.01 para exploratórios  
+  - Reportar todos os testes  
+- **Monitoramento:** Registro pré-análise
+
+### C5 — Variabilidade da implementação do tratamento
+- **Mitigação:**  
+  - Treinamento padronizado  
+  - Checklist obrigatório  
+  - Configuração SonarQube congelada  
+- **Monitoramento:** Logs semanais, auditoria
+
+### C6 — Heterogeneidade de variância
+- **Mitigação:**  
+  - Teste t de Welch  
+  - Teste de Levene  
+  - Transformações  
+- **Monitoramento:** Análise de resíduos
+
+### C7 — Outliers influentes
+- **Mitigação:**  
+  - Sensibilidade com/sem outliers  
+  - Mediana + Mann-Whitney  
+  - Verificar causa  
+- **Monitoramento:** Boxplots e Cook’s Distance
+
+### C8 — Tamanho de amostra desbalanceado
+- **Mitigação:**  
+  - Randomização com balanceamento  
+  - Monitoramento semanal  
+  - Recrutar suplentes  
+- **Monitoramento:** n_T1 vs n_T2 semanal
+
+---
+
+## 13.2 Validade interna
+**Definição:** Grau em que as diferenças nas variáveis resposta são causadas pelo tratamento, e não por fatores externos.
+
+### I1 — History (eventos externos)
+- **Mitigação:**  
+  - Período curto (6-8 semanas)  
+  - Diário de campo  
+  - Análise estratificada  
+  - Controle de comunicação  
+- **Monitoramento:** Diário + reuniões semanais
+
+### I2 — Maturation
+- **Mitigação:**  
+  - Controlar por sprint  
+  - Alternar tratamentos  
+  - Rodízio de desenvolvedores  
+  - Análise temporal  
+- **Monitoramento:** Gráficos de tendências; ANOVA com fator sprint
+
+### I3 — Testing (Hawthorne)
+- **Mitigação:**  
+  - Coleta discreta  
+  - Não revelar métricas prioritárias  
+  - Cegamento parcial  
+- **Monitoramento:** Comparação com histórico
+
+### I4 — Instrumentation
+- **Mitigação:**  
+  - Checklist congelado  
+  - Treinamento único  
+  - Auditoria  
+  - SonarQube versionado  
+- **Monitoramento:** Auditoria 20%; concordância inter-revisor
+
+### I5 — Selection
+- **Mitigação:**  
+  - Critérios da amostra  
+  - Randomização rigorosa  
+  - Bloqueio por tamanho/complexidade  
+  - Verificação de balanceamento  
+- **Monitoramento:** Testes de balanceamento e tabela descritiva
+
+### I6 — Mortality (atrito)
+- **Mitigação:**  
+  - Recrutar suplentes  
+  - Incentivos  
+  - Análise por intenção de tratar  
+  - Comparar perfil desistentes vs completadores  
+- **Monitoramento:** Registro de atrito
+
+### I7 — Diffusion of treatment
+- **Mitigação:**  
+  - Evitar discussões informais  
+  - Separar revisores por tratamento  
+  - Monitorar comunicação  
+- **Monitoramento:** Logs de comunicação; análise temporal
+
+### I8 — Compensatory rivalry
+- **Mitigação:**  
+  - Não enfatizar competição  
+  - Comunicação neutra  
+  - Cegamento das hipóteses  
+- **Monitoramento:** Questionário pós-experimento
+
+### I9 — Resentful demoralization
+- **Mitigação:**  
+  - Valorizar ambos os métodos  
+  - Explicar que ambos são práticas legítimas  
+  - Coletar satisfação (VD10)  
+- **Monitoramento:** Correlação satisfação-qualidade
+
+### I10 — Local history
+- **Mitigação:**  
+  - Monitoramento de uptime  
+  - Re-análise em caso de falha  
+  - Registro de incidentes  
+- **Monitoramento:** Logs técnicos; análise de sensibilidade
+
+---
+
+## 13.3 Validade de constructo
+
+### CT1 — Inadequação da operacionalização de "qualidade"
+- **Mitigação:**  
+  - Usar múltiplas métricas (VD1, VD5, VD6, severidade)  
+  - Percepção qualitativa  
+  - Justificar foco  
+- **Evidência:** Triangulação + literatura
+
+### CT2 — Mono-operation bias
+- **Mitigação:**  
+  - Usar múltiplas VDs  
+  - Análise multidimensional  
+- **Evidência:** Matriz de correlação
+
+### CT3 — Mono-method bias
+- **Mitigação:**  
+  - Métodos mistos  
+  - Triangulação  
+- **Evidência:** Integração quanti-quali
+
+### CT4 — Ambiguidade de "defeito pós-entrega"
+- **Mitigação:**  
+  - Definição clara  
+  - Validação dupla  
+  - Classificação conjunta  
+- **Evidência:** Kappa + exemplos
+
+### CT5 — Confusão entre “revisão manual” e “completa”
+- **Mitigação:**  
+  - Comunicação neutra  
+  - Treinamento  
+  - Evitar termos valorativos  
+- **Evidência:** Checklist de neutralidade
+
+### CT6 — Validade de face do SonarQube
+- **Mitigação:**  
+  - Treinamento sobre métricas  
+  - Relacionar métricas a defeitos reais  
+  - Usar métricas validadas  
+- **Evidência:** Correlação entre VDs
+
+### CT7 — Reatividade da medição
+- **Mitigação:**  
+  - Coleta automática  
+  - Não revelar métricas prioritárias  
+- **Evidência:** Tendência temporal vs baseline
+
+### CT8 — Constructos confundidos
+- **Mitigação:**  
+  - Decompor tempo de revisão  
+  - Coletar timestamps mais finos  
+  - Análise qualitativa  
+- **Evidência:** Decomposição VD7
+
+---
+
+## 13.4 Validade externa
+
+### E1 — Contexto acadêmico vs industrial
+- **Impacto:** Resultados podem não generalizar  
+- **Generaliza para:** Startups, projetos pequenos  
+- **Não generaliza para:** Corporações, sistemas críticos
+
+### E2 — Tamanho pequeno de equipe
+### E3 — Projeto pequeno/médio (<100 KLOC)
+### E4 — Linguagem específica (Java)
+### E5 — Configuração padrão do SonarQube
+### E6 — Período curto (6–8 semanas)
+### E7 — Falta de pressão real
+### E8 — Tipo de funcionalidades (backend)
+### E9 — Cultura e língua (Brasil)
+### E10 — Momento histórico (2025)
+
+**Discussão de generalização:**
+
+**Pode generalizar:**  
+- Equipes ágeis pequenas  
+- Projetos backend Java/C#  
+- Código novo  
+- Configuração padrão de ferramentas
+
+**Não generaliza:**  
+- Corporações grandes  
+- Sistemas críticos  
+- Linguagens dinâmicas  
+- Sistemas legados massivos  
+- Desenvolvimento frontend
+
+---
+
+## 13.5 Resumo das ameaças principais
+
+### Top 10 ameaças críticas
+1. Baixo poder estatístico (C1) — Alta  
+2. Maturation (I2) — Alta  
+3. Hawthorne/Reatividade (I3, CT7) — Média  
+4. Contexto acadêmico (E1) — Alta  
+5. Ambiguidade de defeito (CT4) — Média  
+6. Variabilidade entre revisores (C5, I4) — Média  
+7. Amostra pequena (E2, E3) — Média  
+8. Contaminação (I7) — Baixa  
+9. Outliers (C7) — Baixa  
+10. Mono-operation bias (CT2) — Baixa
+
+---
+
+## Ações preventivas e corretivas
+
+### Pré-execução
+- Piloto  
+- Treinamento  
+- Definir hipóteses  
+- Ajustar protocolo
+
+### Durante execução
+- Monitoramento semanal  
+- Diário de campo  
+- Auditoria  
+- Re-treinamento se necessário  
+
+### Pós-execução
+- Sensibilidade  
+- Teste de pressupostos  
+- Reportar todos os testes  
+- Ajustar conclusões se necessário
+
 
 
 
