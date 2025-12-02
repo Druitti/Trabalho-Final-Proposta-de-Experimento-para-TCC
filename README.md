@@ -19,6 +19,7 @@ EXP-SE-001
   - v4.0 — População, sujeitos e amostragem; Instrumentação e protocolo operacional; Plano de análise de dados (pré-execução) + Avaliação de validade (ameaças e mitigação)
   - v5.0 — Ética, privacidade e conformidade Recursos, infraestrutura e orçamento Cronograma, marcos e riscos operacionais
   - v5.1 — Atualização dos diagramas para formato Mermaid.js
+  - v5.2 — Remoção de redundâncias em determinadas seções, correção no tópico 8.7 e condensação do tópico 13
 
 
 ### 1.4 Datas (criação, última atualização)
@@ -29,7 +30,7 @@ EXP-SE-001
 - **Autor:** [Gabriel Ferreira Amaral] — Engenharia de Software — gabriel.afa@outlook.com
 
 ### 1.6 Responsável principal (PI / dono do experimento)
-[Gabriel Ferriera Amaral] — responsável pelo direcionamento científico do estudo.
+[Gabriel Ferreira Amaral] — responsável pelo direcionamento científico do estudo.
 
 ### 1.7 Projeto / produto / iniciativa relacionada
 Projeto acadêmico de desenvolvimento de software em Java, vinculado à disciplina de Engenharia de Software e ao Experimento de Trabalho de Conclusão de Curso (TCC).  
@@ -657,14 +658,11 @@ Fatores que podem distorcer os resultados e que serão **monitorados** e/ou **mi
 |---|---|---|---|---|---|
 | **CF1** | **Efeito Hawthorne** | Participantes alteram comportamento por saberem que estão sendo observados | Desenvolvedores podem caprichar mais na qualidade do código, reduzindo defeitos artificialmente | • Minimizar comunicação sobre métricas durante experimento <br> • Não revelar qual PR está em qual grupo <br> • Coletar dados de forma discreta | Análise retrospectiva de padrões comportamentais |
 | **CF2** | **Aprendizado / Maturação** | Equipe melhora habilidades ao longo do tempo | Defeitos podem diminuir naturalmente com o tempo, independente do tratamento | • Controlar por sprint (VC7) <br> • Alternar tratamentos ao longo do tempo <br> • Análise de tendência temporal | Gráficos de densidade de defeitos por semana |
-| **CF3** | **Familiaridade com SonarQube** | Desenvolvedores aprendem a "burlar" ou ignorar warnings da ferramenta | Reduz efetividade do tratamento T2 ao longo do experimento | • Treinamento inicial sobre importância das regras <br> • Quality gate rígido (não permite merge com issues críticos) <br> • Auditoria aleatória de PRs | Taxa de issues ignorados ou suprimidos |
-| **CF4** | **Viés de Seleção de Tarefas** | Tarefas mais complexas podem ser alocadas desproporcionalmente a um grupo | Grupo com tarefas mais difíceis apresenta mais defeitos por natureza da tarefa | • Randomização da alocação de PRs <br> • Bloqueio por complexidade (VC2) <br> • Registro da complexidade percebida | Verificação de balanceamento pós-alocação |
-| **CF5** | **Diferenças entre Revisores** | Revisores manuais têm estilos e níveis de rigor diferentes | Variabilidade na qualidade da revisão manual (T1) | • Treinamento padronizado <br> • Checklist obrigatório (VC5) <br> • Rodízio de revisores entre PRs <br> • Auditoria de amostra de revisões | Análise de concordância inter-revisor |
-| **CF6** | **Carga de Trabalho Variável** | Desenvolvedores podem estar mais ou menos ocupados em momentos diferentes | Qualidade do código pode cair sob pressão de prazo | • Distribuir PRs uniformemente ao longo das sprints <br> • Monitorar carga de trabalho via retrospectivas | Registro de horas trabalhadas e número de tarefas simultâneas |
-| **CF7** | **Comunicação Informal** | Desenvolvedores discutem código fora do processo oficial de revisão | Feedback informal pode compensar ausência de revisão formal em T2 | • Instruir equipe a documentar todas as discussões no PR <br> • Observação participante em reuniões | Análise de comunicação via Slack/Discord |
-| **CF8** | **Qualidade dos Testes em Staging** | Testes de validação podem variar em rigor | Defeitos podem não ser detectados por testes fracos, não por falha do método de revisão | • Padronizar suíte de testes <br> • Cobertura mínima exigida (80%) <br> • Casos de teste pré-definidos para cada feature | Análise de cobertura de testes por PR |
-| **CF9** | **Falhas Técnicas Temporárias** | SonarQube pode ficar indisponível; CI/CD pode falhar | PRs do grupo T2 podem não receber análise adequada | • Monitoramento de uptime do SonarQube <br> • Política de re-análise em caso de falha <br> • Backup de dados de análise | Logs de falhas técnicas com timestamps |
-| **CF10** | **Motivação / Engajamento Diferencial** | Participantes podem gostar mais de um método que outro | Desenvolvedores podem se esforçar mais em revisões que consideram mais úteis | • Balancear exposição aos dois métodos <br> • Coletar dados de satisfação (VD10, VD11) <br> • Análise de correlação entre satisfação e qualidade | Questionários de motivação durante experimento |
+| **CF3** | **Viés de Seleção de Tarefas** | Tarefas mais complexas podem ser alocadas desproporcionalmente a um grupo | Grupo com tarefas mais difíceis apresenta mais defeitos por natureza da tarefa | • Randomização da alocação de PRs <br> • Bloqueio por complexidade (VC2) <br> • Registro da complexidade percebida | Verificação de balanceamento pós-alocação |
+| **CF4** | **Diferenças entre Revisores** | Revisores manuais têm estilos e níveis de rigor diferentes | Variabilidade na qualidade da revisão manual (T1) | • Treinamento padronizado <br> • Checklist obrigatório (VC5) <br> • Rodízio de revisores entre PRs <br> • Auditoria de amostra de revisões | Análise de concordância inter-revisor |
+| **CF5** | **Qualidade dos Testes em Staging** | Testes de validação podem variar em rigor | Defeitos podem não ser detectados por testes fracos, não por falha do método de revisão | • Padronizar suíte de testes <br> • Cobertura mínima exigida (80%) <br> • Casos de teste pré-definidos para cada feature | Análise de cobertura de testes por PR |
+| **CF6** | **Falhas Técnicas Temporárias** | SonarQube pode ficar indisponível; CI/CD pode falhar | PRs do grupo T2 podem não receber análise adequada | • Monitoramento de uptime do SonarQube <br> • Política de re-análise em caso de falha <br> • Backup de dados de análise | Logs de falhas técnicas com timestamps |
+
 
 ---
 
@@ -1006,9 +1004,7 @@ Um participante é **elegível** se atender a TODOS os critérios abaixo:
 | **C3: Experiência com Git/GitHub** | Capacidade de criar branches, fazer commits, abrir PRs e fazer code review básico | Teste prático ou portfolio de commits no GitHub |
 | **C4: Disponibilidade de tempo** | Disponibilidade de 3-4 horas/semana para participar do experimento (desenvolvimento, revisão, coleta de dados) | Assinatura de termo de compromisso; verificação de calendário |
 | **C5: Consentimento informado** | Leitura e assinatura do termo de consentimento (TCLE) explicando objetivos, riscos e benefícios | Documento assinado antes do início |
-| **C6: Ausência de conflitos pedagógicos** | Não está reprovando na disciplina; não tem restrições acadêmicas que impedissem participação | Consulta ao departamento de registros |
-| **C7: Concordância com protocolo** | Compromisso de seguir o protocolo experimental (aplicar métodos de revisão conforme designado) | Termo de concordância verbal/escrito |
-| **C8: Acesso a ferramentas** | Tem acesso a computador com Internet, Git instalado e acesso ao repositório GitHub do projeto | Verificação prévia de acesso |
+| **C6: Acesso a ferramentas** | Tem acesso a computador com Internet, Git instalado e acesso ao repositório GitHub do projeto | Verificação prévia de acesso |
 
 **Processo de verificação:**
 
@@ -1204,22 +1200,6 @@ flowchart LR
 | **Candidato falha em C1 ou C2** | ❌ Rejeitado | E-mail educado; explicação de motivo; sugestão de participação futura |
 | **Candidato não completa pré-screening** | ❌ Sem dados | Tentativa de contacto; se sem resposta em 5 dias, considera-se recusa |
 | **Aceitação total < 4 participantes** | 🚫 Go/No-Go | Revisar convite; estender prazo; considerar cancelar se inviável |
-
----
-
-#### Comunicação com Participantes
-
-**Cronograma de comunicações:**
-
-| Fase | Veículo | Conteúdo | Tempo |
-|---|---|---|---|
-| **Divulgação** | Apresentação em sala + E-mail | "Convite para participar de estudo de code review" | Semana 1, dia 1 |
-| **Pré-screening** | E-mail + Link Google Forms | "Preencha formulário de pré-screening" | Semana 1, dia 2 |
-| **Resultado pré-screening** | E-mail individual | "Você foi pré-selecionado! Agende entrevista." | Semana 1, dia 4 |
-| **TCLE** | E-mail + PDF | "Termo de Consentimento — leia e traga assinado" | Semana 1, dia 6 |
-| **Confirmação** | E-mail + Slack/Teams | "Bem-vindo! Treinamento na próxima segunda." | Semana 1, dia 7 |
-| **Lembretes** | Slack/Teams | Lembretes semanais durante experimento | Semanal |
-| **Feedback** | E-mail + Reunião | Resumo de resultados (mantendo cegamento) | Após experimento |
 
 ---
 
@@ -1484,7 +1464,7 @@ Se não → ajustes + mini-piloto (1 semana).
 
 # 12. Plano de análise de dados (pré-execução)
 
----
+
 
 ## 12.1 Estratégia geral de análise
 
@@ -1714,212 +1694,56 @@ Se não → ajustes + mini-piloto (1 semana).
 
 ---
 
-## 13.2 Validade interna
-**Definição:** Grau em que as diferenças nas variáveis resposta são causadas pelo tratamento, e não por fatores externos.
+### 13.2 Validade interna (causalidade)
 
-### I1 — History (eventos externos)
-- **Mitigação:**  
-  - Período curto (6-8 semanas)  
-  - Diário de campo  
-  - Análise estratificada  
-  - Controle de comunicação  
-- **Monitoramento:** Diário + reuniões semanais
+**Mitigações para 10 ameaças:** História, maturação, Hawthorne, instrumentação, seleção, atrito, contaminação, rivalidade, demoralização, história local.
 
-### I2 — Maturation
-- **Mitigação:**  
-  - Controlar por sprint  
-  - Alternar tratamentos  
-  - Rodízio de desenvolvedores  
-  - Análise temporal  
-- **Monitoramento:** Gráficos de tendências; ANOVA com fator sprint
-
-### I3 — Testing (Hawthorne)
-- **Mitigação:**  
-  - Coleta discreta  
-  - Não revelar métricas prioritárias  
-  - Cegamento parcial  
-- **Monitoramento:** Comparação com histórico
-
-### I4 — Instrumentation
-- **Mitigação:**  
-  - Checklist congelado  
-  - Treinamento único  
-  - Auditoria  
-  - SonarQube versionado  
-- **Monitoramento:** Auditoria 20%; concordância inter-revisor
-
-### I5 — Selection
-- **Mitigação:**  
-  - Critérios da amostra  
-  - Randomização rigorosa  
-  - Bloqueio por tamanho/complexidade  
-  - Verificação de balanceamento  
-- **Monitoramento:** Testes de balanceamento e tabela descritiva
-
-### I6 — Mortality (atrito)
-- **Mitigação:**  
-  - Recrutar suplentes  
-  - Incentivos  
-  - Análise por intenção de tratar  
-  - Comparar perfil desistentes vs completadores  
-- **Monitoramento:** Registro de atrito
-
-### I7 — Diffusion of treatment
-- **Mitigação:**  
-  - Evitar discussões informais  
-  - Separar revisores por tratamento  
-  - Monitorar comunicação  
-- **Monitoramento:** Logs de comunicação; análise temporal
-
-### I8 — Compensatory rivalry
-- **Mitigação:**  
-  - Não enfatizar competição  
-  - Comunicação neutra  
-  - Cegamento das hipóteses  
-- **Monitoramento:** Questionário pós-experimento
-
-### I9 — Resentful demoralization
-- **Mitigação:**  
-  - Valorizar ambos os métodos  
-  - Explicar que ambos são práticas legítimas  
-  - Coletar satisfação (VD10)  
-- **Monitoramento:** Correlação satisfação-qualidade
-
-### I10 — Local history
-- **Mitigação:**  
-  - Monitoramento de uptime  
-  - Re-análise em caso de falha  
-  - Registro de incidentes  
-- **Monitoramento:** Logs técnicos; análise de sensibilidade
+- **Controles:** Período curto (6-8 sem.); análise por sprint; Kappa > 0.7; randomização com bloqueio; suplentes; cegamento parcial; análise temporal
+- **Monitoramento:** Diário de campo; logs semanais; gráficos de tendência; auditoria 20%
 
 ---
 
-## 13.3 Validade de constructo
+### 13.3 Validade de constructo (operacionalização)
 
-### CT1 — Inadequação da operacionalização de "qualidade"
-- **Mitigação:**  
-  - Usar múltiplas métricas (VD1, VD5, VD6, severidade)  
-  - Percepção qualitativa  
-  - Justificar foco  
-- **Evidência:** Triangulação + literatura
+### CT1 — Inadequação
+- **Mitigação:** Múltiplas métricas VDs; Triangulação
 
-### CT2 — Mono-operation bias
-- **Mitigação:**  
-  - Usar múltiplas VDs  
-  - Análise multidimensional  
-- **Evidência:** Matriz de correlação
+### CT2 — Múltiplos métodos
+- **Mitigação:** Quanti + quali integrados
 
-### CT3 — Mono-method bias
-- **Mitigação:**  
-  - Métodos mistos  
-  - Triangulação  
-- **Evidência:** Integração quanti-quali
+### CT4 — Rigor
+- **Mitigação:** Definição clara; Kappa > 0.7; coleta automática
 
-### CT4 — Ambiguidade de "defeito pós-entrega"
-- **Mitigação:**  
-  - Definição clara  
-  - Validação dupla  
-  - Classificação conjunta  
-- **Evidência:** Kappa + exemplos
-
-### CT5 — Confusão entre “revisão manual” e “completa”
-- **Mitigação:**  
-  - Comunicação neutra  
-  - Treinamento  
-  - Evitar termos valorativos  
-- **Evidência:** Checklist de neutralidade
-
-### CT6 — Validade de face do SonarQube
-- **Mitigação:**  
-  - Treinamento sobre métricas  
-  - Relacionar métricas a defeitos reais  
-  - Usar métricas validadas  
-- **Evidência:** Correlação entre VDs
-
-### CT7 — Reatividade da medição
-- **Mitigação:**  
-  - Coleta automática  
-  - Não revelar métricas prioritárias  
-- **Evidência:** Tendência temporal vs baseline
-
-### CT8 — Constructos confundidos
-- **Mitigação:**  
-  - Decompor tempo de revisão  
-  - Coletar timestamps mais finos  
-  - Análise qualitativa  
-- **Evidência:** Decomposição VD7
 
 ---
 
-## 13.4 Validade externa
+### 13.4 Validade externa (generalização)
 
-### E1 — Contexto acadêmico vs industrial
-- **Impacto:** Resultados podem não generalizar  
-- **Generaliza para:** Startups, projetos pequenos  
-- **Não generaliza para:** Corporações, sistemas críticos
+**Limitações da pesquisa:**
+- Contexto acadêmico; não generaliza para corporações
+- Tamanho pequeno; não generaliza para projetos maiores
+- Linguagem Java específica
+- Período curto (6-8 semanas)
+- Sem pressão competitiva real
 
-### E2 — Tamanho pequeno de equipe
-### E3 — Projeto pequeno/médio (<100 KLOC)
-### E4 — Linguagem específica (Java)
-### E5 — Configuração padrão do SonarQube
-### E6 — Período curto (6–8 semanas)
-### E7 — Falta de pressão real
-### E8 — Tipo de funcionalidades (backend)
-### E9 — Cultura e língua (Brasil)
-### E10 — Momento histórico (2025)
-
-**Discussão de generalização:**
-
-**Pode generalizar:**  
-- Equipes ágeis pequenas  
-- Projetos backend Java/C#  
-- Código novo  
-- Configuração padrão de ferramentas
-
-**Não generaliza:**  
-- Corporações grandes  
-- Sistemas críticos  
-- Linguagens dinâmicas  
-- Sistemas legados massivos  
-- Desenvolvimento frontend
+**Pode generalizar para:** Equipes ágeis pequenas, projetos backend Java/C#, código novo
 
 ---
 
-## 13.5 Resumo das ameaças principais
+### 13.5 Resumo executivo: Top 5 ameaças críticas
 
-### Top 10 ameaças críticas
-1. Baixo poder estatístico (C1) — Alta  
-2. Maturation (I2) — Alta  
-3. Hawthorne/Reatividade (I3, CT7) — Média  
-4. Contexto acadêmico (E1) — Alta  
-5. Ambiguidade de defeito (CT4) — Média  
-6. Variabilidade entre revisores (C5, I4) — Média  
-7. Amostra pequena (E2, E3) — Média  
-8. Contaminação (I7) — Baixa  
-9. Outliers (C7) — Baixa  
-10. Mono-operation bias (CT2) — Baixa
+| # | Ameaça | Impacto | Mitigação Primária | Status |
+|---|--------|---------|--------|--------|
+| 1 | **Baixo poder** (n=40-60) | Erro Tipo II | IC95% + d; testes não-param | ✅ Monit. post-hoc |
+| 2 | **Maturação** (progresso dev) | Confusão com trat | Análise por sprint | ✅ Gráficos |
+| 3 | **Reatividade** (Hawthorne) | Comportamento alterado | Coleta automática; cegamento | ✅ Análise temporal |
+| 4 | **Contexto acadêmico** | Impossível generalizar ind | Limites claros na discussão | ⚠️ Amostra diversa |
+| 5 | **Ambiguidade defeito** | Inconsistência class | Definição clara; Kappa > 0.7 | ✅ Validação dupla |
 
----
-
-## Ações preventivas e corretivas
-
-### Pré-execução
-- Piloto  
-- Treinamento  
-- Definir hipóteses  
-- Ajustar protocolo
-
-### Durante execução
-- Monitoramento semanal  
-- Diário de campo  
-- Auditoria  
-- Re-treinamento se necessário  
-
-### Pós-execução
-- Sensibilidade  
-- Teste de pressupostos  
-- Reportar todos os testes  
-- Ajustar conclusões se necessário
+**Plano de mitigação integrado:**
+- **Pré-execução:** Piloto, treinamento, definição de hipóteses, Kappa baseline
+- **Durante:** Monitoramento semanal, diário de campo, auditoria 20%, re-treinamento
+- **Pós:** Análise de sensibilidade, teste pressupostos, discussão de limitações
 
 ---
 
@@ -2464,6 +2288,19 @@ Se não → ajustes + mini-piloto (1 semana).
 | **Início da operação (Sem 0)** | **17/02/2026** |
 | Término da coleta (Sem 8) | 14/04/2026 |
 | Análise completa (Sem 12) | 12/05/2026 |
+
+---
+**Cronograma de comunicações:**
+
+| Fase | Veículo | Conteúdo | Tempo |
+|---|---|---|---|
+| **Divulgação** | Apresentação em sala + E-mail | "Convite para participar de estudo de code review" | Semana 0, dia 0 |
+| **Pré-screening** | E-mail + Link Google Forms | "Preencha formulário de pré-screening" | Semana 0, dia 2 |
+| **Resultado pré-screening** | E-mail individual | "Você foi pré-selecionado! Agende entrevista." | Semana 0, dia 4 |
+| **TCLE** | E-mail + PDF | "Termo de Consentimento — leia e traga assinado" | Semana 0, dia 6 |
+| **Confirmação** | E-mail + Slack/Teams | "Bem-vindo! Treinamento na próxima segunda." | Semana 0, dia 7 |
+| **Lembretes** | Slack/Teams | Lembretes semanais durante experimento | Semanal |
+| **Feedback** | E-mail + Reunião | Resumo de resultados (mantendo cegamento) | Após experimento |
 
 ---
 
