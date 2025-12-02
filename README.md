@@ -16,12 +16,13 @@ EXP-SE-001
   - v2.0 — expansão com objetivos específicos, GQM, stakeholders e riscos.
   - v3.0 — modelo conceitual e hipóteses; variáveis, fatores, tratamentos e objetos de estudo; desenho experimental
   - v3.1 — ajustes de precisão nas métricas e operacionalização de critérios.
-  - v4.0 - População, sujeitos e amostragem; Instrumentação e protocolo operacional; Plano de análise de dados (pré-execução) + Avaliação de validade (ameaças e mitigação)
+  - v4.0 — População, sujeitos e amostragem; Instrumentação e protocolo operacional; Plano de análise de dados (pré-execução) + Avaliação de validade (ameaças e mitigação)
+  - v5.0 — Ética, privacidade e conformidade Recursos, infraestrutura e orçamento Cronograma, marcos e riscos operacionais
 
 
 ### 1.4 Datas (criação, última atualização)
 - **Data de criação:** 23/11/2025  
-- **Última atualização:** 01/12/2025
+- **Última atualização:** 02/12/2025
 
 ### 1.5 Autores (nome, área, contato)
 - **Autor:** [Gabriel Ferreira Amaral] — Engenharia de Software — gabriel.afa@outlook.com
@@ -1861,6 +1862,712 @@ Se não → ajustes + mini-piloto (1 semana).
 - Teste de pressupostos  
 - Reportar todos os testes  
 - Ajustar conclusões se necessário
+
+---
+---
+
+## 14. Ética, privacidade e conformidade
+
+### 14.1 Questões éticas (uso de sujeitos, incentivos, etc.)
+
+**Questões éticas identificadas:**
+
+**Uso de estudantes como sujeitos de pesquisa:**
+- Existe uma relação hierárquica entre pesquisador/professor e estudantes participantes
+- Risco de pressão implícita para participação devido à dinâmica acadêmica
+- Possível conflito entre objetivos didáticos da disciplina e objetivos da pesquisa
+
+**Incentivos:**
+- Não haverá incentivos financeiros ou acadêmicos diretos (pontos extras, etc.)
+- Benefício indireto: aprendizado sobre práticas de qualidade de software e métodos empíricos
+- Certificado de participação em pesquisa (opcional, apenas para currículo)
+
+---
+
+### 14.2 Consentimento informado
+
+**Processo de obtenção de consentimento:**
+
+**Fase 1: Apresentação inicial (Semana 0)**
+- Reunião presencial de 30 minutos para apresentar o estudo
+- Slides explicando objetivos, metodologia, riscos, benefícios e direitos dos participantes
+- Sessão de perguntas e respostas
+- Distribuição do Termo de Consentimento Livre e Esclarecido (TCLE)
+
+**Informações fornecidas no TCLE:**
+1. **Título e objetivo do estudo:** Comparação entre revisão manual e automatizada
+2. **Procedimentos:** O que os participantes farão (desenvolver, revisar, responder questionários)
+3. **Duração:** 6-8 semanas, com estimativa de tempo semanal (4-6 horas)
+4. **Riscos mínimos:** Desconforto ao receber críticas; possível aumento de carga de trabalho
+5. **Benefícios:** Aprendizado sobre qualidade de software; contribuição para conhecimento científico
+6. **Confidencialidade:** Como dados serão anonimizados e protegidos
+7. **Voluntariedade:** Direito de recusar ou desistir sem penalização
+8. **Contatos:** Email e telefone do pesquisador e do comitê de ética
+
+**Fase 2: Período de reflexão (1 semana)**
+- Participantes levam TCLE para casa
+- Podem consultar familiares, outros professores, colegas
+- Prazo de 7 dias para decisão
+
+**Fase 3: Coleta de consentimento (Semana 1)**
+- Assinatura física ou digital do TCLE
+- Coleta realizada por assistente de pesquisa (não pelo professor da disciplina)
+- Duas vias: uma para participante, outra para arquivo da pesquisa
+- Consentimento registrado em planilha segura (acesso restrito)
+
+**Formato do consentimento:**
+- Documento de 2-3 páginas em linguagem clara e acessível (evitar jargões)
+- Checkbox para cada item lido e compreendido
+- Espaço para perguntas adicionais antes da assinatura
+- Versão digital com timestamp para rastreabilidade
+
+**Reafirmação de consentimento:**
+- Breve lembrete no início de cada sprint sobre direitos dos participantes
+- Possibilidade de retirar consentimento via email a qualquer momento
+
+---
+
+### 14.3 Privacidade e proteção de dados
+
+**Dados pessoais coletados:**
+
+| Tipo de Dado | Informação Específica | Sensibilidade | Necessidade |
+|---|---|---|---|
+| **Identificação** | Nome, matrícula, email | Média | Necessário para rastreamento de PRs e follow-up |
+| **Desempenho acadêmico** | Semestre, disciplinas cursadas | Baixa | Caracterização de experiência |
+| **Código-fonte** | Repositório GitHub (username visível) | Média | Núcleo do experimento |
+| **Métricas de qualidade** | Defeitos, complexidade, tempo de revisão | Média | Variáveis dependentes |
+| **Feedback subjetivo** | Respostas de questionários, entrevistas | Média | Dados qualitativos |
+
+**Estratégias de proteção:**
+
+**Anonimização:**
+- Cada participante receberá um **código único alfanumérico** (ex: P001, P002, ..., P006)
+- Tabela de mapeamento (nome real ↔ código) armazenada separadamente em arquivo criptografado
+- Apenas pesquisador principal terá acesso à tabela de mapeamento
+- Publicações e relatórios usarão exclusivamente códigos anônimos
+
+**Pseudoanonimização de repositórios:**
+- Repositórios serão clonados para ambiente privado de análise
+- Usernames do GitHub serão substituídos por códigos antes da análise
+- Commits e comentários terão autores mascarados
+
+**Controle de acesso:**
+- Dados brutos armazenados em Google Drive com criptografia (2FA ativado)
+- Acesso restrito ao pesquisador principal e orientador
+- Logs de acesso habilitados
+- Compartilhamento com terceiros apenas após anonimização completa
+
+**Retenção de dados:**
+- **Durante o experimento:** Dados completos mantidos em servidor seguro
+- **Pós-experimento:** Dados anonimizados mantidos por 5 anos para auditoria e replicação
+- **Dados identificáveis:** Descartados após 1 ano ou ao final da defesa do TCC (o que ocorrer primeiro)
+- **Exclusão sob demanda:** Participantes podem solicitar exclusão total de seus dados até 30 dias após conclusão da coleta
+
+**Conformidade com LGPD (Lei Geral de Proteção de Dados):**
+- Base legal: Consentimento explícito (Art. 7º, I) e pesquisa científica (Art. 7º, IV)
+- Finalidade específica: Pesquisa acadêmica sobre qualidade de software
+- Minimização: Apenas dados estritamente necessários serão coletados
+- Transparência: Participantes informados sobre todos os dados coletados e seu uso
+
+**Compartilhamento de dados:**
+- Dataset anonimizado pode ser publicado em repositório acadêmico (ex: Zenodo, figshare)
+- Apenas com consentimento explícito adicional dos participantes
+- Código-fonte não será publicado sem permissão
+
+---
+
+### 14.4 Aprovações necessárias (comitê de ética, jurídico, DPO, etc.)
+
+**Órgãos e aprovações requeridas:**
+
+| Órgão | Tipo de Aprovação | Status Atual | Prazo Estimado | Responsável |
+|---|---|---|---|---|
+| **Comitê de Ética em Pesquisa (CEP)** | Protocolo de pesquisa com seres humanos | ⏳ Pendente | 30-60 dias | Pesquisador + Orientador |
+| **Coordenação do Curso** | Autorização para uso de disciplina | ✅ Aprovado | - | Professor da disciplina |
+| **Departamento de TI** | Uso de infraestrutura (servidores, SonarQube) | ⏳ Em análise | 7-14 dias | Pesquisador |
+| **Jurídico da Instituição** | Revisão do TCLE e conformidade LGPD | ⏳ Pendente | 14-21 dias | Setor jurídico |
+| **DPO (Data Protection Officer)** | Validação de medidas de proteção de dados | ⏳ Pendente | 7 dias | Pesquisador + DPO |
+
+**Documentação necessária para CEP:**
+
+1. **Plataforma Brasil:** Cadastro completo do projeto
+2. **Projeto detalhado:** Versão expandida deste documento
+3. **TCLE:** Termo de consentimento revisado
+4. **Folha de rosto:** Assinada pelo diretor da unidade
+5. **Currículo Lattes:** Pesquisador e orientador atualizados
+6. **Instrumentos de coleta:** Questionários, roteiros de entrevista, checklists
+7. **Declaração de infraestrutura:** Confirmação de disponibilidade de recursos
+8. **Cronograma detalhado:** Com previsão de início pós-aprovação
+
+**Processo de submissão ao CEP:**
+
+**Semana -8:** Preparação de documentação
+**Semana -7:** Submissão via Plataforma Brasil
+**Semana -6 a -2:** Análise pelo CEP; possíveis solicitações de ajustes
+**Semana -1:** Aprovação final (estimativa)
+**Semana 0:** Início do recrutamento de participantes
+
+
+---
+
+## 15. Recursos, infraestrutura e orçamento
+
+### 15.1 Recursos humanos e papéis
+
+**Equipe do experimento:**
+
+**1. Pesquisador Principal (Gabriel Ferreira Amaral)**
+- **Responsabilidades:**
+  - Desenho experimental e definição de hipóteses
+  - Coordenação geral do experimento
+  - Coleta e análise de dados
+  - Preparação de instrumentos (questionários, checklists)
+  - Redação de relatórios e publicações
+  - Garantia de conformidade ética
+- **Dedicação:** 10-15 horas/semana durante 8 semanas
+- **Qualificações:** Estudante de TCC em Engenharia de Software; experiência com Java, Git e pesquisa empírica
+
+**2. Orientador Acadêmico (Professor [Danilo Maia])**
+- **Responsabilidades:**
+  - Supervisão metodológica e científica
+  - Revisão de instrumentos e plano de análise
+  - Apoio na interpretação de resultados
+  - Co-autoria em publicações
+  - Mediação de conflitos éticos ou operacionais
+- **Dedicação:** 2-3 horas/semana
+- **Qualificações:** Mestrado em Engenharia de Software; experiência em métodos empíricos
+
+**3. Participantes / Desenvolvedores (4-6 estudantes)**
+- **Responsabilidades:**
+  - Desenvolver features em Java/Spring Boot
+  - Abrir pull requests seguindo protocolo
+  - Realizar revisões manuais (quando designados)
+  - Interagir com SonarQube (quando aplicável)
+  - Responder questionários e participar de entrevistas
+  - Executar testes em staging/homologação
+- **Dedicação:** 4-6 horas/semana (integrado ao trabalho normal da disciplina)
+- **Qualificações:** Conforme critérios de inclusão (seção 10.2)
+
+**4. Assistente de Pesquisa (Opcional)**
+- **Responsabilidades:**
+  - Coleta de consentimento informado
+  - Organização de dados brutos
+  - Suporte técnico em CI/CD e SonarQube
+  - Transcrição de entrevistas
+- **Dedicação:** 3-5 horas/semana
+- **Qualificações:** Estudante de pós-graduação ou graduação avançada com experiência em pesquisa
+- **Status:** Desejável, mas não crítico; pesquisador principal pode assumir essas funções se necessário
+
+**5. Especialista em Estatística (Consultor)**
+- **Responsabilidades:**
+  - Revisão do desenho experimental e cálculo de poder
+  - Consultoria na análise estatística (ANOVA, testes de hipóteses)
+  - Validação de pressupostos e escolha de testes apropriados
+- **Dedicação:** 2-4 horas total (consultorias pontuais)
+- **Qualificações:** Professor ou profissional com expertise em estatística aplicada
+- **Status:** Consulta pontual; não integrado à equipe
+
+**6. Suporte Técnico de TI (Institucional)**
+- **Responsabilidades:**
+  - Configuração e manutenção de servidor SonarQube (se self-hosted)
+  - Suporte em CI/CD (GitHub Actions)
+  - Acesso a ambientes de staging
+  - Backup de dados
+- **Dedicação:** 1-2 horas/semana (sob demanda)
+- **Status:** Dependente de aprovação institucional
+
+**Matriz RACI (Responsável, Aprovador, Consultado, Informado):**
+
+| Atividade | Pesquisador | Orientador | Participantes | Assist. Pesquisa | TI |
+|---|---|---|---|---|---|
+| Desenho experimental | R/A | C | I | - | - |
+| Submissão ao CEP | R | A | - | C | - |
+| Recrutamento | R | C | - | R | - |
+| Coleta de dados | R | I | R | C | - |
+| Revisão de código | I | I | R | - | - |
+| Análise estatística | R/A | C | I | - | - |
+| Infraestrutura técnica | C | I | I | C | R |
+| Publicação | R | A | C | - | - |
+
+---
+
+### 15.2 Infraestrutura técnica necessária
+
+**Repositório e Controle de Versão:**
+- **GitHub (Cloud):**
+  - Repositório privado com acesso controlado
+  - GitHub Actions para CI/CD (quota gratuita: 2.000 minutos/mês)
+  - Proteção de branch `main` (requer aprovação de PR)
+  - Webhooks para integração com SonarQube
+- **Requisitos:** Conta GitHub educacional (gratuita); internet estável
+
+**Análise Estática de Código:**
+- **SonarQube:**
+  - **Opção 1 (preferencial):** SonarCloud (cloud gratuito para projetos open-source/educacionais)
+    - Sem custo; sem manutenção
+    - Integração nativa com GitHub
+    - Limitações: dados armazenados em servidor terceiro
+  - **Opção 2 (alternativa):** SonarQube Community Edition (self-hosted)
+    - Servidor Linux com Docker
+    - Requisitos: 2 vCPUs, 4 GB RAM, 20 GB disco
+    - Vantagem: controle total dos dados
+    - Desvantagem: requer manutenção
+- **Configuração:** Regras padrão (Sonar Way); quality gate padrão
+
+**Integração Contínua (CI/CD):**
+- **GitHub Actions:**
+  - Workflows para:
+    - Build e testes automatizados (Maven/Gradle)
+    - Análise SonarQube (acionada em cada push/PR)
+    - Deploy para staging (opcional)
+  - Secrets gerenciados via GitHub Secrets
+- **Requisitos:** Arquivos `.github/workflows/*.yml` no repositório
+
+**Ambiente de Desenvolvimento:**
+- **Local (máquinas dos participantes):**
+  - JDK 17+
+  - IDE (IntelliJ IDEA Community ou VS Code com extensões Java)
+  - Git CLI
+  - Maven ou Gradle
+- **Padronização:** Dockerfile ou `devcontainer.json` para consistência (opcional)
+
+**Ambiente de Staging/Homologação:**
+- **Servidor de testes:**
+  - **Opção 1:** Heroku (plano gratuito, limitado)
+  - **Opção 2:** Servidor institucional (se disponível)
+  - **Opção 3:** Docker local compartilhado via ngrok/tunelamento
+- **Requisitos:**
+  - Banco de dados de testes (PostgreSQL ou MySQL)
+  - Deploy automatizado via CI/CD
+  - Logs centralizados (ex: Papertrail, Loggly)
+- **Acesso:** URL compartilhada para testes manuais
+
+**Coleta e Armazenamento de Dados:**
+- **Google Drive (criptografado):**
+  - Planilhas para rastreamento de PRs, métricas, alocações
+  - Armazenamento de questionários e transcrições
+  - Backup diário automático
+- **GitHub API:**
+  - Scripts Python para extração de métricas (tempo de revisão, comentários, commits)
+  - Biblioteca: `PyGithub` ou `requests`
+- **SonarQube API:**
+  - Extração de métricas de qualidade (complexidade, duplicação, issues)
+  - Biblioteca: `requests` + autenticação via token
+
+**Ferramentas de Análise:**
+- **Estatística:**
+  - R ou Python (pandas, scipy, statsmodels)
+  - Jupyter Notebooks para análise exploratória
+- **Visualização:**
+  - Matplotlib, Seaborn (Python) ou ggplot2 (R)
+  - Tableau Public (opcional, para gráficos de apresentação)
+
+**Comunicação:**
+- **Slack ou Discord:**
+  - Canal dedicado ao experimento
+  - Comunicação assíncrona entre participantes e pesquisador
+- **Google Meet / Zoom:**
+  - Reuniões semanais de sprint e entrevistas
+- **Email:**
+  - Comunicações formais (consentimento, cronograma)
+
+**Backup e Redundância:**
+- **Dados críticos:**
+  - Backup diário automático do Google Drive para disco externo local
+  - Repositório Git clonado localmente toda semana
+- **Código de análise:**
+  - Versionado em repositório Git separado (privado)
+
+**Checklist de infraestrutura (pré-operação):**
+- [ ] Repositório GitHub criado com permissões configuradas
+- [ ] SonarQube configurado e integrado ao GitHub
+- [ ] GitHub Actions workflows testados e funcionais
+- [ ] Ambiente de staging disponível e acessível
+- [ ] Scripts de coleta de dados desenvolvidos e validados
+- [ ] Google Drive estruturado com pastas e permissões
+- [ ] Canal de comunicação criado e participantes adicionados
+- [ ] Backup automatizado configurado e testado
+
+---
+
+### 15.3 Materiais e insumos
+
+**Materiais digitais (templates e formulários):**
+
+1. **Termo de Consentimento Livre e Esclarecido (TCLE)**
+   - Formato: PDF e Google Forms (assinatura digital)
+   - Versões: 2 vias (participante + arquivo)
+
+2. **Checklist de Revisão Manual**
+   - Formato: Markdown ou PDF
+   - Conteúdo: 15-20 itens categorizados (lógica, segurança, legibilidade, boas práticas)
+   - Distribuição: Anexado a cada PR do grupo T1
+
+3. **Questionário Pós-Experimento**
+   - Formato: Google Forms
+   - Perguntas: ~20 itens (escala Likert + abertas)
+   - Tempo estimado: 10 minutos
+   - Seções: Satisfação, confiança, aprendizado, feedback qualitativo
+
+4. **Roteiro de Entrevista Semi-Estruturada**
+   - Formato: Documento Word/Google Docs
+   - Perguntas: 8-10 questões abertas
+   - Duração: 15-20 minutos por participante
+   - Tópicos: Experiência com os métodos, percepção de qualidade, sugestões de melhoria
+
+5. **Guia de Treinamento (Onboarding)**
+   - Formato: Slide deck (Google Slides ou PowerPoint)
+   - Conteúdo:
+     - Visão geral do experimento (10 slides)
+     - Como usar SonarQube (5 slides)
+     - Protocolo de revisão manual (5 slides)
+     - Fluxo de trabalho esperado (3 slides)
+   - Sessão: 45 minutos presencial ou via videoconferência
+
+6. **Template de Pull Request**
+   - Formato: Markdown (`.github/PULL_REQUEST_TEMPLATE.md`)
+   - Campos: Descrição da feature, checklist de auto-revisão, issues relacionados, tipo de mudança
+
+7. **Planilha de Rastreamento de PRs**
+   - Formato: Google Sheets
+   - Colunas: PR_ID, Autor, Revisor, LOC, Bloco, Tratamento, Data_Abertura, Data_Merge, Defeitos_Encontrados, Tempo_Revisão, etc.
+   - Compartilhamento: Apenas leitura para participantes
+
+8. **Scripts de Coleta de Dados**
+   - Formato: Python (`.py`) ou Jupyter Notebook (`.ipynb`)
+   - Funções:
+     - `coletar_metricas_github(pr_number)` — extrai timestamps, comentários, commits
+     - `coletar_metricas_sonarqube(project_key)` — extrai complexidade, duplicação, issues
+     - `calcular_densidade_defeitos(pr_id)` — normaliza defeitos por LOC
+   - Repositório: GitHub privado separado
+
+9. **Documento de Protocolo Operacional**
+   - Formato: Markdown ou Google Docs
+   - Conteúdo: Passo a passo detalhado do experimento (seção 11.3)
+   - Versão: Impressa e digital
+
+**Materiais físicos (se aplicável):**
+
+- **Impressões:**
+  - TCLE (2 vias por participante) — 12 páginas total
+  - Checklist de revisão manual (1 por participante) — 6 páginas
+  - Guia rápido de SonarQube (1 por participante) — 4 páginas
+- **Total de impressões:** ~22 páginas (custo estimado: R$ 5,00)
+
+**Licenças de software:**
+
+| Software | Licença | Custo | Justificativa |
+|---|---|---|---|
+| **SonarCloud** | Gratuita (educacional) | R$ 0 | Projeto acadêmico; repositório privado |
+| **GitHub** | Gratuita (educacional) | R$ 0 | Conta educacional; uso pessoal |
+| **Google Workspace** | Gratuita (institucional) | R$ 0 | Email institucional fornece acesso |
+| **Heroku** | Gratuita (hobby tier) | R$ 0 | Staging simples; limitações aceitáveis |
+| **JetBrains IntelliJ** | Gratuita (Community) | R$ 0 | IDE padrão; licença open-source |
+| **Microsoft Office** | Institucional | R$ 0 | Licença fornecida pela universidade |
+
+**Dispositivos:**
+
+- **Computadores dos participantes:**
+  - Requisitos mínimos: i5, 8 GB RAM, 50 GB disco livre
+  - Verificação: Checklist pré-experimento
+- **Servidor (se self-hosted SonarQube):**
+  - VM institucional ou instância AWS/GCP (se disponível via créditos educacionais)
+  - Custo estimado: R$ 0 (créditos) ou R$ 50-100/mês (se pago)
+
+**Contingência para indisponibilidade de materiais:**
+- Se SonarCloud não for aprovado: usar SonarQube Community local
+- Se Heroku falhar: usar Docker local + ngrok para staging
+- Se impressões não forem viáveis: distribuir tudo digitalmente
+
+---
+
+### 15.4 Orçamento e custos estimados
+
+**Premissas:**
+- Experimento acadêmico sem financiamento externo
+- Uso de ferramentas gratuitas sempre que possível
+- Infraestrutura institucional aproveitada
+- Trabalho voluntário de participantes (sem remuneração)
+
+**Categorias de custo:**
+
+**1. Recursos Humanos (horas-pessoa):**
+
+| Recurso | Horas/Semana | Semanas | Total Horas | Custo/Hora (referência) | Custo Total |
+|---|---|---|---|---|---|
+| Pesquisador Principal | 12 | 10 | 120 | R$ 0 (voluntário) | R$ 0 |
+| Orientador | 2 | 10 | 20 | R$ 0 (institucional) | R$ 0 |
+| Participantes (6×4h) | 24 | 8 | 192 | R$ 0 (disciplina) | R$ 0 |
+| Assistente de Pesquisa | 3 | 8 | 24 | R$ 0 (voluntário) | R$ 0 |
+| **Total** | - | - | **356** | - | **R$ 0** |
+
+*Nota: Se fossem remunerados (R$ 50/hora em média), custo seria ~R$ 17.800*
+
+**2. Infraestrutura e Serviços:**
+
+| Item | Tipo | Custo Mensal | Meses | Custo Total |
+|---|---|---|---|---|
+| SonarCloud | Gratuito (educacional) | R$ 0 | 2 | R$ 0 |
+| GitHub | Gratuito (educacional) | R$ 0 | 2 | R$ 0 |
+| Heroku (staging) | Gratuito (hobby tier) | R$ 0 | 2 | R$ 0 |
+| Google Drive | Institucional (ilimitado) | R$ 0 | 2 | R$ 0 |
+| Internet (participantes) | Pessoal | R$ 0 (assumido) | 2 | R$ 0 |
+| Servidor institucional | Institucional | R$ 0 | 2 | R$ 0 |
+| **Total** | - | - | - | **R$ 0** |
+
+*Contingência: Se precisar usar serviços pagos (ex: AWS), custo estimado ~R$ 200*
+
+**3. Materiais e Insumos:**
+
+| Item | Quantidade | Custo Unitário | Custo Total |
+|---|---|---|---|
+| Impressões (TCLE, guias) | 22 páginas × 6 participantes | R$ 0,40/pág | R$ 52,80 |
+| Pen drive (backup) | 1 (32 GB) | R$ 30,00 | R$ 30,00 |
+| Certificados de participação | 6 (impressos) | R$ 5,00 | R$ 30,00 |
+| Encadernação (relatório final) | 2 cópias | R$ 15,00 | R$ 30,00 |
+| **Total** | - | - | **R$ 142,80** |
+
+**4. Despesas Eventuais:**
+
+| Item | Descrição | Custo Estimado |
+|---|---|---|
+| Transporte (reuniões presenciais) | 4 deslocamentos × R$ 10 | R$ 40,00 |
+| Café/água (reuniões) | 4 reuniões × R$ 20 | R$ 80,00 |
+| Taxa de submissão ao CEP | (Se aplicável) | R$ 0 (geralmente gratuito) |
+| **Total** | - | **R$ 120,00** |
+
+**Resumo do orçamento:**
+
+| Categoria | Custo |
+|---|---|
+| Recursos Humanos | R$ 0 (voluntário) |
+| Infraestrutura | R$ 0 (gratuito/institucional) |
+| Materiais | R$ 142,80 |
+| Despesas Eventuais | R$ 120,00 |
+| **Total Geral** | **R$ 262,80** |
+
+**Fonte de financiamento:**
+- **Recursos próprios do pesquisador:** R$ 262,80
+- **Contingência adicional:** R$ 200,00 (reserva para imprevistos)
+- **Total disponível:** R$ 462,80
+
+**Sensibilidade de custos:**
+- Se SonarCloud não funcionar e precisar usar AWS: +R$ 200,00
+- Se precisar remunerar assistente de pesquisa: +R$ 1.200,00 (24h × R$ 50/h)
+- Se aumentar número de participantes para 10: +R$ 100,00 (materiais)
+
+
+**Não incluído neste orçamento:**
+- Custos de publicação em conferências/journals (futuro; fora do escopo do TCC)
+- Equipamentos dos participantes (assumidos como já disponíveis)
+- Conexão de internet (custo pessoal/institucional assumido)
+
+---
+
+## 16. Cronograma, marcos e riscos operacionais
+
+### 16.1 Macrocronograma (até o início da execução)
+
+**Cronograma detalhado (fase pré-execução):**
+
+| Semana | Marco Principal | Atividades | Responsável | Entregável | Status |
+|---|---|---|---|---|---|
+| **-12** | Início do planejamento | • Definir escopo e objetivos<br>• Revisar literatura<br>• Esboçar desenho experimental | Pesquisador + Orientador | Esboço inicial do plano | ✅ Concluído |
+| **-11** | Refinamento metodológico | • Definir variáveis e hipóteses<br>• Escolher testes estatísticos<br>• Calcular tamanho de amostra | Pesquisador | Seções 7 e 8 do plano | ✅ Concluído |
+| **-10** | Desenho operacional | • Definir protocolo experimental<br>• Criar instrumentos (questionários, checklist)<br>• Preparar templates | Pesquisador | Seções 9, 10, 11 do plano | ✅ Concluído |
+| **-9** | Finalização do plano | • Revisar plano completo<br>• Validar com orientador<br>• Ajustes finais | Pesquisador + Orientador | **Plano v3.0** | ✅ Concluído |
+| **-8** | Submissão ao CEP | • Preparar documentação CEP<br>• Submeter via Plataforma Brasil<br>• Solicitar aprovações institucionais | Pesquisador | Protocolo submetido | ⏳ A fazer |
+| **-7** | Preparação técnica | • Configurar repositório GitHub<br>• Instalar e configurar SonarQube<br>• Desenvolver scripts de coleta | Pesquisador + TI | Infraestrutura pronta | ⏳ A fazer |
+| **-6** | Aguardar CEP | • Acompanhar análise do CEP<br>• Responder pendências (se houver)<br>• Testar ferramentas | Pesquisador | - | ⏳ A fazer |
+| **-5** | Recrutamento | • Apresentar estudo à turma<br>• Distribuir TCLE<br>• Coletar consentimentos | Pesquisador + Assistente | Lista de participantes | ⏳ A fazer |
+| **-4** | Treinamento | • Sessão de onboarding (2h)<br>• Apresentar SonarQube<br>• Explicar protocolo de revisão | Pesquisador | Participantes treinados | ⏳ A fazer |
+| **-3** | Preparação final | • Revisar instrumentos<br>• Testar CI/CD completo<br>• Criar planilhas de rastreamento | Pesquisador | Checklist de prontidão | ⏳ A fazer |
+| **-2** | Validação pré-piloto | • Validar com orientador<br>• Conferir aprovações<br>• Comunicar cronograma | Pesquisador | **Go/No-Go checkpoint** | ⏳ A fazer |
+| **-1** | **Piloto** | • Executar piloto com 2 PRs<br>• Coletar feedback<br>• Ajustar protocolo se necessário | Todos | Relatório de piloto | ⏳ A fazer |
+| **0** | **Início da execução** | • Sprint 1 começa<br>• Primeiros PRs abertos<br>• Coleta de dados inicia | Todos | Experimento em operação | ⏳ A fazer |
+
+**Marcos críticos (Gates):**
+
+1. **G1 (Semana -9): Plano aprovado** — Orientador valida plano completo
+2. **G2 (Semana -5): CEP aprovado** — Autorização ética obtida
+3. **G3 (Semana -2): Infraestrutura validada** — Todos os sistemas testados e funcionais
+4. **G4 (Semana -1): Piloto bem-sucedido** — Protocolo validado; ajustes finalizados
+5. **G5 (Semana 0): Go final para operação** — Todos os critérios de prontidão atingidos
+
+**Datas estimadas (assumindo início em fevereiro/2026):**
+
+| Marco | Data Estimada |
+|---|---|
+| Início do planejamento (Sem -12) | 25/11/2025 (histórico) |
+| Submissão ao CEP (Sem -8) | 23/12/2025 |
+| Aprovação CEP (Sem -5) | 13/01/2026 |
+| Treinamento de participantes (Sem -4) | 20/01/2026 |
+| Piloto (Sem -1) | 10/02/2026 |
+| **Início da operação (Sem 0)** | **17/02/2026** |
+| Término da coleta (Sem 8) | 14/04/2026 |
+| Análise completa (Sem 12) | 12/05/2026 |
+
+---
+
+### 16.2 Dependências entre atividades
+
+**Mapa de dependências (precedência):**
+```
+┌──────────────────┐
+│ Plano Finalizado │
+└────────┬─────────┘
+│
+▼
+┌─────────────────────┐       ┌────────────────────┐
+│ Submissão ao CEP    ├──────→│ Aprovação          │
+└──────────┬──────────┘       │ Institucional (TI) │
+│                  └────────┬───────────┘
+│                           │
+▼                           ▼
+┌──────────────────────┐     ┌──────────────────────┐
+│ Aprovação CEP        │     │ Infra Técnica Pronta │
+└──────────┬───────────┘     └──────────┬───────────┘
+│                             │
+│         ┌───────────────────┘
+│         │
+▼         ▼
+┌──────────────────────┐
+│ Recrutamento +       │
+│ Consentimento        │
+└──────────┬───────────┘
+│
+▼
+┌──────────────┐
+│ Treinamento  │
+└──────┬───────┘
+│
+▼
+┌─────────────┐
+│ Piloto      │
+└──────┬──────┘
+│
+▼
+┌──────────────────┐
+│ Início Operação  │
+└──────────────────┘
+```
+**Tabela de dependências críticas:**
+
+| Atividade (Dependente) | Depende de | Tipo de Dependência | Folga | Impacto se atrasar |
+|---|---|---|---|---|
+| **Submissão ao CEP** | Plano finalizado | Finish-to-Start (FS) | 0 dias | Atrasa todo cronograma |
+| **Recrutamento** | Aprovação CEP | FS | 0 dias | Não pode iniciar sem aprovação ética |
+| **Treinamento** | Recrutamento + Infra técnica | FS | 3 dias | Pode ser adiantado se infra pronta antes |
+| **Piloto** | Treinamento + Aprovação TI | FS | 0 dias | Piloto inválido sem treinamento |
+| **Início operação** | Piloto + Ajustes + TCLE assinado | FS | 0 dias | Critério de prontidão não atendido |
+| **Configuração SonarQube** | Aprovação TI | FS | 7 dias | Pode ser feito em paralelo com CEP |
+| **Desenvolvimento de scripts** | Infra técnica | FS | 5 dias | Pode iniciar com ambientes de teste |
+| **Ajustes pós-piloto** | Feedback do piloto | FS | 2 dias | Pode ser acelerado se poucos ajustes |
+
+**Atividades paralelas (podem acontecer simultaneamente):**
+
+- Análise do CEP **||** Preparação técnica (configuração de servidores, scripts)
+- Recrutamento **||** Finalização de instrumentos (questionários)
+- Treinamento **||** Testes de integração CI/CD
+
+**Caminho crítico (Critical Path):**
+Plano → CEP → Aprovação CEP → Recrutamento → Treinamento → Piloto → Operação
+
+**Duração total do caminho crítico:** 12 semanas (não pode ser reduzida sem comprometer qualidade)
+
+**Folgas identificadas:**
+- Configuração de SonarQube: +7 dias (pode ser feita enquanto aguarda CEP)
+- Desenvolvimento de scripts: +5 dias (pode ser feito com dados mock)
+- Revisão de instrumentos: +3 dias (pode ser feita até o piloto)
+
+**Estratégias para reduzir dependências:**
+
+1. **Antecipação de atividades não-críticas:**
+   - Iniciar configuração técnica antes da aprovação do CEP (usar ambiente de teste)
+   - Desenvolver scripts de coleta com dados simulados
+
+2. **Paralelização agressiva:**
+   - Submeter aprovação institucional (TI) em paralelo com CEP
+   - Preparar materiais de treinamento durante análise do CEP
+
+3. **Fast-tracking:**
+   - Se CEP atrasar, iniciar recrutamento informal (apresentar estudo, mas não coletar consentimento)
+   - Treinar participantes em ferramentas gerais (Git, GitHub) antes da aprovação formal
+
+---
+
+### 16.3 Riscos operacionais e plano de contingência
+
+**Categorização de riscos:**
+
+**1. Riscos de Cronograma**
+
+| ID | Risco | Probabilidade | Impacto | Severidade | Contingência |
+|---|---|---|---|---|---|
+| **RC1** | Atraso na aprovação do CEP (>30 dias) | Alta (60%) | Alto | 🔴 Crítico | • Submeter com 2 meses de antecedência<br>• Ter documentação impecável<br>• Contato proativo com CEP<br>• Se atrasar >45 dias: adiar experimento para próximo semestre |
+| **RC2** | Feriados ou greves afetam calendário acadêmico | Média (30%) | Médio | 🟡 Moderado | • Incluir buffer de 2 semanas no cronograma<br>• Monitorar comunicados institucionais<br>• Ter cronograma flexível (8-10 semanas) |
+| **RC3** | Participantes desistem ou ficam indisponíveis | Média (40%) | Alto | 🔴 Crítico | • Recrutar 8 participantes para garantir 6 ativos<br>• Ter lista de suplentes<br>• Manter engajamento com comunicação constante |
+| **RC4** | Piloto revela necessidade de grandes mudanças | Baixa (20%) | Médio | 🟡 Moderado | • Planejar 2 semanas para ajustes pós-piloto<br>• Ter orientador revisando protocolo antes do piloto<br>• Limitar mudanças ao essencial |
+
+**2. Riscos Técnicos**
+
+| ID | Risco | Probabilidade | Impacto | Severidade | Contingência |
+|---|---|---|---|---|---|
+| **RT1** | SonarCloud rejeita projeto (não qualifica como educacional) | Baixa (15%) | Alto | 🔴 Crítico | • Aplicar com antecedência<br>• Ter plano B: SonarQube self-hosted<br>• Reservar servidor institucional ou usar Docker local |
+| **RT2** | GitHub Actions excede quota gratuita | Média (30%) | Médio | 🟡 Moderado | • Monitorar uso semanal<br>• Otimizar workflows (rodar apenas em PRs, não em todos os pushes)<br>• Usar conta GitHub Teams (maior quota) |
+| **RT3** | Falhas intermitentes em CI/CD | Alta (50%) | Baixo | 🟢 Baixo | • Configurar retry automático em workflows<br>• Ter logs detalhados<br>• Política: re-executar análise em caso de falha |
+| **RT4** | Ambiente de staging inacessível ou instável | Média (35%) | Médio | 🟡 Moderado | • Ter ambiente local como backup<br>• Usar Docker Compose para replicar staging<br>• Documentar setup para recuperação rápida |
+| **RT5** | Perda de dados (corrupção, exclusão acidental) | Baixa (10%) | Alto | 🔴 Crítico | • Backup diário automático (Google Drive + disco local)<br>• Versionamento de planilhas (histórico do Google Sheets)<br>• Repositório Git para scripts e dados coletados |
+
+**3. Riscos de Pessoas**
+
+| ID | Risco | Probabilidade | Impacto | Severidade | Contingência |
+|---|---|---|---|---|---|
+| **RP1** | Baixa adesão ao protocolo (participantes ignoram instruções) | Alta (55%) | Alto | 🔴 Crítico | • Treinamento robusto com exemplos práticos<br>• Checklist obrigatório em cada PR<br>• Monitoramento semanal de conformidade<br>• Feedback imediato quando protocolo violado |
+| **RP2** | Conflitos entre participantes (revisões conflituosas) | Baixa (15%) | Médio | 🟡 Moderado | • Código de conduta claro<br>• Revisões focadas em código, não em pessoas<br>• Mediação do pesquisador se necessário |
+| **RP3** | Carga excessiva percebida pelos participantes | Média (40%) | Médio | 🟡 Moderado | • Comunicar claramente expectativas (4-6h/semana)<br>• Integrar ao trabalho normal da disciplina<br>• Oferecer suporte técnico rápido<br>• Permitir redução de escopo se necessário |
+| **RP4** | Pesquisador fica indisponível (doença, emergência) | Baixa (10%) | Alto | 🟡 Moderado | • Assistente de pesquisa treinado como backup<br>• Protocolo documentado para continuidade<br>• Orientador pode assumir temporariamente |
+
+**4. Riscos de Qualidade de Dados**
+
+| ID | Risco | Probabilidade | Impacto | Severidade | Contingência |
+|---|---|---|---|---|---|
+| **RD1** | Poucos defeitos encontrados (N < 10 total) | Média (30%) | Alto | 🔴 Crítico | • Testes rigorosos em staging<br>• Ampliar definição de "defeito" (incluir code smells severos)<br>• Estender período de coleta<br>• Análise qualitativa se dados insuficientes |
+| **RD2** | Dados faltantes (>20% de valores ausentes) | Média (35%) | Médio | 🟡 Moderado | • Validação em tempo real (alertas automáticos)<br>• Dupla verificação semanal<br>• Imputação estatística se padrão missing at random |
+| **RD3** | Viés de Hawthorne muito forte (todos melhoram igualmente) | Alta (60%) | Médio | 🟡 Moderado | • Análise de tendência temporal<br>• Comparação com dados históricos (se disponíveis)<br>• Foco em diferenças relativas entre T1 e T2 |
+| **RD4** | Desbalanceamento severo entre grupos (N_T1 << N_T2) | Baixa (20%) | Médio | 🟡 Moderado | • Randomização com restrição (seção 9.2)<br>• Monitoramento semanal de balanço<br>• Usar ANCOVA se desbalanceamento ocorrer |
+
+**5. Riscos Éticos**
+
+| ID | Risco | Probabilidade | Impacto | Severidade | Contingência |
+|---|---|---|---|---|---|
+| **RE1** | Participante se sente exposto ou constrangido | Média (25%) | Alto | 🟡 Moderado | • Anonimização rigorosa<br>• Feedback privado e construtivo<br>• Canal confidencial para relatar desconforto<br>• Permitir retirada imediata sem penalização |
+| **RE2** | Vazamento de dados pessoais | Baixa (5%) | Alto | 🔴 Crítico | • Criptografia de dados<br>• Acesso restrito (2FA)<br>• Conformidade LGPD<br>• Plano de resposta a incidentes (notificação em 24h) |
+| **RE3** | Pressão percebida para participar (coerção implícita) | Média (30%) | Médio | 🟡 Moderado | • Coleta de consentimento por terceiro<br>• Enfatizar voluntariedade<br>• Oferecer alternativas equivalentes |
+
+**Plano de resposta a riscos (geral):**
+
+1. **Monitoramento contínuo:**
+   - Checklist semanal de riscos
+   - Dashboard de métricas operacionais (adesão, dados coletados, infraestrutura)
+   - Reuniões de retrospectiva ao final de cada sprint
+
+2. **Gatilhos de ação:**
+   - Se 3+ riscos críticos (🔴) se materializarem: pausar experimento e reavaliar
+   - Se N < 30 PRs na semana 6: estender período de coleta
+   - Se adesão < 60%: reunião emergencial com participantes
+
+3. **Comunicação de riscos:**
+   - Riscos críticos comunicados imediatamente ao orientador
+   - Riscos moderados reportados em reuniões semanais
+   - Log de riscos mantido em Google Sheets compartilhado
+
+4. **Lições aprendidas:**
+   - Documentar todos os problemas e soluções aplicadas
+   - Retrospectiva final para melhorar futuros experimentos
+
+---
 
 
 
