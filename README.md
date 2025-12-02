@@ -18,6 +18,7 @@ EXP-SE-001
   - v3.1 — ajustes de precisão nas métricas e operacionalização de critérios.
   - v4.0 — População, sujeitos e amostragem; Instrumentação e protocolo operacional; Plano de análise de dados (pré-execução) + Avaliação de validade (ameaças e mitigação)
   - v5.0 — Ética, privacidade e conformidade Recursos, infraestrutura e orçamento Cronograma, marcos e riscos operacionais
+  - v5.1 — Atualização dos diagramas para formato Mermaid.js
 
 
 ### 1.4 Datas (criação, última atualização)
@@ -301,60 +302,93 @@ O experimento fundamenta-se nos seguintes conceitos-chave:
 
 #### Diagrama de Influências
 
-```
-┌─────────────────────────────────────────────────────────────┐
-│                    Tipo de Revisão de Código                │
-│                    (Variável Independente)                  │
-└──────────────────────┬──────────────────────────────────────┘
-                       │ 
-        ┌──────────────┴──────────────┐
-        │                             │
-        ▼                             ▼
-┌──────────────────┐        ┌──────────────────┐
-│ Revisão Manual   │        │ SonarQube (Auto) │
-│  (Peer Review)   │        │    (Análise      │   
-│                  │        │    Estática)     │
-└────────┬─────────┘        └────────┬─────────┘
-         ▼                           ▼
-         │                         │
-         │ Detecta:                │ Detecta:              │
-         │ • Lógica complexa       │ • Padrões estruturais │
-         │ • Contexto de negócio   │ • Vulnerabilidades    │
-         │ • Casos extremos        │ • Complexidade        │
-         │ • Design patterns       │ • Duplicação          │
-         │                         │ • Code smells         │
-         │                         │───────────────────────┘
-         └───────────┬─────────────┘
-                     │  
-                     ▼
-         ┌────────────────────────────┐
-         │ Qualidade do Código        │
-         │  (Métrica Primária)        │
-         │                            │
-         │ • Densidade de Defeitos    │
-         │   (M1: defeitos/KLOC)      │
-         │ • Taxa de Críticos (M2)    │
-         │ • Defeitos Pós-Entrega     │
-         │   (M3)                     │
-         └──────────────┬─────────────┘
-                        │
-                        ▼
-         ┌────────────────────────────┐
-         │  Resultado Final           │
-         │  (Efeito Observado)        │
-         │                            │
-         │ Redução de Defeitos        │
-         │ em Produção?               │
-         └────────────────────────────┘
+```mermaid
+flowchart LR
 
-┌─────────────────────────────────────────────────────────────┐
-│  Variáveis Moderadoras / Contexto                           │
-│  • Experiência dos desenvolvedores (M14: Confiança)         │
-│  • Complexidade do código (M8: Complexidade Ciclomática)    │ 
-│  • Tamanho do PR (linhas modificadas)                       │ 
-│  • Criticidade da funcionalidade                            │
-└─────────────────────────────────────────────────────────────┘
+    %% --------------------------
+    %% NÓS PRINCIPAIS
+    %% --------------------------
+
+    A["Tipo de Revisão de Código
+(Variável Independente)"]
+
+    B1["Revisão Manual
+(Peer Review)
+
+Detecta:
+• Lógica complexa
+• Contexto de negócio
+• Casos extremos
+• Design patterns"]
+
+    B2["SonarQube (Automática)
+(Análise Estática)
+
+Detecta:
+• Padrões estruturais
+• Vulnerabilidades
+• Complexidade
+• Duplicação
+• Code smells"]
+
+    C["Qualidade do Código
+(Métrica Primária)
+
+• Densidade de Defeitos (M1)
+• Taxa de Críticos (M2)
+• Defeitos Pós-Entrega (M3)"]
+
+    D["Resultado Final
+(Efeito Observado)
+
+Redução de defeitos
+em produção?"]
+
+    CTX["Variáveis Moderadoras / Contexto
+
+• Experiência dos devs (M14)
+• Complexidade do código (M8)
+• Tamanho do PR
+• Criticidade da funcionalidade"]
+
+
+    %% --------------------------
+    %% FLUXO HORIZONTAL
+    %% --------------------------
+
+    A --> B1
+    A --> B2
+
+    B1 --> C
+    B2 --> C
+
+    C --> D
+
+    %% Contexto abaixo
+    A --- CTX
+    B1 --- CTX
+    B2 --- CTX
+    C --- CTX
+
+
+    %% --------------------------
+    %% ESTILOS DE CORES
+    %% --------------------------
+
+    classDef indep fill:#e3f2fd,stroke:#1565c0,stroke-width:2px,color:#0d47a1,rx:10,ry:10;
+    classDef review fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px,color:#1b5e20,rx:10,ry:10;
+    classDef metric fill:#fff3e0,stroke:#ef6c00,stroke-width:2px,color:#e65100,rx:10,ry:10;
+    classDef result fill:#f3e5f5,stroke:#8e24aa,stroke-width:2px,color:#6a1b9a,rx:10,ry:10;
+    classDef ctx fill:#eeeeee,stroke:#424242,stroke-width:1.8px,color:#212121,rx:10,ry:10;
+
+    %% Aplicação dos estilos
+    class A indep;
+    class B1,B2 review;
+    class C metric;
+    class D result;
+    class CTX ctx;
 ```
+
 
 #### Mecanismo de Ação Esperado
 
@@ -653,41 +687,63 @@ O desenho em blocos é apropriado para este experimento porque:
 4. **Comparabilidade:** Garante que ambos os tratamentos (T1 e T2) sejam aplicados a PRs similares, evitando viés de seleção.
 
 **Estrutura do desenho:**
+```mermaid
+flowchart TD
+
+    A["População de PRs
+(Todos os PRs do projeto)"]
+    A --> B["Estratificação em Blocos"]
+
+    B --> C1["Bloco 1
+(Pequeno)
+50–150 LOC"]
+
+    B --> C2["Bloco 2
+(Médio)
+151–300 LOC"]
+
+    B --> C3["Bloco 3
+(Grande)
+301–500 LOC"]
+
+    C1 --> D1["Randomização
+dentro do bloco"]
+    C2 --> D2["Randomização
+dentro do bloco"]
+    C3 --> D3["Randomização
+dentro do bloco"]
+
+    D1 --> E1["T1 (n)
+T2 (n)"]
+    D2 --> E2["T1 (n)
+T2 (n)"]
+    D3 --> E3["T1 (n)
+T2 (n)"]
+
+    %% Legenda
+    subgraph Legenda
+        L1["T1 = Revisão Manual"]
+        L2["T2 = Revisão Automatizada (SonarQube)"]
+        L3["n = número aproximadamente igual de PRs por célula"]
+    end
+
+    %% ===========================
+    %% ESTILOS DE CORES
+    %% ===========================
+    classDef main fill:#e3f2fd,stroke:#1565c0,stroke-width:2px,color:#0d47a1,rx:10,ry:10;
+    classDef block fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px,color:#1b5e20,rx:10,ry:10;
+    classDef random fill:#fff3e0,stroke:#ef6c00,stroke-width:2px,color:#e65100,rx:10,ry:10;
+    classDef result fill:#f3e5f5,stroke:#8e24aa,stroke-width:2px,color:#6a1b9a,rx:10,ry:10;
+    classDef legend fill:#eeeeee,stroke:#424242,stroke-width:1.5px,color:#212121,rx:6,ry:6;
+
+    %% Atribuir estilos
+    class A,B main;
+    class C1,C2,C3 block;
+    class D1,D2,D3 random;
+    class E1,E2,E3 result;
+    class L1,L2,L3 legend;
 ```
-┌─────────────────────────────────────────────────────────────┐
-│                    População de PRs                          │
-│                  (Todos os PRs do projeto)                   │
-└──────────────────────┬──────────────────────────────────────┘
-                       │
-                       ▼
-         ┌─────────────────────────────┐
-         │  Estratificação em Blocos   │
-         └─────────────┬───────────────┘
-                       │
-        ┌──────────────┼──────────────┐
-        │              │              │
-        ▼              ▼              ▼
-   ┌─────────┐   ┌─────────┐   ┌─────────┐
-   │ Bloco 1 │   │ Bloco 2 │   │ Bloco 3 │
-   │(Pequeno)│   │ (Médio) │   │(Grande) │
-   │50-150   │   │151-300  │   │301-500  │
-   │  LOC    │   │  LOC    │   │  LOC    │
-   └────┬────┘   └────┬────┘   └────┬────┘
-        │             │             │
-        │ Randomização│             │
-        │  dentro do  │             │
-        │    bloco    │             │
-        ▼             ▼             ▼
-   ┌────────┐    ┌────────┐    ┌────────┐
-   │T1  │T2 │    │T1  │T2 │    │T1  │T2 │
-   │(n) │(n)│    │(n) │(n)│    │(n) │(n)│
-   └────────┘    └────────┘    └────────┘
-   
-   Legenda:
-   T1 = Revisão Manual
-   T2 = Revisão Automatizada (SonarQube)
-   n = número aproximadamente igual de PRs por célula
-```
+
 
 **Critérios de bloqueio:**
 
@@ -1088,54 +1144,56 @@ Com 6 desenvolvedores:
 
 **Etapas de recrutamento:**
 
+```mermaid
+flowchart LR
+    %% Direção horizontal
+    %% LR = Left → Right
+    %% Nós com estilo uniforme
+
+    A["FASE 1: Divulgação e Convite
+    • Apresentação do projeto em sala de aula
+    • Distribuição de folder com objetivos e benefícios
+    • E-mail com convite formal; link para pré-screening
+    Responsável: Professor / Pesquisador
+    Timeline: Semana 1 (2-3 dias)"]
+
+    B["FASE 2: Pré-screening (Questionário Online)
+    • Verificação de C1-C4: experiência, disponibilidade
+    • Formulário de 3-5 minutos via Google Forms
+    • Perguntas sobre: experiência Java, Git, horas/sem
+    Responsável: Pesquisador (análise automática)
+    Timeline: Semana 1 (até dia 5)"]
+
+    C["FASE 3: Validação / Entrevista (10-15 min)
+    • Conversa com candidatos pré-selecionados
+    • Confirmação de critérios; avaliação de motivação
+    • Teste técnico rápido (ex: criar PR no GitHub)
+    Responsável: Pesquisador + Professor
+    Timeline: Semana 1 (dias 6-7)"]
+
+    D["FASE 4: Consentimento Informado (TCLE)
+    • Fornecimento do Termo de Consentimento
+    • Leitura; resposta a dúvidas
+    • Assinatura e coleta de termo original
+    Responsável: Pesquisador + Comitê Ética (se req.)
+    Timeline: Semana 1 (fim de semana)"]
+
+    E["FASE 5: Confirmação Final e Treinamento
+    • Lista de participantes confirmados
+    • Agendamento da sessão de treinamento
+    • Distribuição de material (checklist, guias etc.)
+    Responsável: Pesquisador
+    Timeline: Semana 2 (segunda)"]
+
+    %% Fluxo
+    A --> B --> C --> D --> E
+
+    %% Estilos
+    classDef fase fill:#e3f2fd,stroke:#1565c0,stroke-width:2px,color:#0d47a1,rx:10,ry:10;
+    class A,B,C,D,E fase;
 ```
-┌────────────────────────────────────────────────────┐
-│ FASE 1: Divulgação e Convite                        │
-│ • Apresentação do projeto em sala de aula           │
-│ • Distribuição de folder com objetivos e benefícios │
-│ • E-mail com convite formal; link para pré-screening │
-│ Responsável: Professor / Pesquisador                │
-│ Timeline: Semana 1 (2-3 dias)                       │
-└───────────────────┬────────────────────────────────┘
-                    ▼
-┌────────────────────────────────────────────────────┐
-│ FASE 2: Pré-screening (Questionário Online)        │
-│ • Verificação de C1-C4: experiência, disponibilidade│
-│ • Formulário de 3-5 minutos via Google Forms        │
-│ • Perguntas sobre: experiência Java, Git, horas/sem │
-│ Responsável: Pesquisador (análise automática)       │
-│ Timeline: Semana 1 (até dia 5)                      │
-└───────────────────┬────────────────────────────────┘
-                    ▼
-┌────────────────────────────────────────────────────┐
-│ FASE 3: Validação / Entrevista (10-15 min)         │
-│ • Conversa com candidatos pré-selecionados          │
-│ • Confirmação de critérios; avaliação de motivação  │
-│ • Teste técnico rápido (ex: criar PR no GitHub)     │
-│ Responsável: Pesquisador + Professor                │
-│ Timeline: Semana 1 (dias 6-7)                       │
-└───────────────────┬────────────────────────────────┘
-                    ▼
-┌────────────────────────────────────────────────────┐
-│ FASE 4: Consentimento Informado (TCLE)             │
-│ • Fornecimento de Termo de Consentimento Livre     │
-│   e Esclarecido                                     │
-│ • Leitura; resposta a dúvidas                       │
-│ • Assinatura e coleta de termo original             │
-│ Responsável: Pesquisador + Comitê Ética (se req.)  │
-│ Timeline: Semana 1 (fim de semana)                  │
-└───────────────────┬────────────────────────────────┘
-                    ▼
-┌────────────────────────────────────────────────────┐
-│ FASE 5: Confirmação Final e Treinamento             │
-│ • Lista de participantes confirmados                │
-│ • Agendamento de sessão de treinamento              │
-│ • Distribuição de material preparatório (checklist, │
-│   guias de uso de SonarQube, etc.)                  │
-│ Responsável: Pesquisador                            │
-│ Timeline: Semana 2 (segunda)                        │
-└────────────────────────────────────────────────────┘
-```
+
+
 
 #### Critérios de Aceitação / Rejeição
 
@@ -1864,7 +1922,6 @@ Se não → ajustes + mini-piloto (1 semana).
 - Ajustar conclusões se necessário
 
 ---
----
 
 ## 14. Ética, privacidade e conformidade
 
@@ -2413,45 +2470,40 @@ Se não → ajustes + mini-piloto (1 semana).
 ### 16.2 Dependências entre atividades
 
 **Mapa de dependências (precedência):**
+```mermaid
+flowchart TD
+
+    A["Plano Finalizado"]
+
+    A --> B["Submissão ao CEP"]
+    B --> C["Aprovação CEP"]
+
+    B --> D["Aprovação
+Institucional (TI)"]
+
+    C --> F["Recrutamento +
+Consentimento"]
+    D --> F
+
+    F --> G["Treinamento"]
+    G --> H["Piloto"]
+    H --> I["Início Operação"]
+
+    %% ===========================
+    %% ESTILOS DE CORES
+    %% ===========================
+    classDef main fill:#e3f2fd,stroke:#1565c0,stroke-width:2px,color:#0d47a1,rx:10,ry:10;
+    classDef approve fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px,color:#1b5e20,rx:10,ry:10;
+    classDef prep fill:#f3e5f5,stroke:#8e24aa,stroke-width:2px,color:#6a1b9a,rx:10,ry:10;
+    classDef ops fill:#fff3e0,stroke:#ef6c00,stroke-width:2px,color:#e65100,rx:10,ry:10;
+
+    %% Aplicar estilos
+    class A main;
+    class B,C,D approve;
+    class F prep;
+    class G,H,I ops;
 ```
-┌──────────────────┐
-│ Plano Finalizado │
-└────────┬─────────┘
-│
-▼
-┌─────────────────────┐       ┌────────────────────┐
-│ Submissão ao CEP    ├──────→│ Aprovação          │
-└──────────┬──────────┘       │ Institucional (TI) │
-│                  └────────┬───────────┘
-│                           │
-▼                           ▼
-┌──────────────────────┐     ┌──────────────────────┐
-│ Aprovação CEP        │     │ Infra Técnica Pronta │
-└──────────┬───────────┘     └──────────┬───────────┘
-│                             │
-│         ┌───────────────────┘
-│         │
-▼         ▼
-┌──────────────────────┐
-│ Recrutamento +       │
-│ Consentimento        │
-└──────────┬───────────┘
-│
-▼
-┌──────────────┐
-│ Treinamento  │
-└──────┬───────┘
-│
-▼
-┌─────────────┐
-│ Piloto      │
-└──────┬──────┘
-│
-▼
-┌──────────────────┐
-│ Início Operação  │
-└──────────────────┘
-```
+
 **Tabela de dependências críticas:**
 
 | Atividade (Dependente) | Depende de | Tipo de Dependência | Folga | Impacto se atrasar |
