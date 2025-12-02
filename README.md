@@ -1,5 +1,5 @@
 
-# Plano de Experimento – Scoping e Planejamento
+# Proposta de Experimento para Trabalho de Conclusão de Curso (TCC)
 
 ## 1. Identificação básica
 
@@ -1462,11 +1462,11 @@ Se não → ajustes + mini-piloto (1 semana).
 
 ---
 
-# 12. Plano de análise de dados (pré-execução)
+## 12. Plano de análise de dados (pré-execução)
 
 
 
-## 12.1 Estratégia geral de análise
+### 12.1 Estratégia geral de análise
 
 ### **Estrutura da análise**
 
@@ -1502,7 +1502,7 @@ Se não → ajustes + mini-piloto (1 semana).
 
 ---
 
-## 12.2 Métodos estatísticos
+### 12.2 Métodos estatísticos
 
 ### **Testes paramétricos**
 
@@ -1539,7 +1539,7 @@ Se não → ajustes + mini-piloto (1 semana).
 
 ---
 
-## 12.3 Dados faltantes e outliers
+### 12.3 Dados faltantes e outliers
 
 ### **Dados faltantes**
 
@@ -1566,7 +1566,7 @@ Se não → ajustes + mini-piloto (1 semana).
 
 ---
 
-## 12.4 Análise qualitativa
+### 12.4 Análise qualitativa
 
 ### **Fontes**
 
