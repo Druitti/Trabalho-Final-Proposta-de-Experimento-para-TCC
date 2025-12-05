@@ -7,234 +7,15 @@
 Comparação entre revisão de código manual (peer review) e revisão automatizada por SonarQube na redução da densidade de defeitos em projetos Java.
 
 ### 1.2 ID / código
-EXP-SE-001
+## 10. População, sujeitos e amostragem (resumo)
 
-### 1.3 Versão do documento e histórico de revisão
-- **Versão atual:** v4.0  
-- **Histórico:**  
-  - v1.0 — criação inicial do documento, contendo escopo e fundamentos teóricos.
-  - v2.0 — expansão com objetivos específicos, GQM, stakeholders e riscos.
-  - v3.0 — modelo conceitual e hipóteses; variáveis, fatores, tratamentos e objetos de estudo; desenho experimental
-  - v3.1 — ajustes de precisão nas métricas e operacionalização de critérios.
-  - v4.0 — População, sujeitos e amostragem; Instrumentação e protocolo operacional; Plano de análise de dados (pré-execução) + Avaliação de validade (ameaças e mitigação)
-  - v5.0 — Ética, privacidade e conformidade Recursos, infraestrutura e orçamento Cronograma, marcos e riscos operacionais
-  - v5.1 — Atualização dos diagramas para formato Mermaid.js
-  - v5.2 — Remoção de redundâncias em determinadas seções, correção no tópico 8.7 e condensação do tópico 13
+- População-alvo: desenvolvedores que usam Java/Spring Boot em equipes pequenas (4–6 pessoas), contextos acadêmicos prioritários.
+- Elegibilidade: matriculado na disciplina, ≥6 meses Java, acesso a GitHub, disponibilidade ~3–4 h/sem.; consentimento (TCLE).
+- Exclusões: experiência insuficiente, indisponibilidade, conflitos de interesse, retirada voluntária.
+- Amostra pragmática: 30–50 PRs totais (meta ideal 50+); 15–25 PRs por tratamento; balanceamento por tamanho/complexidade/autores.
+- Recrutamento: convite em sala, pré‑screening online, entrevista curta, assinatura TCLE; treinamento único (≈3 h) antes do início.
 
-
-### 1.4 Datas (criação, última atualização)
-- **Data de criação:** 23/11/2025  
-- **Última atualização:** 02/12/2025
-
-### 1.5 Autores (nome, área, contato)
-- **Autor:** [Gabriel Ferreira Amaral] — Engenharia de Software — gabriel.afa@outlook.com
-
-### 1.6 Responsável principal (PI / dono do experimento)
-[Gabriel Ferreira Amaral] — responsável pelo direcionamento científico do estudo.
-
-### 1.7 Projeto / produto / iniciativa relacionada
-Projeto acadêmico de desenvolvimento de software em Java, vinculado à disciplina de Engenharia de Software e ao Experimento de Trabalho de Conclusão de Curso (TCC).  
-Foco: análise comparativa de práticas de garantia de qualidade no ciclo de desenvolvimento.
-
----
-
-## 2. Contexto e problema
-
-### 2.1 Descrição do problema / oportunidade
-Equipes de desenvolvimento utilizam revisões de código manuais como mecanismo principal de detecção de defeitos antes da integração. Contudo, ferramentas de análise estática, como SonarQube, têm sido adotadas para automatizar parte desse processo, oferecendo relatórios imediatos sobre problemas estruturais, duplicações e vulnerabilidades.  
-Ainda não há clareza, no contexto estudado, sobre qual método resulta em menor densidade de defeitos pós-entrega. Assim, surge a oportunidade de comparar empiricamente esses dois métodos de revisão com base em métricas objetivas de qualidade.
-
-### 2.2 Contexto organizacional e técnico
-O experimento será conduzido em um ambiente acadêmico, com equipes de estudantes desenvolvendo sistemas Java utilizando GitHub, CI/CD básico e práticas ágeis.  
-Tecnologias relevantes incluem:
-- Java 17+, Spring Boot  
-- Git e GitHub (branches, PRs, issues)  
-- SonarQube (regras padrão + qualidade mínima exigida)  
-- GitHub Actions para integração contínua  
-
-O processo padrão envolve desenvolvimento em feature branches, abertura de pull requests, revisão manual e posterior integração.
-
-### 2.3 Trabalhos e evidências prévias (internos e externos)
-Evidências existentes incluem:
-- Estudos empíricos que avaliam a eficácia da revisão de código manual na redução de defeitos.  
-- Pesquisas sobre o uso de ferramentas como SonarQube para identificação automática de smells e vulnerabilidades.  
-- Estudos comparativos mostrando que cada abordagem captura tipos diferentes de problemas (manuais captam lógica; ferramentas captam padrões estruturais).  
-- Em contextos internos, observou-se aumento de retrabalho quando revisões manuais são superficiais e ausência de ferramentas automatizadas leva à negligência de problemas estruturais.
-
-### 2.4 Referencial teórico e empírico essencial
-O experimento fundamenta-se nos seguintes conceitos-chave:
-- **Code Review Manual:** técnica tradicional que envolve inspeção humana do código, amplamente adotada em processos ágeis e DevOps.  
-- **Análise Estática de Código:** uso de ferramentas que identificam problemas automaticamente antes da execução, como complexidade, duplicação, vulnerabilidades e violações de boas práticas.  
-- **Qualidade de Software:** conceitos como densidade de defeitos, complexidade ciclomática, cobertura de testes e maintainability index orientam o estudo.  
-- **Engenharia de Software Empírica:** uso de experimentos controlados para avaliar práticas de desenvolvimento e fundamentar decisões baseadas em evidências.  
-- **Estudos anteriores** mostram que combinar revisão manual com análises automatizadas pode melhorar a qualidade, mas o impacto relativo e isolado de cada abordagem ainda é pouco quantificado em ambientes pequenos/médios.
-
-## 3. Objetivos e Questões (Goal / Question / Metric)
-
-### 3.1 Objetivo Geral (Goal Template)
-
-**Analisar** a efetividade de duas estratégias de revisão de código (manual e automatizada via SonarQube) **com o propósito de** identificar qual método resulta em menor densidade de defeitos pós-entrega e maior qualidade estrutural, **sob a perspectiva de** gerentes de qualidade, desenvolvedores e arquitetos de software, **no contexto de** projetos acadêmicos de desenvolvimento Java em equipes pequenas/médias (4-6 pessoas).
-
----
-
-### 3.2 Objetivos Específicos
-
-| ID | Objetivo Específico | Descrição |
-|---|---|---|
-| O1 | Comparar a densidade de defeitos | Medir e comparar a quantidade de defeitos detectados pós-entrega em sprints com revisão manual versus automatizada |
-| O2 | Avaliar a cobertura de detecção | Identificar quais categorias de problemas (segurança, complexidade, duplicação, etc.) cada método detecta melhor |
-| O3 | Quantificar o impacto no tempo e esforço | Medir tempo gasto em revisão, número de comentários gerados e ciclos de retrabalho em cada abordagem |
-| O4 | Analisar a satisfação e percepção | Avaliar a aceitação, confiança e conforto dos desenvolvedores com cada método de revisão |
-
----
-
-### 3.3 Tabela GQM (Goal / Question / Metric)
-
-| Objetivo | Pergunta (Q) | Métricas Associadas | ID Métricas |
-|---|---|---|---|
-| O1 | Q1.1: Qual é a densidade de defeitos detectados após entrega entre os dois métodos? | M1 (Densidade de Defeitos), M2 (Taxa de Defeitos Críticos) | M1, M2 |
-| O1 | Q1.2: Quantos defeitos são encontrados em produção/homologação para cada abordagem? | M3 (Defeitos Pós-Entrega), M4 (Severity Distribution) | M3, M4 |
-| O1 | Q1.3: Qual é a correlação entre problemas identificados em revisão e defeitos reais em produção? | M1 (Densidade de Defeitos), M5 (True Positive Rate) | M1, M5 |
-| O2 | Q2.1: Quantos problemas de segurança cada método consegue identificar? | M6 (Vulnerabilidades Detectadas), M7 (Security Issues) | M6, M7 |
-| O2 | Q2.2: Qual é o desempenho de cada método na identificação de complexidade excessiva? | M8 (Complexidade Ciclomática Média), M2 (Taxa de Defeitos Críticos) | M8, M2 |
-| O2 | Q2.3: Como cada abordagem se comporta na detecção de duplicação de código? | M9 (Duplicação de Código %), M5 (True Positive Rate) | M9, M5 |
-| O3 | Q3.1: Quanto tempo é gasto em cada tipo de revisão? | M10 (Tempo Médio de Revisão), M11 (Ciclos de Retrabalho) | M10, M11 |
-| O3 | Q3.2: Qual é o volume de comentários/feedback gerado em cada método? | M12 (Número de Comentários), M10 (Tempo Médio de Revisão) | M12, M10 |
-| O3 | Q3.3: Quantos ciclos de retrabalho são necessários em cada abordagem? | M11 (Ciclos de Retrabalho), M3 (Defeitos Pós-Entrega) | M11, M3 |
-| O4 | Q4.1: Como os desenvolvedores avaliam a utilidade de cada método? | M13 (Satisfação Percebida), M14 (Confiança no Método) | M13, M14 |
-| O4 | Q4.2: Qual método é considerado menos intrusivo/mais aceitável? | M14 (Confiança no Método), M15 (Taxa de Adoção) | M14, M15 |
-| O4 | Q4.3: Qual é o aprendizado percebido pelos desenvolvedores em cada estratégia? | M13 (Satisfação Percebida), M16 (Feedback Qualitativo) | M13, M16 |
-
----
-
-### 3.4 Catálogo de Métricas
-
-| ID | Nome da Métrica | Descrição | Unidade | Fonte de Dados |
-|---|---|---|---|---|
-| M1 | Densidade de Defeitos | Número de defeitos encontrados pós-entrega por 1.000 linhas de código | defeitos/KLOC | Relatórios de defeitos, análise de issues |
-| M2 | Taxa de Defeitos Críticos | Percentual de defeitos com severidade crítica ou alta em relação ao total | % | Sistema de gerenciamento de defeitos |
-| M3 | Defeitos Pós-Entrega | Número absoluto de defeitos identificados após entrega/merge para main | quantidade | GitHub Issues, sistema de rastreamento de bugs |
-| M4 | Severity Distribution | Distribuição de defeitos por nível de severidade (crítico, alto, médio, baixo) | % por severidade | Análise de defeitos registrados |
-| M5 | True Positive Rate | Percentual de problemas flagged que correspondem a defeitos reais | % | Validação manual/testes de aceitação |
-| M6 | Vulnerabilidades Detectadas | Número total de vulnerabilidades de segurança identificadas | quantidade | Relatórios SonarQube + comentários de revisão manual |
-| M7 | Security Issues | Número específico de issues ligados a segurança (SQL injection, XSS, etc.) | quantidade | SonarQube + análise manual |
-| M8 | Complexidade Ciclomática Média | Média da complexidade de funções/métodos no código revisado | índice | SonarQube metrics |
-| M9 | Duplicação de Código % | Percentual de linhas duplicadas em relação ao total do projeto | % | SonarQube duplicate detection |
-| M10 | Tempo Médio de Revisão | Tempo gasto por um revisor/ferramenta para revisar um PR | minutos | Timestamps de PR, logs de análise SonarQube |
-| M11 | Ciclos de Retrabalho | Número de vezes que um PR requer correções antes da aprovação | quantidade | Histórico de commits/iterações em PR |
-| M12 | Número de Comentários | Quantidade total de comentários (feedback) deixados em revisão | quantidade | GitHub PR comments |
-| M13 | Satisfação Percebida | Avaliação subjetiva dos desenvolvedores quanto à utilidade do método (escala 1-5) | escala Likert | Pesquisa/questionário pós-experimento |
-| M14 | Confiança no Método | Grau de confiança que os desenvolvedores têm na capacidade do método identificar problemas | escala Likert (1-5) | Entrevista/questionário estruturado |
-| M15 | Taxa de Adoção | Percentual de PRs que seguem o protocolo de revisão proposto | % | Auditoria de PRs no repositório |
-| M16 | Feedback Qualitativo | Observações e comentários coletados via entrevistas semi-estruturadas | texto/temas | Transcrições de entrevistas |
-
----
-
-## 4. Escopo e Contexto do Experimento
-
-### 4.1 Escopo Funcional / de Processo
-
-#### Incluído no escopo:
-- Desenvolvimento de features/user stories em Java utilizando Spring Boot
-- Abertura de pull requests (PRs) no GitHub
-- Aplicação da estratégia de revisão manual (peer review tradicional) em metade dos PRs
-- Aplicação da estratégia de revisão automatizada (SonarQube) em outra metade dos PRs
-- Registro de métricas de qualidade pré e pós-integração
-- Testes em ambiente de staging/homologação para detecção de defeitos reais
-- Coleta de feedback qualitativo via entrevistas/questionários com desenvolvedores
-- Análise comparativa dos resultados entre os dois métodos
-
-#### Excluído do escopo:
-- Revisão de infraestrutura e DevOps
-- Análise de performance (tempo de execução, throughput)
-- Testes de aceitação por usuários finais
-- Modificações estruturais no SonarQube ou criação de regras customizadas (utilizar configuração padrão)
-- Análise de impacto em projetos de larga escala (>100 KLOC)
-- Outras ferramentas de análise estática (Findbugs, SpotBugs, Checkstyle) — foco exclusivo em SonarQube
-- Revisão de código de testes unitários (escopo limitado a lógica de negócio)
-
----
-
-### 4.2 Contexto do Estudo
-
-| Aspecto | Descrição |
-|---|---|
-| **Tipo de Organização** | Acadêmica (instituição de ensino superior) |
-| **Tamanho** | Pequeno (4-6 estudantes por equipe) |
-| **Tipo de Projeto** | Desenvolvimento de aplicação web (back-end Java + frontend básico) |
-| **Criticidade** | Média (projeto acadêmico, sem críticos em produção real) |
-| **Perfil de Experiência dos Participantes** | Misto: estudantes do 4º/5º semestre com experiência variada em Java (6-18 meses) |
-| **Ambiente de Execução** | Repositório GitHub; CI/CD com GitHub Actions; SonarQube em cloud gratuito ou self-hosted; staging em servidor de testes |
-| **Duração Prevista** | 3-4 sprints (6-8 semanas) |
-| **Linguagem de Programação** | Java 17+ |
-| **Framework Principal** | Spring Boot 3.x |
-
----
-
-### 4.3 Premissas
-
-| ID | Premissa | Justificativa |
-|---|---|---|
-| P1 | Todos os participantes possuem experiência básica em Git, GitHub e Java | Necessário para aplicação consistente de ambos os métodos |
-| P2 | SonarQube permanecerá disponível e estável durante todo o experimento | Falhas de ferramenta invalidariam dados da abordagem automatizada |
-| P3 | Os PRs são do tamanho e complexidade comparáveis entre os dois grupos | Necessário para comparação justa entre métodos |
-| P4 | Os revisores manuais aplicarão critérios consistentes e fundamentados | Reduz viés e padroniza a qualidade da revisão manual |
-| P5 | Os testes em homologação identificarão adequadamente defeitos reais | Essencial para validar se os métodos capturam problemas significativos |
-| P6 | A equipe manterá registro consistente de tempo, comentários e iterações | Dados essenciais para M10, M11, M12 |
-
----
-
-### 4.4 Restrições
-
-| Tipo | Descrição | Impacto |
-|---|---|---|
-| **Tempo** | Disponibilidade de sprints acadêmicos limitada a 6-8 semanas | Pode reduzir volume de PRs analisados; limita profundidade de análise |
-| **Orçamento** | Projeto sem financiamento; uso de ferramentas gratuitas | SonarQube limitado a cloud gratuito ou versão community; sem suporte premium |
-| **Ferramentas** | GitHub Actions com quotas gratuitas; SonarQube comunidade | Sem acesso a features premium; possíveis limitações de relatórios |
-| **Acesso** | Ambiente de staging compartilhado; possível contenção de recursos | Testes em homologação podem sofrer atrasos; variabilidade nos resultados |
-| **Amostra** | Pequena equipe (4-6 pessoas) | Baixa generalização; possível viés por conhecimento interpessoal |
-| **Regras Organizacionais** | Calendário acadêmico rígido; feriados e períodos de prova | Interrupções involuntárias no fluxo de desenvolvimento |
-
----
-
-### 4.5 Limitações Previstas (Validez Externa)
-
-- **Contexto acadêmico vs. industrial:** resultados podem não ser generalizáveis para equipes profissionais com projetos críticos
-- **Tamanho reduzido da amostra:** 4-6 desenvolvedores; conclusões limitadas em relação a equipes maiores (10+)
-- **Projeto pequeno/médio:** aplicação a sistemas com >200 KLOC pode apresentar dinâmica diferente
-- **Configuração padrão do SonarQube:** não reflete customizações específicas de organizações reais
-- **Possível Hawthorne effect:** desenvolvedores sabem que estão sendo avaliados; comportamento pode não refletir prática rotineira
-- **Falta de randomização verdadeira:** possível viés na atribuição de PRs aos grupos (manual vs. automatizado)
-- **Curva de aprendizado:** equipe pode melhorar ao longo do tempo, confundindo efeito do método com maturação
-
----
-
-## 5. Stakeholders e Impacto Esperado
-
-### 5.1 Stakeholders Principais
-
-| Stakeholder | Descrição | Interesse |
-|---|---|---|
-| **Desenvolvedores (Participantes)** | Estudantes que desenvolvem e revisam código no experimento | Compreender qual método agrega mais valor; reduzir retrabalho |
-| **Professor/Orientador** | Responsável acadêmico pelo experimento; orienta pesquisa | Validar hipóteses; gerar conhecimento científico sobre práticas de qualidade |
-| **Gerentes de Qualidade / QA** | Profissionais interessados em políticas de revisão | Embasar decisão sobre adoção de ferramentas automatizadas |
-| **Arquitetos de Software** | Responsáveis por definir padrões de qualidade e processos | Fundamentar padrões de revisão; definir políticas de integração |
-| **Comunidade Acadêmica** | Outros estudantes, pesquisadores em Engenharia de Software | Contribuir com evidências para tomadas de decisão em contextos similares |
-
----
-
-### 5.2 Interesses e Expectativas dos Stakeholders
-
-| Stakeholder | Expectativa | Benefício Esperado |
-|---|---|---|
-| **Desenvolvedores** | Aprender quais técnicas de revisão são mais eficazes | Melhorar qualidade do código; reduzir tempo em revisão improdutiva |
-| **Professor/Orientador** | Gerar dados empíricos sólidos para publicação ou conclusão de TCC | Fundamentar recomendações com evidência; contribuir ao conhecimento em ES |
-| **Gerentes de Qualidade** | Conhecer o custo-benefício de ferramentas automatizadas vs. manual | Justificar investimento em ferramentas; otimizar processo de QA |
-| **Arquitetos** | Definir políticas de revisão baseadas em evidências | Padronizar prática; aumentar eficiência e qualidade de produtos |
-| **Comunidade Acadêmica** | Ter estudo de referência em revisão de código | Usar como base para pesquisas futuras; informar curriculum |
-
----
-
+Critérios, fluxos de seleção, módulos de treinamento e cronograma detalhados estão no Apêndice C (recrutamento e treinamento).
 ### 5.3 Impactos Potenciais no Processo / Produto
 
 #### Durante o experimento:
@@ -509,19 +290,6 @@ Os objetos de estudo neste experimento são **Pull Requests (PRs)** contendo imp
 - **Framework:** Spring Boot 3.x com Java 17+
 - **Repositório:** Código versionado no GitHub com histórico completo de commits, comentários e iterações
 
-**Critérios de inclusão:**
-- PRs que modificam **lógica de negócio, REST APIs ou funcionalidades** (não apenas refatorações de estilo, formatting ou comentários)
-- PRs com pelo menos 50 LOC modificadas em **código-fonte** (excluso testes automaticamente gerados)
-- PRs abertos após o início oficial do experimento
-- PRs que passam por todo o fluxo de revisão (abertura → revisão → aprovação/rejeição → merge/retrabalho)
-- PRs com descrição clara da funcionalidade no título ou descrição
-
-**Critérios de exclusão:**
-- PRs puramente de documentação (README, comentários)
-- PRs que modificam apenas configurações (YAML, properties)
-- PRs abandonados ou fechados sem merge
-- PRs com <50 LOC (muito triviais para análise significativa)
-
 ---
 
 ### 8.2 Sujeitos / participantes (visão geral)
@@ -536,18 +304,6 @@ Os objetos de estudo neste experimento são **Pull Requests (PRs)** contendo imp
 | **Experiência com Git/GitHub** | Básica a intermediária; todos devem saber criar branches, PRs e realizar code review |
 | **Experiência com Spring Boot** | Pelo menos 1 projeto acadêmico prévio |
 | **Conhecimento de SonarQube** | Não obrigatório (será fornecido treinamento) |
-
-**Papéis no experimento:**
-
-1. **Autores de PRs:** Desenvolvedores que implementam features e abrem PRs
-2. **Revisores manuais:** Participantes designados para realizar peer review tradicional
-3. **Operadores do SonarQube:** Participantes que interpretam relatórios automatizados (pode ser o próprio autor)
-4. **Testadores:** Responsáveis por validar código em staging/homologação (podem ser os mesmos desenvolvedores em rodízio)
-
-**Recrutamento:**
-- Convite direto a estudantes matriculados na disciplina de Engenharia de Software
-- Consentimento informado com explicação clara dos objetivos e procedimentos
-- Participação voluntária; possibilidade de desistência sem penalização acadêmica
 
 ---
 
@@ -581,16 +337,6 @@ Os objetos de estudo neste experimento são **Pull Requests (PRs)** contendo imp
 |---|---|---|
 | **T1: Controle (Revisão Manual)** | PR passa por revisão humana tradicional sem uso de ferramentas automatizadas | 1. Desenvolvedor abre PR no GitHub <br> 2. Revisor humano designado recebe notificação <br> 3. Revisor analisa código usando checklist padronizado <br> 4. Revisor deixa comentários e aprova ou solicita mudanças <br> 5. Autor corrige e atualiza PR (se necessário) <br> 6. Após aprovação, PR é mergeado <br> 7. Código é testado em staging/homologação |
 | **T2: Tratamento (Revisão Automatizada SonarQube)** | PR passa por análise estática automática; aprovação baseada em quality gate da ferramenta | 1. Desenvolvedor abre PR no GitHub <br> 2. GitHub Actions dispara análise SonarQube automaticamente <br> 3. Relatório é gerado com issues identificadas <br> 4. Autor analisa relatório e corrige problemas críticos <br> 5. PR é atualizado; nova análise é executada <br> 6. Quality gate aprovado → PR é mergeado <br> 7. Código é testado em staging/homologação |
-
-**Diferenciação entre tratamentos:**
-
-| Aspecto | T1 (Manual) | T2 (Automatizado) |
-|---|---|---|
-| **Revisor** | Humano | Ferramenta (SonarQube) |
-| **Critérios de aprovação** | Subjetivos + checklist | Objetivos (quality gate) |
-| **Tempo de resposta** | Variável (depende de disponibilidade) | Imediato (CI/CD) |
-| **Tipo de problemas detectados** | Lógica, contexto, design | Padrões, estrutura, métricas |
-| **Feedback** | Comentários textuais no GitHub | Relatório estruturado com categorias |
 
 ---
 
@@ -672,18 +418,6 @@ Fatores que podem distorcer os resultados e que serão **monitorados** e/ou **mi
 
 **Desenho escolhido:** **Desenho em Blocos Randomizados (Randomized Block Design)**
 
-**Justificativa:**
-
-O desenho em blocos é apropriado para este experimento porque:
-
-1. **Heterogeneidade conhecida:** Os PRs variam naturalmente em tamanho, complexidade e tipo de funcionalidade. Essa variabilidade pode obscurecer o efeito real do tratamento.
-
-2. **Controle de variáveis de confusão:** Ao agrupar PRs em blocos homogêneos (por tamanho, complexidade, tipo), reduzimos a variância intra-bloco e aumentamos a precisão na detecção de diferenças entre tratamentos.
-
-3. **Tamanho de amostra limitado:** Com ~40-60 PRs esperados, é essencial maximizar o poder estatístico controlando fontes de variação conhecidas.
-
-4. **Comparabilidade:** Garante que ambos os tratamentos (T1 e T2) sejam aplicados a PRs similares, evitando viés de seleção.
-
 **Estrutura do desenho:**
 ```mermaid
 flowchart TD
@@ -742,34 +476,6 @@ T2 (n)"]
     class L1,L2,L3 legend;
 ```
 
-
-**Critérios de bloqueio:**
-
-| Bloco | Critério Principal | Critério Secundário | Justificativa |
-|---|---|---|---|
-| **Bloco 1 (Pequeno)** | 50-150 LOC | Complexidade: Simples a Média | PRs menores com escopo reduzido |
-| **Bloco 2 (Médio)** | 151-300 LOC | Complexidade: Média | PRs de tamanho moderado, escopo padrão |
-| **Bloco 3 (Grande)** | 301-500 LOC | Complexidade: Média a Alta | PRs maiores com múltiplas componentes ou lógica complexa |
-
-**Número esperado de unidades por bloco:**
-
-- **Meta:** ~6-10 PRs por célula (tratamento × bloco)
-- **Total esperado:** 36-60 PRs distribuídos em 6 células (3 blocos × 2 tratamentos)
-
-**Modelo estatístico:**
-
-O modelo ANOVA para blocos randomizados será:
-```
-Y_ij = μ + τ_i + β_j + ε_ij
-
-Onde:
-Y_ij = resposta observada (ex: densidade de defeitos)
-μ = média geral
-τ_i = efeito do tratamento i (i = 1,2)
-β_j = efeito do bloco j (j = 1,2,3)
-ε_ij = erro aleatório
-```
-
 ---
 
 ### 9.2 Randomização e alocação
@@ -803,50 +509,6 @@ A randomização será realizada **dentro de cada bloco** para garantir balancea
      PR_ID | LOC | Complexidade | Bloco | Tratamento | Data_Abertura
 ```
    - Apenas pesquisador tem acesso à alocação completa (cegamento parcial dos participantes)
-
-**Exemplo de código Python para randomização:**
-```python
-import random
-
-def alocar_tratamento(bloco, historico_bloco):
-    """
-    Aloca tratamento garantindo balanceamento dentro do bloco
-    """
-    contagem_t1 = historico_bloco.count('T1')
-    contagem_t2 = historico_bloco.count('T2')
-    
-    # Se diferença > 2, força alocação ao grupo menor
-    if contagem_t1 - contagem_t2 >= 2:
-        return 'T2'
-    elif contagem_t2 - contagem_t1 >= 2:
-        return 'T1'
-    else:
-        return random.choice(['T1', 'T2'])
-
-# Exemplo de uso
-bloco1_historico = []
-for pr in range(10):
-    tratamento = alocar_tratamento('Bloco1', bloco1_historico)
-    bloco1_historico.append(tratamento)
-    print(f"PR {pr+1}: {tratamento}")
-```
-
-**O que será randomizado:**
-
-| Elemento | Randomizado? | Justificativa |
-|---|---|---|
-| **Alocação de PR ao tratamento** | ✅ Sim | Evita viés de seleção; garante comparabilidade |
-| **Ordem de revisão dentro de sprint** | ❌ Não | Não relevante; PRs revisados conforme abertura |
-| **Escolha do revisor manual** | ✅ Sim (rodízio) | Evita viés de revisor específico |
-| **Ordem dos testes em staging** | ❌ Não | Todos testados após merge |
-
-**O que NÃO será randomizado:**
-
-- **Features/tarefas:** Alocação de features aos desenvolvedores segue planejamento normal da sprint (não interferimos no processo de desenvolvimento)
-- **Momento de abertura do PR:** Desenvolvedores abrem PRs naturalmente ao completarem features
-- **Blocos:** PRs são alocados deterministicamente aos blocos baseado em LOC
-
----
 
 ### 9.3 Balanceamento e contrabalanço
 
@@ -894,19 +556,6 @@ Embora o desenho não seja crossover (cada PR recebe apenas 1 tratamento), aplic
    - **Problema:** Testadores podem ficar mais atentos após encontrar defeitos
    - **Solução:** Aleatorizar ordem de teste dos PRs em staging (não testar todos T1 primeiro, depois T2)
 
-**Verificação de balanceamento:**
-
-Análise pré-experimento (após coleta mas antes da análise estatística):
-
-| Fator | Teste de Balanceamento | Critério de Aceitação |
-|---|---|---|
-| **Tamanho (LOC)** | Teste t: média LOC_T1 vs. LOC_T2 | p > 0.05 (não significativo) |
-| **Complexidade** | Teste χ²: distribuição de complexidade | p > 0.05 |
-| **Autores** | Teste χ²: distribuição de PRs por desenvolvedor | p > 0.05 |
-| **Sprints** | Teste χ²: distribuição temporal | p > 0.05 |
-
-Se balanceamento falhar (p < 0.05), usar **covariáveis** na análise estatística (ANCOVA) para ajustar diferenças.
-
 ---
 ### 9.4 Número de grupos e sessões
 
@@ -923,48 +572,6 @@ Se balanceamento falhar (p < 0.05), usar **covariáveis** na análise estatísti
 
 - **Total de células experimentais:** 2 tratamentos × 3 blocos = **6 células**
 
-**Distribuição esperada de PRs:**
-
-| Bloco | T1 (Manual) | T2 (SonarQube) | Total por Bloco |
-|---|---|---|---|
-|Bloco 1 (Pequeno) | 6-10 PRs | 6-10 PRs | 12-20 PRs |
-| Bloco 2 (Médio) | 6-10 PRs | 6-10 PRs | 12-20 PRs |
-| Bloco 3 (Grande) | 6-10 PRs | 6-10 PRs | 12-20 PRs |
-| Total | 18-30 PRs | 18-30 PRs | 36-60 PRs |
-
-**Número de "sessões" (sprints):**
-
-- **Duração:** 3-4 sprints de 2 semanas cada
-- **Total:** 6-8 semanas de coleta de dados
-- **PRs por sprint (estimativa):** 9-15 PRs (3-5 PRs por sprint × 2 tratamentos)
-
-**Participação dos sujeitos:**
-
-- **Cada desenvolvedor:**
-  - Atua como **autor** de PRs em ambos os tratamentos (exposição balanceada)
-  - Atua como **revisor manual** em PRs do grupo T1 (rodízio)
-  - Interage com **relatórios SonarQube** em seus próprios PRs do grupo T2
-
-- **Exposição esperada por desenvolvedor (assumindo 6 participantes):**
-  - Autoria: 6-10 PRs ao longo do experimento (mix T1/T2)
-  - Revisão manual: 3-5 PRs de outros autores (apenas T1)
-  - Total de interações: ~9-15 PRs
-
-**Justificativa do tamanho de amostra:**
-
-| Aspecto | Valor | Justificativa |
-|---|---|---|
-| **N total esperado** | 36-60 PRs | Viável em 6-8 semanas; equipe de 6 pessoas produz ~1.5 PRs/semana/pessoa |
-| **N por tratamento** | 18-30 PRs | Suficiente para teste t com poder moderado (0.60-0.70) para efeito médio (d=0.5) |
-| **N por célula (bloco×tratamento)** | 6-10 PRs | Permite ANOVA de blocos; reduz risco de células vazias |
-| **Poder estatístico** | ~0.60-0.70 | Abaixo do ideal (0.80), mas aceitável para estudo exploratório em contexto acadêmico |
-
-**Considerações sobre viabilidade:**
-
-- **Mínimo aceitável:** 30 PRs totais (15 por tratamento) para análise válida
-- **Meta ideal:** 50+ PRs totais (25+ por tratamento) para poder adequado
-- **Contingência:** Se N < 30 ao final da coleta, estender período experimental em 2 semanas ou reduzir escopo de análise (focar em análise descritiva + tamanho de efeito)
-
 ---
 ## 10. População, sujeitos e amostragem
 
@@ -973,24 +580,6 @@ Se balanceamento falhar (p < 0.05), usar **covariáveis** na análise estatísti
 A **população-alvo** deste experimento é definida como:
 
 > Desenvolvedores que trabalham com **Java e Spring Boot**, atuando em **equipes pequenas/médias (4-6 pessoas)** de desenvolvimento de software, em contextos acadêmicos ou industriais, que realizam revisão de código como prática de garantia de qualidade.
-
-**Critérios de caracterização da população:**
-
-| Critério | Definição |
-|---|---|
-| **Tecnologia principal** | Java 17+ com Spring Boot 3.x |
-| **Tamanho de equipe** | 4-6 desenvolvedores (equipes pequenas/médias) |
-| **Contexto** | Acadêmico (prioridade) ou industrial pequeno/médio |
-| **Prática de desenvolvimento** | Uso de Git, GitHub, PRs e code review como rotina |
-| **Experiência mínima** | 6+ meses com Java; pelo menos 1 projeto em Spring Boot |
-| **Engajamento** | Participação voluntária em práticas de qualidade de software |
-
-**Justificativa da população:**
-
-- Alinhada com **objetivo O1-O4** de comparar métodos de revisão
-- Representa contexto real onde ambas as práticas (manual + automatizada) são aplicáveis
-- Amostra homogênea reduz variabilidade não relacionada ao tratamento
-
 ---
 
 ### 10.2 Critérios de inclusão de sujeitos
@@ -1005,14 +594,6 @@ Um participante é **elegível** se atender a TODOS os critérios abaixo:
 | **C4: Disponibilidade de tempo** | Disponibilidade de 3-4 horas/semana para participar do experimento (desenvolvimento, revisão, coleta de dados) | Assinatura de termo de compromisso; verificação de calendário |
 | **C5: Consentimento informado** | Leitura e assinatura do termo de consentimento (TCLE) explicando objetivos, riscos e benefícios | Documento assinado antes do início |
 | **C6: Acesso a ferramentas** | Tem acesso a computador com Internet, Git instalado e acesso ao repositório GitHub do projeto | Verificação prévia de acesso |
-
-**Processo de verificação:**
-
-1. **Divulgação:** Comunicação por e-mail e em sala de aula com convite para participar
-2. **Pré-screening:** Questionário inicial (2-3 minutos) via formulário online para verificar C1-C4
-3. **Entrevista/Validação:** Conversa breve (10-15 min) com candidatos pré-selecionados para confirmar critérios
-4. **Assinatura:** Coleta de TCLE e termo de concordância
-5. **Confirmação:** Lista de participantes confirmados 1 semana antes do início
 
 ---
 
@@ -1031,11 +612,6 @@ Um participante é **excluído** se apresentar QUALQUER uma das condições abai
 | **E7: Falta de adesão ao protocolo** | Participante não segue protocolo (ex: faz review manual quando deveria usar SonarQube; não registra dados) | Invalidação de dados dessa unidade experimental |
 | **E8: Eventos adversos** | Participante sofre incidente de segurança da informação (hack de conta, vazamento de código) | Impossibilidade de garantir confidencialidade dos dados |
 
-**Processo de exclusão:**
-
-- **Exclusão pré-experimento:** Se critério E1-E5 detectado, participante é informado educadamente e não iniciada coleta de dados
-- **Exclusão mid-experimento:** Se E6-E8 ocorrem, dados do participante até esse ponto são **análisados separadamente** (análise de sensibilidade) ou removidos conforme critério adotado
-- **Comunicação:** Participantes excluídos recebem comunicação clara das razões e garantia de que exclusão não afeta nota/avaliação acadêmica
 
 ---
 
@@ -1058,72 +634,6 @@ Um participante é **excluído** se apresentar QUALQUER uma das condições abai
 | **Tamanho de efeito esperado (d de Cohen)** | 0.5 | Efeito médio; diferenças práticas que esperamos encontrar |
 | **Teste estatístico** | Teste t independente (two-tailed) | Comparação de 2 grupos independentes |
 | **Variância (σ)** | Estimada em ~1.2 defeitos/KLOC | Baseada em literatura; estudos prévios de code review |
-
-**Cálculo (usando fórmula de Cohen para teste t):**
-
-$$n = \frac{2(z_{\alpha/2} + z_\beta)^2 \cdot \sigma^2}{d^2}$$
-
-Onde:
-- $z_{\alpha/2} = 1.96$ (para α=0.05, bilateral)
-- $z_\beta = 0.84$ (para poder=0.80)
-- $d = 0.5$ (tamanho de efeito médio)
-- $\sigma = 1.2$ (desvio padrão estimado)
-
-$$n = \frac{2(1.96 + 0.84)^2 \cdot (1.2)^2}{(0.5)^2} = \frac{2 \cdot 7.84 \cdot 1.44}{0.25} \approx 90$$
-
-**Conclusão do cálculo:** ~90 PRs por grupo (180 no total) seria o tamanho ideal para poder 0.80.
-
-#### Ajustes Práticos e Restrições
-
-**Realidade do projeto:** Não é viável alcançar 90 PRs por grupo em 6-8 semanas com equipe de 6 desenvolvedores.
-
-**Amostra realística planejada:**
-
-| Tratamento | PRs Planejados | Razão |
-|---|---|---|
-| **T1 (Revisão Manual)** | 15-25 PRs | Viável em 6-8 semanas; equipe de 6 gera ~1.5 PR/semana |
-| **T2 (Revisão Automatizada)** | 15-25 PRs | Mesmo ritmo de desenvolvimento |
-| **Total** | 30-50 PRs | Amostra pragmática balanceada |
-
-**Consequências do tamanho reduzido:**
-
-| Aspecto | Impacto |
-|---|---|
-| **Poder estatístico** | ~0.60-0.70 (abaixo do ideal 0.80) |
-| **Intervalo de confiança (IC)** | Mais largo; precisão reduzida |
-| **Tamanho de efeito detectável** | Necessário d ≥ 0.6-0.7 (efeito grande a médio) |
-| **Análise de sensibilidade** | Essencial; reportar junto com p-values |
-
-**Justificativa de aceitabilidade:**
-
-- Tamanho de amostra **reduzido é aceitável** em estudos exploratórios e acadêmicos
-- Poder 0.60-0.70 ainda oferece evidência considerável (não é "sem poder")
-- Resultados serão reportados com **intervalo de confiança, d de Cohen e tamanho de efeito**, não apenas p-value
-- Conclusões serão **conservadoras** ("sugestivo de diferença" vs. "diferença significativa")
-
----
-
-#### Distribuição de Amostra entre Grupos
-
-**Amostra por tratamento:**
-
-| Tratamento | Célula 1 (Bloco Pequeno) | Célula 2 (Bloco Médio) | Célula 3 (Bloco Grande) | Total |
-|---|---|---|---|---|
-| **T1 (Manual)** | 5-8 PRs | 5-8 PRs | 5-8 PRs | 15-24 PRs |
-| **T2 (SonarQube)** | 5-8 PRs | 5-8 PRs | 5-8 PRs | 15-24 PRs |
-| **Total por bloco** | 10-16 PRs | 10-16 PRs | 10-16 PRs | 30-48 PRs |
-
-**Amostra por desenvolvedor:**
-
-Com 6 desenvolvedores:
-- Cada um contribui com **5-8 PRs** ao longo do experimento (mix T1/T2)
-- Cada um realiza **2-4 revisões manuais** de PRs de colegas (T1 apenas)
-- Total de interações por pessoa: ~7-12 interações
-
-**Meta mínima de sucesso (C1 do critério 6.2):**
-
-- **Mínimo aceitável:** 30 PRs totais (15 por grupo)
-- **Meta ambiciosa:** 40+ PRs totais (20+ por grupo)
 
 ---
 
@@ -1189,18 +699,6 @@ flowchart LR
     class A,B,C,D,E fase;
 ```
 
-
-
-#### Critérios de Aceitação / Rejeição
-
-| Cenário | Decisão | Ação |
-|---|---|---|
-| **Candidato atende todos C1-C8** | ✅ Aceito | Convite formal; agendamento de treinamento |
-| **Candidato atende C1-C3, C5-C8; C4 questionável** | ⚠️ Aceitação condicional | Conversa sobre disponibilidade; negociação de horários; menção em TCLE |
-| **Candidato falha em C1 ou C2** | ❌ Rejeitado | E-mail educado; explicação de motivo; sugestão de participação futura |
-| **Candidato não completa pré-screening** | ❌ Sem dados | Tentativa de contacto; se sem resposta em 5 dias, considera-se recusa |
-| **Aceitação total < 4 participantes** | 🚫 Go/No-Go | Revisar convite; estender prazo; considerar cancelar se inviável |
-
 ---
 
 ### 10.6 Treinamento e preparação dos sujeitos
@@ -1261,60 +759,6 @@ Conteúdo detalhado em seção 11.3.
 | **Confidencialidade** | Como dados serão armazenados, quem pode acessar | 5 min | Política de privacidade do projeto |
 | **Uso dos dados** | Dados usados apenas para pesquisa; será publicado anonimizado | 5 min | Exemplos de relatórios com anonimização |
 | **Contato em caso de dúvida** | Professor, pesquisador, comitê ética | 5 min | Números, e-mails, horários |
-
-#### Cronograma de Treinamento
-
-**Sessão única integrada (3 horas total)**
-
-```
-Semana 2, segunda-feira, 14:00-17:00
-
-14:00-14:30 → Módulo 1: Visão geral
-14:30-15:15 → Módulo 2: Revisão manual + pausa 5 min
-15:20-16:05 → Módulo 3: SonarQube + pausa 5 min
-16:10-16:40 → Módulo 4: GitHub/CI-CD
-16:40-17:00 → Módulo 5: Ética + Q&A
-```
-
-**Alternativa (se presencial problemático):** Gravação assíncrona disponibilizada; sessão ao vivo (30 min) para Q&A
-
-#### Materiais de Suporte
-
-**Documentos a fornecer:**
-
-1. **Checklist de Revisão Manual (PDF/Markdown)**
-   - Versão impressa e digital
-   - Inclui exemplos de cada critério
-
-2. **Quick Reference Guide — SonarQube (1-2 páginas)**
-   - Categorias de issues
-   - Como interpretar cada tipo
-   - Links para documentação completa
-
-3. **Protocolo Experimental (resumido)**
-   - O que fazer em cada fase
-   - O que não fazer
-   - Contato para dúvidas
-
-4. **Vídeo de Tutorial (5-10 min)**
-   - Gravação do treinamento ou compilação de demos
-   - Disponibilizada para revisão posterior
-
-5. **FAQ (Frequently Asked Questions)**
-   - Perguntas comuns sobre protocolo, ferramentas, ética
-   - Atualizado durante experimento conforme surgem dúvidas
-
-#### Validação do Aprendizado
-
-**Pós-treinamento, avaliação breve:**
-
-| Método | Questão | Critério de Sucesso |
-|---|---|---|
-| **Questionário** | "Qual é o objetivo do experimento?" | ≥80% respostas corretas |
-| **Demonstração** | Participante faz review de PR fictício usando checklist | Identifica ≥3/4 problemas plantados |
-| **Interpretação** | Participante explica um issue SonarQube | Explicação correta de bug/vulnerability |
-
-**Se não atingir sucesso:** Fornecimento de reforço de treinamento 1-on-1; adiamento do início até competência confirmada
 
 ---
 
@@ -2457,6 +1901,1138 @@ Plano → CEP → Aprovação CEP → Recrutamento → Treinamento → Piloto �
    - Retrospectiva final para melhorar futuros experimentos
 
 ---
+
+## 17. Governança do Experimento
+
+### 17.1 Papéis e responsabilidades formais
+
+A governança do experimento segue uma estrutura clara de papéis para garantir a execução adequada, tomada de decisões eficiente e rastreabilidade das ações.
+
+#### Matriz RACI Detalhada
+
+| Atividade | Pesquisador | Orientador | Participantes | Assistente | TI/Suporte |
+|---|---|---|---|---|---|
+| **Desenho experimental** | R/A | C | I | - | - |
+| **Submissão ao CEP** | R | A | - | C | - |
+| **Aprovações institucionais** | R | A | - | - | C |
+| **Recrutamento de participantes** | R | C | - | R | - |
+| **Treinamento** | R | C | I | C | - |
+| **Configuração de infraestrutura** | C | I | I | C | R |
+| **Coleta de dados** | R | I | R | C | - |
+| **Revisão de código (T1)** | I | I | R | - | - |
+| **Operação do SonarQube (T2)** | C | I | R | - | C |
+| **Testes em staging** | I | I | R | - | C |
+| **Análise estatística** | R/A | C | I | - | - |
+| **Análise qualitativa** | R | C | C | C | - |
+| **Resolução de conflitos** | C | R/A | I | - | - |
+| **Controle de qualidade dos dados** | R | C | - | R | - |
+| **Publicação de resultados** | R | A | C | - | - |
+| **Arquivamento e documentação** | R | I | - | C | - |
+
+**Legenda RACI:**
+- **R** = Responsável (executa a atividade)
+- **A** = Aprovador (accountable, responde pelo resultado)
+- **C** = Consultado (fornece input antes da decisão)
+- **I** = Informado (recebe comunicação após a decisão)
+
+---
+
+#### Estrutura de Tomada de Decisão
+
+| Tipo de Decisão | Exemplos | Decisor | Processo |
+|---|---|---|---|
+| **Operacional** | Ajuste de horário de reunião, esclarecimento de dúvidas de participantes, correção de bugs em scripts | Pesquisador Principal | Decisão imediata; registro em log de atividades |
+| **Tática** | Ajuste no checklist de revisão, extensão de prazo de sprint, mudança de instrumento secundário | Pesquisador + Orientador | Discussão em reunião semanal; aprovação do orientador |
+| **Estratégica** | Alteração de hipóteses, mudança de desenho experimental, redução de escopo, cancelamento | Orientador (com input do pesquisador) | Análise formal; documentação de justificativa; aprovação CEP se afetar participantes |
+| **Emergencial** | Falha crítica de sistema, desistência em massa, violação ética | Orientador | Decisão imediata; comunicação a todos stakeholders em 24h |
+
+---
+
+#### Descrição Detalhada dos Papéis
+
+**Pesquisador Principal (Gabriel Ferreira Amaral)**
+
+| Aspecto | Detalhamento |
+|---|---|
+| **Autoridade** | Decisões operacionais; propor mudanças táticas e estratégicas |
+| **Responsabilidades** | Coordenação geral; execução do protocolo; coleta e análise de dados; comunicação com participantes; redação de relatórios |
+| **Prestação de contas** | Reuniões semanais com orientador; relatórios de progresso; documentação de decisões |
+| **Disponibilidade** | 10-15 horas/semana durante o experimento |
+| **Contato** | Email: gabriel.afa@outlook.com |
+
+**Orientador Acadêmico (Professor Danilo Maia)**
+
+| Aspecto | Detalhamento |
+|---|---|
+| **Autoridade** | Aprovação de decisões táticas e estratégicas; resolução de conflitos; decisões emergenciais |
+| **Responsabilidades** | Supervisão metodológica; revisão de instrumentos e análises; mediação de conflitos; co-autoria |
+| **Prestação de contas** | Coordenação do curso; comitê de ética (se aplicável) |
+| **Disponibilidade** | 2-3 horas/semana; disponível para emergências |
+| **Contato** | Email institucional |
+
+**Participantes (4-6 desenvolvedores)**
+
+| Aspecto | Detalhamento |
+|---|---|
+| **Autoridade** | Execução de suas próprias tarefas; reportar problemas e sugestões |
+| **Responsabilidades** | Desenvolver código; realizar revisões; responder questionários; seguir protocolo |
+| **Prestação de contas** | Pesquisador principal |
+| **Disponibilidade** | 4-6 horas/semana (integrado à disciplina) |
+| **Direitos** | Desistir a qualquer momento; receber feedback; confidencialidade |
+
+---
+
+### 17.2 Ritos de acompanhamento pré-execução
+
+Antes do início da operação, os seguintes ritos de acompanhamento garantirão alinhamento e prontidão:
+
+#### Calendário de Ritos Pré-Execução
+
+| Rito | Semana | Duração | Participantes | Objetivo | Entregável |
+|---|---|---|---|---|---|
+| **Reunião de Alinhamento Inicial** | -10 | 1h | Pesquisador, Orientador | Validar plano; alinhar expectativas; definir cronograma | Ata com decisões; cronograma aprovado |
+| **Checkpoint de CEP** | -8 | 30min | Pesquisador, Orientador | Revisar documentação CEP; submeter | Protocolo submetido |
+| **Reunião de Infraestrutura** | -7 | 1h | Pesquisador, TI | Validar requisitos técnicos; resolver pendências | Checklist de infraestrutura |
+| **Status Semanal** | -7 a -2 | 30min | Pesquisador, Orientador | Acompanhar progresso; resolver bloqueios | Ata com status e ações |
+| **Revisão de Instrumentos** | -4 | 1h | Pesquisador, Orientador | Validar questionários, checklists, scripts | Instrumentos aprovados |
+| **Sessão de Treinamento** | -4 | 3h | Pesquisador, Participantes | Capacitar em ferramentas e protocolo | Participantes treinados |
+| **Piloto Review** | -1 | 1h | Pesquisador, Orientador | Avaliar resultados do piloto; decidir ajustes | Relatório de piloto; ajustes definidos |
+| **Go/No-Go Meeting** | 0 (dia -1) | 30min | Pesquisador, Orientador | Decisão final de iniciar operação | Aprovação formal para início |
+
+---
+
+#### Agenda Padrão das Reuniões de Status Semanal
+
+1. **Revisão de ações pendentes** (5 min)
+   - Status das ações da reunião anterior
+   - Identificação de ações atrasadas
+
+2. **Progresso das atividades** (10 min)
+   - O que foi concluído desde a última reunião
+   - O que está em andamento
+   - Próximas atividades planejadas
+
+3. **Riscos e bloqueios** (10 min)
+   - Novos riscos identificados
+   - Bloqueios atuais e ações de mitigação
+   - Necessidade de escalação
+
+4. **Decisões necessárias** (5 min)
+   - Itens que requerem aprovação
+   - Discussão e resolução
+
+5. **Próximos passos** (5 min)
+   - Definição de ações e responsáveis
+   - Data da próxima reunião
+
+**Documentação:** Atas serão registradas em Google Docs compartilhado, com template padronizado.
+
+---
+
+#### Critérios de Escalação
+
+| Situação | Nível de Escalação | Prazo para Ação |
+|---|---|---|
+| Bloqueio operacional não resolvido em 48h | Orientador | Imediato |
+| Risco crítico identificado | Orientador | 24h |
+| Conflito entre participantes | Orientador | 48h |
+| Atraso > 1 semana no cronograma | Orientador | Reunião extraordinária |
+| Problema ético ou de privacidade | Orientador + CEP | Imediato |
+| Desistência de > 30% dos participantes | Orientador | Imediato |
+
+---
+
+### 17.3 Processo de controle de mudanças no plano
+
+Qualquer alteração no desenho experimental, escopo, hipóteses ou protocolo operacional deve seguir o processo formal de controle de mudanças para garantir rastreabilidade e integridade científica.
+
+#### Categorização de Mudanças
+
+| Categoria | Descrição | Exemplos | Aprovador | Prazo |
+|---|---|---|---|---|
+| **Menor** | Ajustes que não afetam desenho, hipóteses ou validade | Correção de typos; ajuste de horários; clarificação de instruções; correção de bugs em scripts | Pesquisador (notifica orientador) | Imediato |
+| **Moderada** | Mudanças que afetam operação mas não alteram fundamentalmente o estudo | Mudança de instrumento secundário; ajuste de critérios de inclusão; extensão de prazo de sprint; adição de métrica exploratória | Orientador | 3 dias úteis |
+| **Maior** | Mudanças que afetam desenho, hipóteses ou validade do estudo | Alteração de hipóteses; mudança de desenho experimental; redução significativa de escopo; alteração de variáveis primárias | Orientador + CEP (se afetar participantes) | 7 dias úteis (ou conforme CEP) |
+
+---
+
+#### Fluxo de Controle de Mudanças
+
+```
+┌─────────────────────────────────────────────────────────────────────────┐
+│                    PROCESSO DE CONTROLE DE MUDANÇAS                     │
+└─────────────────────────────────────────────────────────────────────────┘
+
+    ┌──────────────┐
+    │ 1. IDENTIFI- │
+    │    CAÇÃO     │ ──► Qualquer membro identifica necessidade de mudança
+    └──────┬───────┘
+           │
+           ▼
+    ┌──────────────┐
+    │ 2. DOCUMEN-  │
+    │    TAÇÃO     │ ──► Preencher Formulário de Solicitação de Mudança (FSM)
+    └──────┬───────┘
+           │
+           ▼
+    ┌──────────────┐
+    │ 3. CLASSIFI- │
+    │    CAÇÃO     │ ──► Pesquisador categoriza (Menor/Moderada/Maior)
+    └──────┬───────┘
+           │
+           ▼
+    ┌──────────────┐     ┌─────────────────────────────────────────────┐
+    │ 4. ANÁLISE   │     │ Avaliar impacto em:                         │
+    │    DE        │ ──► │ • Cronograma  • Custo  • Validade           │
+    │    IMPACTO   │     │ • Ética       • Participantes               │
+    └──────┬───────┘     └─────────────────────────────────────────────┘
+           │
+           ▼
+    ┌──────────────┐
+    │ 5. APROVAÇÃO │ ──► Decisor apropriado aprova, rejeita ou solicita ajustes
+    └──────┬───────┘
+           │
+       ┌───┴───┐
+       │       │
+       ▼       ▼
+  ┌────────┐ ┌────────┐
+  │APROVADO│ │REJEITADO│ ──► Comunicar justificativa; arquivar FSM
+  └───┬────┘ └─────────┘
+      │
+      ▼
+    ┌──────────────┐
+    │ 6. IMPLEMEN- │
+    │    TAÇÃO     │ ──► Executar mudança; atualizar documentos afetados
+    └──────┬───────┘
+           │
+           ▼
+    ┌──────────────┐
+    │ 7. COMUNICA- │
+    │    ÇÃO       │ ──► Informar stakeholders afetados
+    └──────┬───────┘
+           │
+           ▼
+    ┌──────────────┐
+    │ 8. REGISTRO  │ ──► Atualizar histórico de versões; log de mudanças
+    └──────────────┘
+```
+
+---
+
+#### Template do Formulário de Solicitação de Mudança (FSM)
+
+| Campo | Conteúdo |
+|---|---|
+| **ID da Mudança** | MUD-XXX (sequencial) |
+| **Data da Solicitação** | [DD/MM/AAAA] |
+| **Solicitante** | [Nome e papel] |
+| **Categoria** | [ ] Menor  [ ] Moderada  [ ] Maior |
+| **Seção do Plano Afetada** | [Ex: Seção 8 - Variáveis; Seção 11 - Protocolo] |
+| **Descrição da Mudança** | [Descrição detalhada do que será alterado] |
+| **Justificativa** | [Por que a mudança é necessária] |
+| **Alternativas Consideradas** | [Outras opções avaliadas e por que foram descartadas] |
+| **Impacto em Cronograma** | [ ] Nenhum  [ ] Atraso de __ dias  [ ] Antecipação |
+| **Impacto em Orçamento** | [ ] Nenhum  [ ] Aumento de R$ __  [ ] Redução |
+| **Impacto em Validade** | [ ] Nenhum  [ ] Interna  [ ] Externa  [ ] Constructo  [ ] Conclusão |
+| **Impacto em Participantes** | [ ] Nenhum  [ ] Requer nova comunicação  [ ] Requer re-consentimento |
+| **Decisão** | [ ] Aprovada  [ ] Rejeitada  [ ] Aprovada com modificações |
+| **Aprovador** | [Nome, data, assinatura] |
+| **Justificativa da Decisão** | [Se rejeitada ou modificada] |
+| **Data de Implementação** | [DD/MM/AAAA] |
+
+---
+
+#### Log de Mudanças (Registro Histórico)
+
+| ID | Data | Categoria | Descrição Resumida | Decisão | Aprovador | Versão do Plano |
+|---|---|---|---|---|---|---|
+| MUD-001 | [Data] | [Cat] | [Resumo] | [Aprov/Rej] | [Nome] | vX.X → vX.Y |
+
+*Nota: Este log será mantido em planilha Google Sheets com acesso restrito ao pesquisador e orientador.*
+
+---
+
+## 18. Plano de Documentação e Reprodutibilidade
+
+### 18.1 Repositórios e convenções de nomeação
+
+#### Estrutura de Repositórios
+
+O experimento utilizará uma estrutura organizada de repositórios para garantir rastreabilidade e facilitar a reprodução futura:
+
+| Repositório | Plataforma | Acesso | Conteúdo |
+|---|---|---|---|
+| **exp-code-review-main** | GitHub (privado) | Participantes + Pesquisador | Código-fonte do projeto Java; PRs; histórico de commits |
+| **exp-code-review-docs** | Google Drive | Pesquisador + Orientador | Plano de experimento; instrumentos; dados coletados; análises |
+| **exp-code-review-scripts** | GitHub (privado) | Pesquisador | Scripts de coleta de dados; notebooks de análise; automações |
+| **exp-code-review-backup** | Disco local + Cloud | Pesquisador | Backups criptografados de todos os dados |
+
+---
+
+#### Estrutura de Pastas (Google Drive)
+
+```
+📁 EXP-SE-001-CodeReview/
+│
+├── 📁 01-Planejamento/
+│   ├── 📄 Plano_Experimento_v5.0.md
+│   ├── 📄 Historico_Versoes.md
+│   └── 📄 Log_Mudancas.xlsx
+│
+├── 📁 02-Etica/
+│   ├── 📄 TCLE_v1.0.pdf
+│   ├── 📄 Protocolo_CEP.pdf
+│   ├── 📄 Aprovacao_CEP.pdf
+│   └── 📁 Consentimentos_Assinados/
+│
+├── 📁 03-Instrumentos/
+│   ├── 📄 Checklist_Revisao_Manual_v1.0.pdf
+│   ├── 📄 Questionario_Pos_Experimento.pdf
+│   ├── 📄 Roteiro_Entrevista.pdf
+│   ├── 📄 Template_PR.md
+│   └── 📄 Template_Issue_Defeito.md
+│
+├── 📁 04-Treinamento/
+│   ├── 📄 Slides_Treinamento.pptx
+│   ├── 📄 Guia_Participante.pdf
+│   ├── 📄 Guia_SonarQube.pdf
+│   └── 📁 Videos/
+│
+├── 📁 05-Dados_Brutos/
+│   ├── 📁 PRs/
+│   ├── 📁 SonarQube_Reports/
+│   ├── 📁 GitHub_Logs/
+│   ├── 📁 Questionarios/
+│   └── 📁 Entrevistas/
+│
+├── 📁 06-Dados_Processados/
+│   ├── 📄 Dataset_Principal.xlsx
+│   ├── 📄 Metricas_Agregadas.xlsx
+│   └── 📄 Codificacao_Qualitativa.xlsx
+│
+├── 📁 07-Analises/
+│   ├── 📁 Notebooks/
+│   ├── 📁 Outputs_Estatisticos/
+│   └── 📁 Visualizacoes/
+│
+├── 📁 08-Relatorios/
+│   ├── 📄 Relatorio_Piloto.pdf
+│   ├── 📄 Relatorio_Final.pdf
+│   └── 📄 Apresentacao_Defesa.pptx
+│
+└── 📁 09-Backup/
+    └── 📄 Backup_Log.txt
+```
+
+---
+
+#### Convenções de Nomeação
+
+**Arquivos de Documentos:**
+```
+[Tipo]_[Descricao]_v[Versao].[extensao]
+Exemplos:
+- Plano_Experimento_v5.0.md
+- Checklist_Revisao_Manual_v1.2.pdf
+- Questionario_Satisfacao_v1.0.pdf
+```
+
+**Dados Coletados:**
+```
+[Fonte]_[Tipo]_[Data_YYYYMMDD].[extensao]
+Exemplos:
+- GitHub_PRs_20260301.json
+- SonarQube_Report_20260315.json
+- Questionario_Respostas_20260420.xlsx
+```
+
+**Scripts e Notebooks:**
+```
+[Numero]_[Descricao_snake_case].[extensao]
+Exemplos:
+- 01_coleta_github_api.py
+- 02_processamento_sonarqube.py
+- 03_analise_estatistica.ipynb
+- 04_visualizacoes.ipynb
+```
+
+**Pull Requests (no repositório do projeto):**
+```
+[Tipo]/[ID-Issue]-[descricao-kebab-case]
+Exemplos:
+- feature/US-001-cadastro-usuario
+- bugfix/BUG-023-correcao-login
+- refactor/REF-005-otimizacao-query
+```
+
+**Issues de Defeitos:**
+```
+[DEF-XXX] [Severidade] - [Descrição breve]
+Exemplos:
+- [DEF-001] CRÍTICO - Falha de autenticação em produção
+- [DEF-012] MÉDIO - Validação de email incorreta
+```
+
+---
+
+#### Controle de Versões de Documentos
+
+| Tipo de Alteração | Incremento de Versão | Exemplo |
+|---|---|---|
+| Correções menores (typos, formatação) | Terceiro dígito (patch) | v1.0.0 → v1.0.1 |
+| Adições ou ajustes de conteúdo | Segundo dígito (minor) | v1.0.1 → v1.1.0 |
+| Mudanças estruturais significativas | Primeiro dígito (major) | v1.1.0 → v2.0.0 |
+
+---
+
+### 18.2 Templates e artefatos padrão
+
+#### Lista de Templates Disponíveis
+
+| ID | Template | Formato | Localização | Uso |
+|---|---|---|---|---|
+| **T01** | Plano de Experimento | Markdown | `/01-Planejamento/` | Estrutura completa do estudo |
+| **T02** | TCLE (Termo de Consentimento) | PDF/Google Forms | `/02-Etica/` | Consentimento dos participantes |
+| **T03** | Checklist de Revisão Manual | PDF/Markdown | `/03-Instrumentos/` | Guiar revisores em T1 |
+| **T04** | Template de Pull Request | Markdown | Repositório GitHub | Padronizar descrição de PRs |
+| **T05** | Template de Issue de Defeito | Markdown | Repositório GitHub | Reportar defeitos encontrados |
+| **T06** | Questionário Pós-Experimento | Google Forms | `/03-Instrumentos/` | Coletar percepções dos participantes |
+| **T07** | Roteiro de Entrevista | Word/PDF | `/03-Instrumentos/` | Guiar entrevistas qualitativas |
+| **T08** | Planilha de Rastreamento de PRs | Google Sheets | `/05-Dados_Brutos/` | Tracking de todos os PRs |
+| **T09** | Ata de Reunião | Google Docs | `/01-Planejamento/` | Documentar reuniões |
+| **T10** | Formulário de Solicitação de Mudança | Google Forms | `/01-Planejamento/` | Controle de mudanças |
+| **T11** | Relatório de Piloto | Markdown | `/08-Relatorios/` | Documentar resultados do piloto |
+| **T12** | Diário de Campo | Google Docs | `/05-Dados_Brutos/` | Observações do pesquisador |
+
+---
+
+#### Detalhamento de Templates Principais
+
+**T03 - Checklist de Revisão Manual**
+
+```markdown
+# Checklist de Revisão de Código
+
+**PR:** [Número]  |  **Revisor:** [Nome]  |  **Data:** [DD/MM/AAAA]
+
+## 1. Lógica e Correção
+- [ ] A lógica implementada está correta e atende aos requisitos?
+- [ ] Os casos extremos (edge cases) foram considerados?
+- [ ] O fluxo de controle está claro e sem caminhos mortos?
+
+## 2. Segurança
+- [ ] Não há vulnerabilidades óbvias (SQL injection, XSS, etc.)?
+- [ ] Dados sensíveis estão protegidos adequadamente?
+- [ ] Autenticação/autorização implementadas corretamente?
+
+## 3. Legibilidade e Manutenibilidade
+- [ ] Nomes de variáveis e métodos são descritivos?
+- [ ] O código está bem organizado e modular?
+- [ ] Comentários são usados quando necessário (não em excesso)?
+
+## 4. Boas Práticas
+- [ ] Segue os padrões de código do projeto?
+- [ ] Não há código duplicado desnecessário?
+- [ ] Tratamento de exceções está adequado?
+
+## 5. Testes
+- [ ] Há testes unitários para a funcionalidade?
+- [ ] Os testes cobrem cenários principais e de erro?
+
+## Decisão Final
+- [ ] **APROVADO** - Pode ser mergeado
+- [ ] **APROVADO COM RESSALVAS** - Pequenos ajustes necessários
+- [ ] **REQUER MUDANÇAS** - Correções obrigatórias antes do merge
+
+## Comentários Adicionais
+[Espaço para observações livres]
+
+---
+**Tempo gasto nesta revisão:** ___ minutos
+```
+
+---
+
+**T04 - Template de Pull Request (GitHub)**
+
+```markdown
+## Descrição
+[Breve descrição da funcionalidade ou correção implementada]
+
+## Tipo de Mudança
+- [ ] Nova funcionalidade (feature)
+- [ ] Correção de bug (bugfix)
+- [ ] Refatoração (refactor)
+- [ ] Documentação (docs)
+
+## Issue Relacionada
+Closes #[número da issue]
+
+## Checklist do Autor
+- [ ] Código segue os padrões do projeto
+- [ ] Testes foram adicionados/atualizados
+- [ ] Documentação foi atualizada (se aplicável)
+- [ ] Build passa localmente
+
+## Screenshots (se aplicável)
+[Adicionar imagens se houver mudanças visuais]
+
+## Notas para o Revisor
+[Informações adicionais que ajudem na revisão]
+```
+
+---
+
+**T05 - Template de Issue de Defeito**
+
+```markdown
+## Descrição do Defeito
+[Descrição clara e concisa do problema]
+
+## PR de Origem
+PR #[número] - [título]
+
+## Severidade
+- [ ] 🔴 CRÍTICO - Sistema inoperante ou perda de dados
+- [ ] 🟠 ALTO - Funcionalidade principal comprometida
+- [ ] 🟡 MÉDIO - Funcionalidade secundária afetada
+- [ ] 🟢 BAIXO - Problema cosmético ou menor
+
+## Categoria
+- [ ] Lógica incorreta
+- [ ] Segurança/Vulnerabilidade
+- [ ] Performance
+- [ ] Tratamento de erros
+- [ ] Interface/Usabilidade
+- [ ] Outro: ___
+
+## Passos para Reproduzir
+1. [Primeiro passo]
+2. [Segundo passo]
+3. [...]
+
+## Comportamento Esperado
+[O que deveria acontecer]
+
+## Comportamento Atual
+[O que está acontecendo]
+
+## Ambiente
+- Branch/Commit: [hash]
+- Ambiente: [staging/homologação]
+
+## Evidências
+[Screenshots, logs, stack traces]
+
+## Notas Adicionais
+[Informações extras]
+```
+
+---
+
+### 18.3 Plano de empacotamento para replicação futura
+
+Para garantir que o experimento possa ser replicado por outras equipes ou em contextos futuros, será preparado um **Pacote de Replicação** contendo todos os artefatos necessários.
+
+#### Componentes do Pacote de Replicação
+
+| Componente | Descrição | Formato | Anonimização |
+|---|---|---|---|
+| **Plano de Experimento** | Documento completo com todas as seções | PDF + Markdown | Não necessária |
+| **Instrumentos de Coleta** | Questionários, checklists, roteiros, templates | PDF + Editáveis | Não necessária |
+| **Scripts de Coleta** | Códigos para extração de dados do GitHub e SonarQube | Python (.py) | Não necessária |
+| **Scripts de Análise** | Notebooks com análises estatísticas e visualizações | Jupyter (.ipynb) | Não necessária |
+| **Dataset Anonimizado** | Dados coletados com identificadores removidos | CSV/Excel | ✅ Completa |
+| **Codebook** | Dicionário de variáveis com definições e valores | PDF | Não necessária |
+| **Relatório Metodológico** | Descrição detalhada de procedimentos, desvios e lições aprendidas | PDF | Não necessária |
+| **Resultados Estatísticos** | Outputs de testes, tabelas, gráficos | PDF + Dados brutos | ✅ Completa |
+| **Manual de Replicação** | Guia passo a passo para reproduzir o estudo | PDF | Não necessária |
+
+---
+
+#### Estrutura do Pacote de Replicação
+
+```
+📁 ReplicationPackage_EXP-SE-001/
+│
+├── 📄 README.md                      # Visão geral e instruções
+├── 📄 LICENSE.txt                    # Licença de uso (CC BY 4.0)
+│
+├── 📁 01-Protocol/
+│   ├── 📄 ExperimentPlan_v5.0.pdf
+│   ├── 📄 ExperimentPlan_v5.0.md
+│   └── 📄 ChangeLog.md
+│
+├── 📁 02-Instruments/
+│   ├── 📄 ReviewChecklist.pdf
+│   ├── 📄 PostExperimentSurvey.pdf
+│   ├── 📄 InterviewGuide.pdf
+│   ├── 📄 PRTemplate.md
+│   └── 📄 DefectTemplate.md
+│
+├── 📁 03-Data/
+│   ├── 📄 Dataset_Anonymized.csv
+│   ├── 📄 Codebook.pdf
+│   ├── 📄 QualitativeCoding.xlsx
+│   └── 📄 DataCollectionLog.csv
+│
+├── 📁 04-Scripts/
+│   ├── 📄 01_github_data_collection.py
+│   ├── 📄 02_sonarqube_extraction.py
+│   ├── 📄 03_data_preprocessing.py
+│   ├── 📄 04_statistical_analysis.ipynb
+│   ├── 📄 05_qualitative_analysis.ipynb
+│   ├── 📄 requirements.txt
+│   └── 📄 README_Scripts.md
+│
+├── 📁 05-Results/
+│   ├── 📄 StatisticalOutputs.pdf
+│   ├── 📄 Figures/
+│   │   ├── fig01_density_comparison.png
+│   │   ├── fig02_time_distribution.png
+│   │   └── ...
+│   └── 📄 Tables/
+│       ├── table01_descriptive_stats.csv
+│       └── ...
+│
+├── 📁 06-Reports/
+│   ├── 📄 FinalReport.pdf
+│   ├── 📄 MethodologicalNotes.pdf
+│   └── 📄 LessonsLearned.md
+│
+└── 📁 07-Supplementary/
+    ├── 📄 TrainingMaterials.pdf
+    ├── 📄 EthicsApproval.pdf
+    └── 📄 ConsentFormTemplate.pdf
+```
+
+---
+
+#### Manual de Replicação (Estrutura)
+
+O Manual de Replicação incluirá:
+
+1. **Pré-requisitos**
+   - Tamanho mínimo de equipe e perfil de participantes
+   - Infraestrutura técnica necessária (GitHub, SonarQube, etc.)
+   - Conhecimentos prévios recomendados
+
+2. **Preparação**
+   - Como adaptar instrumentos ao contexto local
+   - Configuração de ambiente técnico
+   - Processo de aprovação ética
+
+3. **Execução**
+   - Protocolo operacional detalhado
+   - Pontos de atenção e erros comuns
+   - Checklist de verificação por fase
+
+4. **Análise**
+   - Como usar os scripts fornecidos
+   - Interpretação dos outputs estatísticos
+   - Análise qualitativa
+
+5. **Variações Permitidas**
+   - Adaptações que mantêm validade
+   - Modificações que requerem cautela
+   - Mudanças que invalidam comparação
+
+---
+
+#### Cronograma de Preparação do Pacote
+
+| Fase | Atividade | Semana | Responsável |
+|---|---|---|---|
+| Durante experimento | Documentar desvios e decisões | Contínuo | Pesquisador |
+| Pós-coleta | Anonimizar dados | +1 | Pesquisador |
+| Pós-análise | Preparar codebook e documentação | +2 | Pesquisador |
+| Pós-análise | Revisar e limpar scripts | +2 | Pesquisador |
+| Pré-publicação | Montar pacote completo | +3 | Pesquisador |
+| Pré-publicação | Revisão pelo orientador | +4 | Orientador |
+| Publicação | Upload para repositório (Zenodo/figshare) | +4 | Pesquisador |
+
+---
+
+#### Repositório de Publicação
+
+O pacote de replicação será publicado em:
+
+- **Zenodo** (https://zenodo.org) — repositório acadêmico com DOI permanente
+- **Alternativa:** figshare ou repositório institucional
+
+**Licença:** Creative Commons Attribution 4.0 (CC BY 4.0) — permite uso, adaptação e redistribuição com atribuição.
+
+---
+
+## 19. Plano de Comunicação
+
+### 19.1 Públicos e mensagens-chave pré-execução
+
+#### Mapeamento de Stakeholders e Comunicação
+
+| Stakeholder | Interesse Principal | Mensagem-Chave | Nível de Detalhe | Canal Preferido |
+|---|---|---|---|---|
+| **Participantes (Desenvolvedores)** | Entender o que farão; benefícios pessoais | "Você contribuirá para pesquisa sobre qualidade de código, aprenderá práticas de revisão e receberá certificado de participação" | Alto (protocolo completo) | Presencial + Email |
+| **Orientador** | Viabilidade e qualidade científica | "O estudo está bem planejado, com riscos mapeados e cronograma realista" | Alto (plano completo) | Reuniões + Documentos |
+| **Coordenação do Curso** | Impacto na disciplina; aprovações | "O experimento se integra à disciplina sem prejudicar objetivos pedagógicos" | Médio (resumo executivo) | Email formal + Reunião |
+| **Comitê de Ética (CEP)** | Proteção dos participantes; conformidade | "O estudo segue diretrizes éticas, com consentimento informado e proteção de dados" | Alto (protocolo completo) | Plataforma Brasil |
+| **TI/Suporte** | Requisitos técnicos; disponibilidade | "Precisamos de acesso a servidor, configuração de SonarQube e suporte eventual" | Médio (requisitos técnicos) | Email + Reunião técnica |
+| **Comunidade Acadêmica** | Contribuição ao conhecimento | "Estudo comparativo rigoroso sobre revisão de código manual vs. automatizada" | Baixo (abstract) | Publicações futuras |
+
+---
+
+#### Mensagens por Fase
+
+**Fase 1: Divulgação Inicial (Semana -5)**
+
+| Público | Mensagem |
+|---|---|
+| **Participantes potenciais** | "Convidamos você a participar de um estudo sobre revisão de código. Você aprenderá técnicas de code review e SonarQube, contribuindo para pesquisa acadêmica. A participação é voluntária e integrada às atividades da disciplina." |
+
+**Fase 2: Recrutamento (Semana -5 a -4)**
+
+| Público | Mensagem |
+|---|---|
+| **Candidatos pré-selecionados** | "Você foi pré-selecionado para participar do estudo. Por favor, leia o Termo de Consentimento anexo e confirme sua participação até [data]." |
+
+**Fase 3: Treinamento (Semana -4)**
+
+| Público | Mensagem |
+|---|---|
+| **Participantes confirmados** | "Bem-vindo ao estudo! A sessão de treinamento será em [data/hora]. Você receberá capacitação em revisão de código, SonarQube e o protocolo do experimento." |
+
+**Fase 4: Início da Operação (Semana 0)**
+
+| Público | Mensagem |
+|---|---|
+| **Participantes** | "O experimento começa hoje! Lembre-se de seguir o protocolo de revisão designado para cada PR. Em caso de dúvidas, contate [pesquisador]." |
+| **Orientador** | "Experimento iniciado conforme planejado. Primeiro status report em [data]." |
+
+---
+
+### 19.2 Canais e frequência de comunicação
+
+#### Matriz de Canais de Comunicação
+
+| Canal | Uso Principal | Público | Frequência | Responsável |
+|---|---|---|---|---|
+| **Email** | Comunicações formais; convites; documentos oficiais | Todos | Conforme necessidade | Pesquisador |
+| **Slack/Discord** | Comunicação rápida; dúvidas operacionais; lembretes | Participantes + Pesquisador | Diário (durante operação) | Pesquisador |
+| **Google Meet/Zoom** | Reuniões de status; treinamento; entrevistas | Conforme necessidade | Semanal (com orientador) | Pesquisador |
+| **Presencial** | Treinamento; apresentações; sessões de feedback | Participantes | Conforme cronograma | Pesquisador |
+| **GitHub (Issues/PRs)** | Comunicação técnica sobre código; feedback de revisão | Participantes | Contínuo | Participantes |
+| **Google Drive** | Compartilhamento de documentos; colaboração | Pesquisador + Orientador | Conforme necessidade | Pesquisador |
+| **Plataforma Brasil** | Submissão e acompanhamento ético | CEP | Conforme processo | Pesquisador |
+
+---
+
+#### Frequência de Comunicações por Tipo
+
+| Tipo de Comunicação | Frequência | Canal | Responsável |
+|---|---|---|---|
+| **Status do experimento (para orientador)** | Semanal | Google Meet + Email | Pesquisador |
+| **Lembretes operacionais (para participantes)** | 2x por semana | Slack/Discord | Pesquisador |
+| **Atualizações de progresso (para participantes)** | Ao final de cada sprint | Email | Pesquisador |
+| **Alertas de problemas técnicos** | Imediato | Slack/Discord + Email | Pesquisador/TI |
+| **Comunicação de mudanças no protocolo** | Conforme necessidade | Email formal | Pesquisador |
+| **Feedback individual (para participantes)** | Ao final do experimento | Email + Reunião | Pesquisador |
+
+---
+
+#### Templates de Comunicação
+
+**Template: Email de Convite para Participação**
+
+```
+Assunto: Convite para Participar de Estudo sobre Revisão de Código
+
+Prezado(a) [Nome],
+
+Você está sendo convidado(a) a participar do estudo "Comparação entre 
+Revisão de Código Manual e Automatizada (SonarQube)" como parte do 
+projeto de TCC em Engenharia de Software.
+
+O QUE VOCÊ FARÁ:
+• Desenvolver funcionalidades em Java/Spring Boot (como parte da disciplina)
+• Participar de revisões de código (manual ou via SonarQube)
+• Responder questionário ao final (10 min)
+• Participar de entrevista opcional (15 min)
+
+BENEFÍCIOS:
+• Aprender técnicas de revisão de código
+• Experiência com ferramenta SonarQube
+• Certificado de participação em pesquisa acadêmica
+• Contribuir para o conhecimento em Engenharia de Software
+
+COMPROMISSO DE TEMPO:
+• 4-6 horas/semana (integrado às atividades da disciplina)
+• Duração: 6-8 semanas
+
+A participação é voluntária e você pode desistir a qualquer momento 
+sem qualquer penalização.
+
+Para participar, responda este email confirmando interesse até [data].
+
+Atenciosamente,
+[Nome do Pesquisador]
+[Contato]
+```
+
+---
+
+**Template: Lembrete Semanal (Slack/Discord)**
+
+```
+📢 LEMBRETE SEMANAL - Experimento Code Review
+
+Olá, equipe!
+
+📊 Status da semana:
+• PRs abertos: X
+• PRs revisados: Y
+• PRs pendentes de revisão: Z
+
+🎯 Próximos passos:
+• [Ação 1]
+• [Ação 2]
+
+⚠️ Atenção:
+• Lembrem-se de usar o checklist para revisões manuais
+• Verifiquem o relatório SonarQube antes de solicitar merge
+
+❓ Dúvidas? Respondam aqui ou enviem email para [pesquisador].
+
+Bom trabalho! 💪
+```
+
+---
+
+### 19.3 Pontos de comunicação obrigatórios
+
+#### Eventos que Exigem Comunicação Formal
+
+| Evento | Público | Canal | Prazo | Template |
+|---|---|---|---|---|
+| **Aprovação do plano pelo orientador** | Pesquisador, Orientador | Email + Documento assinado | Imediato | Ata de aprovação |
+| **Submissão ao CEP** | Orientador | Email | 24h | Confirmação de submissão |
+| **Aprovação do CEP** | Todos os stakeholders | Email | 48h | Comunicado de aprovação |
+| **Início do recrutamento** | Participantes potenciais | Email + Presencial | Na data | Convite para participação |
+| **Confirmação de participantes** | Orientador | Email | 48h após recrutamento | Lista de participantes |
+| **Realização do treinamento** | Orientador | Email | 24h após | Resumo do treinamento |
+| **Conclusão do piloto** | Orientador | Email + Reunião | 48h após | Relatório de piloto |
+| **Decisão Go/No-Go** | Todos os participantes | Email | Imediato | Comunicado de início |
+| **Início da operação** | Todos os participantes | Email + Slack | Na data | Boas-vindas + instruções |
+| **Mudanças no protocolo (Moderada/Maior)** | Participantes afetados + Orientador | Email formal | 48h antes da implementação | FSM aprovado |
+| **Incidentes críticos** | Orientador | Email + Telefone | Imediato | Relatório de incidente |
+| **Término da coleta de dados** | Participantes | Email | Na data | Agradecimento + próximos passos |
+| **Disponibilização de resultados** | Participantes | Email | Após análise | Resumo de resultados |
+
+---
+
+#### Checklist de Comunicação por Fase
+
+**Pré-Execução:**
+- [ ] Comunicar aprovação do plano ao orientador
+- [ ] Enviar documentação ao CEP
+- [ ] Comunicar aprovação do CEP a stakeholders
+- [ ] Enviar convites de participação
+- [ ] Confirmar lista de participantes
+- [ ] Comunicar data e local do treinamento
+- [ ] Enviar materiais de treinamento antecipadamente
+- [ ] Comunicar resultados do piloto
+- [ ] Comunicar decisão Go/No-Go
+- [ ] Enviar email de boas-vindas no início da operação
+
+**Durante Execução:**
+- [ ] Enviar lembretes semanais via Slack/Discord
+- [ ] Comunicar status semanal ao orientador
+- [ ] Comunicar mudanças de protocolo (se houver)
+- [ ] Comunicar resolução de incidentes (se houver)
+
+**Pós-Execução:**
+- [ ] Agradecer participantes pelo envolvimento
+- [ ] Comunicar disponibilidade para entrevistas
+- [ ] Compartilhar resumo de resultados com participantes
+- [ ] Comunicar publicação de resultados (se aplicável)
+
+---
+
+## 20. Critérios de Prontidão para Execução (Definition of Ready)
+
+### 20.1 Checklist de prontidão (itens que devem estar completos)
+
+Antes de iniciar a operação do experimento, TODOS os itens abaixo devem estar completos e verificados:
+
+#### Categoria 1: Aprovações e Documentação
+
+| ID | Item | Verificação | Status | Responsável |
+|---|---|---|---|---|
+| **A1** | Plano de experimento aprovado pelo orientador | Documento assinado ou email de aprovação | ⬜ Pendente | Orientador |
+| **A2** | Protocolo aprovado pelo Comitê de Ética (CEP) | Parecer consubstanciado aprovado | ⬜ Pendente | CEP |
+| **A3** | Aprovação institucional (uso de infraestrutura) | Email de autorização da coordenação/TI | ⬜ Pendente | Coordenação |
+| **A4** | TCLE finalizado e aprovado | Documento revisado pelo orientador | ⬜ Pendente | Pesquisador |
+| **A5** | Todos os instrumentos finalizados | Questionários, checklists, templates prontos | ⬜ Pendente | Pesquisador |
+
+#### Categoria 2: Participantes
+
+| ID | Item | Verificação | Status | Responsável |
+|---|---|---|---|---|
+| **P1** | Mínimo de 4 participantes confirmados | Lista com nomes e contatos | ⬜ Pendente | Pesquisador |
+| **P2** | Todos os TCLEs assinados | Documentos coletados e arquivados | ⬜ Pendente | Pesquisador |
+| **P3** | Treinamento realizado | Lista de presença; avaliação de aprendizado | ⬜ Pendente | Pesquisador |
+| **P4** | Participantes têm acesso às ferramentas | Verificação de login no GitHub, Slack, etc. | ⬜ Pendente | Pesquisador |
+| **P5** | Critérios de inclusão verificados | Checklist de elegibilidade preenchido | ⬜ Pendente | Pesquisador |
+
+#### Categoria 3: Infraestrutura Técnica
+
+| ID | Item | Verificação | Status | Responsável |
+|---|---|---|---|---|
+| **T1** | Repositório GitHub configurado | Acesso dos participantes; templates de PR/Issue | ⬜ Pendente | Pesquisador |
+| **T2** | SonarQube operacional | Análise de teste executada com sucesso | ⬜ Pendente | Pesquisador/TI |
+| **T3** | CI/CD funcionando | Pipeline executado sem erros em PR de teste | ⬜ Pendente | Pesquisador |
+| **T4** | Ambiente de staging disponível | Deploy de teste realizado | ⬜ Pendente | TI |
+| **T5** | Scripts de coleta de dados testados | Extração de métricas de teste bem-sucedida | ⬜ Pendente | Pesquisador |
+| **T6** | Planilhas de rastreamento criadas | Templates preenchidos e compartilhados | ⬜ Pendente | Pesquisador |
+| **T7** | Canal de comunicação ativo | Slack/Discord criado; participantes adicionados | ⬜ Pendente | Pesquisador |
+| **T8** | Backup configurado | Teste de backup/restore realizado | ⬜ Pendente | Pesquisador |
+
+#### Categoria 4: Piloto
+
+| ID | Item | Verificação | Status | Responsável |
+|---|---|---|---|---|
+| **L1** | Piloto executado | Mínimo 2-4 PRs processados | ⬜ Pendente | Pesquisador |
+| **L2** | Relatório de piloto elaborado | Documento com achados e ajustes | ⬜ Pendente | Pesquisador |
+| **L3** | Ajustes pós-piloto implementados | Mudanças documentadas e aplicadas | ⬜ Pendente | Pesquisador |
+| **L4** | Piloto aprovado pelo orientador | Email ou ata de aprovação | ⬜ Pendente | Orientador |
+
+#### Categoria 5: Logística
+
+| ID | Item | Verificação | Status | Responsável |
+|---|---|---|---|---|
+| **G1** | Cronograma de sprints definido | Datas de início/fim de cada sprint | ⬜ Pendente | Pesquisador |
+| **G2** | Backlog inicial de features criado | Lista de tarefas para primeira sprint | ⬜ Pendente | Pesquisador |
+| **G3** | Comunicação de início preparada | Email de boas-vindas redigido | ⬜ Pendente | Pesquisador |
+| **G4** | Materiais de suporte distribuídos | Guias, checklists enviados aos participantes | ⬜ Pendente | Pesquisador |
+| **G5** | Reunião de kickoff agendada | Data, hora, local/link confirmados | ⬜ Pendente | Pesquisador |
+
+---
+
+#### Resumo do Checklist
+
+| Categoria | Total de Itens | Obrigatórios | Críticos para Go |
+|---|---|---|---|
+| Aprovações e Documentação | 5 | 5 | A1, A2, A4 |
+| Participantes | 5 | 5 | P1, P2, P3 |
+| Infraestrutura Técnica | 8 | 8 | T1, T2, T3 |
+| Piloto | 4 | 4 | L1, L4 |
+| Logística | 5 | 5 | G1, G2 |
+| **TOTAL** | **27** | **27** | **11 críticos** |
+
+---
+
+### 20.2 Aprovações finais para iniciar a operação
+
+#### Reunião de Go/No-Go
+
+**Objetivo:** Validar que todos os critérios de prontidão foram atendidos e autorizar formalmente o início da operação.
+
+**Participantes:**
+- Pesquisador Principal (apresenta status)
+- Orientador Acadêmico (aprova ou rejeita)
+
+**Data:** Semana 0, dia -1 (um dia antes do início planejado)
+
+**Duração:** 30 minutos
+
+---
+
+#### Agenda da Reunião Go/No-Go
+
+1. **Revisão do checklist de prontidão** (10 min)
+   - Status de cada categoria
+   - Itens pendentes e justificativa
+
+2. **Avaliação de riscos residuais** (5 min)
+   - Riscos críticos identificados
+   - Mitigações em vigor
+
+3. **Decisão formal** (5 min)
+   - Votação: Go / No-Go / Go Condicional
+
+4. **Próximos passos** (5 min)
+   - Se Go: confirmar comunicação aos participantes
+   - Se No-Go: definir ações corretivas e nova data
+
+5. **Registro da decisão** (5 min)
+   - Documentar em ata formal
+
+---
+
+#### Critérios de Decisão
+
+| Decisão | Critérios | Ação |
+|---|---|---|
+| **GO** | 100% dos itens críticos completos; ≥90% do checklist total completo; sem riscos críticos não mitigados | Iniciar operação na data planejada |
+| **GO CONDICIONAL** | ≥90% dos itens críticos completos; itens pendentes têm plano de resolução em ≤48h; riscos aceitos formalmente | Iniciar com monitoramento intensificado; resolver pendências em paralelo |
+| **NO-GO** | <90% dos itens críticos completos; riscos críticos sem mitigação; impossibilidade técnica | Adiar início; definir nova data após resolução |
+
+---
+
+#### Registro Formal de Aprovação
+
+**Termo de Aprovação para Início do Experimento**
+
+```
+TERMO DE APROVAÇÃO - INÍCIO DO EXPERIMENTO
+
+Experimento: EXP-SE-001 - Comparação entre Revisão de Código Manual 
+             e Automatizada (SonarQube)
+
+Data da Reunião Go/No-Go: ___/___/______
+
+CHECKLIST DE PRONTIDÃO:
+• Aprovações e Documentação: ___/5 completos
+• Participantes: ___/5 completos
+• Infraestrutura Técnica: ___/8 completos
+• Piloto: ___/4 completos
+• Logística: ___/5 completos
+• TOTAL: ___/27 completos (___%)
+
+ITENS CRÍTICOS:
+[ ] A1 - Plano aprovado pelo orientador
+[ ] A2 - Protocolo aprovado pelo CEP
+[ ] A4 - TCLE finalizado
+[ ] P1 - Mínimo 4 participantes confirmados
+[ ] P2 - TCLEs assinados
+[ ] P3 - Treinamento realizado
+[ ] T1 - Repositório GitHub configurado
+[ ] T2 - SonarQube operacional
+[ ] T3 - CI/CD funcionando
+[ ] L1 - Piloto executado
+[ ] L4 - Piloto aprovado
+
+DECISÃO:
+[ ] GO - Autorizado início em ___/___/______
+[ ] GO CONDICIONAL - Início autorizado com ressalvas: _______________
+[ ] NO-GO - Início adiado para ___/___/______
+         Motivo: _________________________________________________
+
+PENDÊNCIAS ACEITAS (se Go Condicional):
+1. _______________ | Prazo: ___/___/______ | Responsável: ___________
+2. _______________ | Prazo: ___/___/______ | Responsável: ___________
+
+RISCOS ACEITOS:
+1. _______________________________________________________________
+2. _______________________________________________________________
+
+ASSINATURAS:
+
+_________________________________    Data: ___/___/______
+Pesquisador Principal
+[Gabriel Ferreira Amaral]
+
+_________________________________    Data: ___/___/______
+Orientador Acadêmico
+[Professor Danilo Maia]
+```
+
+---
+
+#### Fluxo Pós-Aprovação
+
+```
+                    ┌─────────────────┐
+                    │ REUNIÃO GO/NO-GO │
+                    └────────┬────────┘
+                             │
+              ┌──────────────┼──────────────┐
+              │              │              │
+              ▼              ▼              ▼
+        ┌─────────┐    ┌───────────┐    ┌─────────┐
+        │   GO    │    │    GO     │    │  NO-GO  │
+        │         │    │CONDICIONAL│    │         │
+        └────┬────┘    └─────┬─────┘    └────┬────┘
+             │               │               │
+             ▼               ▼               ▼
+    ┌─────────────────┐ ┌─────────────┐ ┌──────────────┐
+    │ Comunicar       │ │ Comunicar   │ │ Definir ações│
+    │ participantes   │ │ com ressalvas│ │ corretivas   │
+    └────────┬────────┘ └──────┬──────┘ └───────┬──────┘
+             │                 │                │
+             ▼                 ▼                ▼
+    ┌─────────────────┐ ┌─────────────┐ ┌──────────────┐
+    │ INICIAR         │ │ INICIAR +   │ │ NOVA DATA    │
+    │ EXPERIMENTO     │ │ MONITORAR   │ │ GO/NO-GO     │
+    └─────────────────┘ └─────────────┘ └──────────────┘
+```
+
+---
+
+#### Comunicação Pós-Aprovação
+
+**Se GO:**
+
+```
+Assunto: ✅ Experimento EXP-SE-001 - Início Confirmado!
+
+Prezados participantes,
+
+Temos o prazer de informar que o experimento "Comparação entre 
+Revisão de Código Manual e Automatizada" foi aprovado para início!
+
+📅 DATA DE INÍCIO: [Data]
+🕐 REUNIÃO DE KICKOFF: [Data/Hora] - [Local/Link]
+
+PRÓXIMOS PASSOS:
+1. Comparecer à reunião de kickoff
+2. Verificar acesso ao repositório GitHub
+3. Revisar os materiais de treinamento enviados
+
+Lembrem-se: o canal Slack/Discord está disponível para dúvidas!
+
+Contamos com a participação de todos.
+
+Atenciosamente,
+[Pesquisador]
+```
+
+**Se NO-GO:**
+
+```
+Assunto: ⏸️ Experimento EXP-SE-001 - Início Adiado
+
+Prezados participantes,
+
+Informamos que o início do experimento foi adiado para [nova data].
+
+MOTIVO: [Breve explicação sem detalhes técnicos excessivos]
+
+NOVA DATA PREVISTA: [Data]
+
+Manteremos todos informados sobre o andamento. Agradecemos a 
+compreensão e o compromisso de vocês com o projeto.
+
+Atenciosamente,
+[Pesquisador]
+```
+
+---
+
+### Resumo Executivo - Definition of Ready
+
+| Critério | Requisito | Verificação |
+|---|---|---|
+| **Aprovações** | CEP + Orientador + Institucional | Documentos assinados/aprovados |
+| **Participantes** | ≥4 confirmados com TCLE + Treinamento | Lista + Presença + Avaliação |
+| **Infraestrutura** | GitHub + SonarQube + CI/CD + Staging | Testes bem-sucedidos |
+| **Piloto** | Executado e aprovado | Relatório + Aprovação |
+| **Logística** | Cronograma + Backlog + Comunicação | Documentos prontos |
+
+**Decisão Final:** Experimento só inicia com **aprovação formal do orientador** após verificação de **100% dos itens críticos** do checklist.
+
+---
+
+*Fim das Seções 17-20 do Plano de Experimento EXP-SE-001*
 
 
 
