@@ -1,5 +1,5 @@
 
-# Plano de Experimento – Scoping e Planejamento
+# Proposta de Experimento para Trabalho de Conclusão de Curso (TCC)
 
 ## 1. Identificação básica
 
@@ -7,7 +7,7 @@
 Comparação entre revisão de código manual (peer review) e revisão automatizada por SonarQube na redução da densidade de defeitos em projetos Java.
 
 ### 1.2 ID / código
-EXP-SE-001
+## 10. População, sujeitos e amostragem (resumo)
 
 ### 1.3 Versão do documento e histórico de revisão
 - **Versão atual:** v4.0  
@@ -236,6 +236,7 @@ O experimento fundamenta-se nos seguintes conceitos-chave:
 
 ---
 
+Critérios, fluxos de seleção, módulos de treinamento e cronograma detalhados estão no Apêndice C (recrutamento e treinamento).
 ### 5.3 Impactos Potenciais no Processo / Produto
 
 #### Durante o experimento:
